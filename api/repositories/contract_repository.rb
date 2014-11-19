@@ -1,72 +1,71 @@
-require './api/models/contract'
-require './api/models/condition'
-require './api/models/signature'
 require './api/utils/hash_generator'
+require 'mongo'
 
 class ContractRepository
+  include Mongo
+
   def get_contracts
-    Contract.all
+    db_contracts.find.to_a
   end
 
   def get_contract(contract_id)
-    contract = Contract.all(:id => contract_id).first
-    conditions = Condition.all(:contract_uuid => contract.uuid)
-
-    conditions.each do |condition|
-      condition.signatures.each do |signature|
-        signature
-      end
-      contract.conditions << condition
-    end
-
-    contract
+    db_contracts.find({:contract_id => contract_id}).to_a[0]
   end
 
   def get_contracts_by_status(status)
-    Contract.all(:status => status)
+    db_contracts.find({:status => status}).to_a
   end
 
   def save_contract(name, description, expires, target_wallet_address, target_wallet_tag, value, conditions)
     hash_generator = HashGenerator.new
 
-    contract = Contract.new(
-        :uuid => hash_generator.generate_uuid,
+    conditions.each do |condition|
+      condition[:id] = hash_generator.generate_uuid
+      condition[:status] = 'pending'
+      condition[:signatures].each do |signature|
+        signature[:id] = hash_generator.generate_uuid
+      end
+    end
+
+    contract = {
+        :contract_id => hash_generator.generate_uuid,
         :name => name,
         :description => description,
         :expires => expires,
         :target_wallet_address => target_wallet_address,
         :target_wallet_tag => target_wallet_tag,
         :value => value,
-        :status => 'pending')
+        :conditions => conditions,
+        :status => 'pending'
+    }
 
-    if conditions != nil && conditions.length > 0
-      conditions.each do |cond|
-        condition = Condition.new(:uuid => hash_generator.generate_uuid,
-                                  :name => cond['name'],
-                                  :description => cond['description'],
-                                  :sequence_number => cond['sequence_number'],
-                                  :expires => cond['expires'])
+    contracts = db_contracts
+    contracts.insert(contract)
+    contract[:contract_id]
 
-        # if conditions['signatures'] != nil
-        cond['signatures'].each do |sig|
-          condition.signatures << Signature.new(:uuid => hash_generator.generate_uuid,
-                                                :origin_wallet_address => sig['origin_wallet_address'],
-                                                :origin_wallet_tag => sig['origin_wallet_tag'])
+  end
+
+  def update_signature(contract_id, condition_id, signature_id, signature, status)
+    contracts = db_contracts
+    contract = contracts.find({:contract_id => contract_id}).to_a[0]
+
+    contract['conditions'].each do |condition|
+      if condition['id'] == condition_id
+        condition['signatures'].each do |sig|
+          if sig['id'] == signature_id
+            sig['signature'] = signature
+            sig['status'] = status
+          end
         end
-        # end
-
-        contract.conditions << condition
       end
     end
 
-    begin
-      contract.save
-      contract
-    rescue Exception => e
-      # contract.errors.each do |e|
-      puts e
-      raise e
-    end
+    contracts.update({:contract_id => contract['contract_id']}, contract)
+
   end
 
+  private
+  def db_contracts
+    Connection.new('localhost', 27017).db('ig-contracts')['contracts']
+  end
 end

@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 
 # gem "rails"
 gem 'sinatra'
-gem 'data_mapper'
-gem 'dm-sqlite-adapter'
+gem 'rubysl-securerandom'
 gem 'rest-client'
+gem 'bson_ext'
+gem 'mongo'

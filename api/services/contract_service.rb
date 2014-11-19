@@ -16,4 +16,9 @@ class ContractService
     repository = ContractRepository.new
     repository.get_contracts
   end
+
+  def update_condition(contract_id, condition_id, signature_id, signature, status)
+    repository = ContractRepository.new
+    repository.update_signature(contract_id, condition_id, signature_id, signature, status)
+  end
 end
