@@ -1,5 +1,3 @@
-require 'mongo_mapper'
-
 class Transaction
   include MongoMapper::EmbeddedDocument
 

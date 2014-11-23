@@ -2,6 +2,5 @@ class MasterSignature
   include MongoMapper::EmbeddedDocument
 
   key :signature, String
-
-  belongs_to :participant
+  key :participant_id, String, :required => true
 end

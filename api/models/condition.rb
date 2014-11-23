@@ -1,12 +1,11 @@
 class Condition
   include MongoMapper::EmbeddedDocument
 
-  key :_id, BSON::ObjectId
-  key :name, String
-  key :description, String
-  key :expires, Integer
-  key :sequence_number, Integer
-  key :status, String
+  key :name, String, :required => true
+  key :description, String, :required => true
+  key :expires, Integer, :required => true
+  key :sequence_number, Integer, :required => true
+  key :status, String, :required => true
 
   many :transactions
   many :signatorys

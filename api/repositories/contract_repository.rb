@@ -97,7 +97,7 @@ class ContractRepository
       signatory_arr = []
 
       condition[:signatories].each do |signatory|
-        participant_id = participant_ids_hash[signatory[:participant_external_id]]
+        participant_id = participant_ids_hash[signatory[:participant_external_id].to_i]
         signatory_arr << Signatory.new(:participant_id => participant_id)
       end
 
@@ -106,8 +106,8 @@ class ContractRepository
       transactions_arr = []
 
       condition[:transactions].each do |transaction|
-        from_participant_id = participant_ids_hash[transaction[:from_participant_external_id]]
-        to_participant_id = participant_ids_hash[transaction[:to_participant_external_id]]
+        from_participant_id = participant_ids_hash[transaction[:from_participant_external_id].to_i]
+        to_participant_id = participant_ids_hash[transaction[:to_participant_external_id].to_i]
 
         transactions_arr << Transaction.new(:from_participant_id => from_participant_id,
                                             :to_participant_id => to_participant_id,
@@ -130,7 +130,7 @@ class ContractRepository
     participants.each do |participant|
       participant_id = ObjectId.new
       #keep a record of the new ObjectId for each participant so that we can use this later
-      participant_ids_hash[participant[:external_id]] = participant_id
+      participant_ids_hash[participant[:external_id].to_i] = participant_id
 
       participants_arr << Participant.new(:_id => participant_id,
                                           :external_id => participant[:external_id],

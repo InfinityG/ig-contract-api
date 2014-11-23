@@ -1,11 +1,10 @@
 class Participant
   include MongoMapper::EmbeddedDocument
 
-  key :external_id, Integer
+  key :external_id, Integer, :required => true
   key :public_key, String
   key :wallet_address, String
   key :wallet_tag, Integer
-  key :role, String
+  key :role, String, :required => true
 
-  one :master_signature
 end

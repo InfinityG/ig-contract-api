@@ -1,9 +1,9 @@
 class Contract
   include MongoMapper::Document
 
-  key :name, String
-  key :description, String
-  key :expires, Integer
+  key :name, String, :required => true
+  key :description, String, :required => true
+  key :expires, Integer, :required => true
 
   many :conditions
   many :participants
