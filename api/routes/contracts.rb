@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require './api/services/contract_service'
+require './api/validators/contract_validator'
 require 'json'
 
 module Sinatra
@@ -9,17 +10,14 @@ module Sinatra
       app.post '/contracts' do
         data = JSON.parse(request.body.read, :symbolize_names => true)
 
-        #TODO: validation
-        name = data[:name]
-        description = data[:description]
-        expires = data[:expires]
-        target_wallet_address = data[:target_wallet_address]
-        target_wallet_tag = data[:target_wallet_tag]
-        value = data[:value]
-        conditions = data[:conditions]
+        # validation_result = ContractValidator.new.validate_contract data
+        #
+        # unless validation_result[:valid]
+        #   status 500
+        #   return validation_result.to_json
+        # end
 
-        result = ContractService.new.create_contract(name, description, expires, target_wallet_address,
-                                                     target_wallet_tag, value, conditions)
+        result = ContractService.new.create_contract(data)
 
         status 200 # not 201 as this has just been submitted.
         return result.to_json

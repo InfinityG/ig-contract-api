@@ -8,16 +8,18 @@
 
 require 'logger'
 require './app'
+require 'mongo'
+require 'mongo_mapper'
 
-#callback uri for completed contract notifications. Could use a queue here - eg: IronMQ
+# Global constants
 GATEWAY_WEBHOOK_URI = 'http://localhost:8001/notifications'
-
-#logging
 LOGGER = Logger.new 'app_log.log', 10, 1024000
 DEFAULT_REQUEST_TIMEOUT = 60
-
-#CORS origins
 ALLOWED_ORIGIN = 'http://localhost:8001'
+
+#Configure MongoMapper
+MongoMapper.connection = Mongo::Connection.new('localhost', 27017)
+MongoMapper.database = 'ig-contracts'
 
 run ApiApp
 

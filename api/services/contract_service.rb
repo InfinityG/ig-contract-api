@@ -1,10 +1,17 @@
 require './api/repositories/contract_repository'
 
 class ContractService
-  def create_contract(name, description, expires, target_wallet_address,
-                      target_wallet_tag, value, conditions)
+  def create_contract(data)
+
+    name = data[:name]
+    description = data[:description]
+    expires = data[:expires]
+    conditions = data[:conditions]
+    participants = data[:participants]
+    master_signatures = data[:master_signatures]
+
     repository = ContractRepository.new
-    repository.save_contract name, description, expires, target_wallet_address, target_wallet_tag, value, conditions
+    repository.save_contract name, description, expires, conditions, participants, master_signatures
   end
 
   def get_contract(contract_id)
