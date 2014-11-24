@@ -7,5 +7,4 @@ class Transaction
   key :currency, String
   key :status, String
   key :ledger_transaction_hash, String
-
 end

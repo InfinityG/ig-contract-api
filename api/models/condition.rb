@@ -7,7 +7,7 @@ class Condition
   key :sequence_number, Integer, :required => true
   key :status, String, :required => true
 
-  many :transactions
+  one :trigger
   many :signatorys
 
 end

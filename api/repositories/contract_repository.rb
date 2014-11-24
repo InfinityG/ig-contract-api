@@ -5,8 +5,10 @@ require './api/models/contract'
 require './api/models/participant'
 require './api/models/master_signature'
 require './api/models/signatory'
-require './api/models/transaction'
+require './api/models/trigger'
 require './api/models/condition'
+require './api/models/transaction'
+require './api/models/webhook'
 
 class ContractRepository
   include Mongo
@@ -34,7 +36,7 @@ class ContractRepository
 
     ### PARTICIPANTS
     participants_arr = []
-    participant_ids_hash = {} #a dictionary of external_id:id pairs
+    participant_ids_hash = {} #a dictionary of external_id:_id pairs
     populate_participants(participant_ids_hash, participants, participants_arr)
 
     ### CONDITIONS
@@ -96,34 +98,46 @@ class ContractRepository
 
       signatory_arr = []
 
-      condition[:signatories].each do |signatory|
+      condition[:signatorys].each do |signatory|
         participant_id = participant_ids_hash[signatory[:participant_external_id].to_i]
         signatory_arr << Signatory.new(:participant_id => participant_id)
       end
 
+      ### TRIGGER
+
+      transaction_arr = []
+      webhook_arr = []
+
       ### TRANSACTIONS
-
-      transactions_arr = []
-
-      condition[:transactions].each do |transaction|
+      condition[:trigger][:transactions].each do |transaction|
         from_participant_id = participant_ids_hash[transaction[:from_participant_external_id].to_i]
         to_participant_id = participant_ids_hash[transaction[:to_participant_external_id].to_i]
 
-        transactions_arr << Transaction.new(:from_participant_id => from_participant_id,
-                                            :to_participant_id => to_participant_id,
-                                            :amount => transaction[:amount],
-                                            :currency => transaction[:currency],
-                                            :status => 'pending')
+        transaction_arr << Transaction.new(:from_participant_id => from_participant_id,
+                                           :to_participant_id => to_participant_id,
+                                           :amount => transaction[:amount],
+                                           :currency => transaction[:currency],
+                                           :status => 'pending')
       end
+
+      ### WEBHOOKS
+      condition[:trigger][:webhooks].each do |webhook|
+        webhook_arr << Webhook.new(:uri => webhook[:uri])
+      end
+
+      trigger = Trigger.new(:transactions => transaction_arr, :webhooks => webhook_arr)
 
       conditions_arr << Condition.new(:name => condition[:name],
                                       :description => condition[:description],
                                       :sequence_number => condition[:sequence_number],
                                       :status => 'pending',
-                                      :transactions => transactions_arr,
+                                      :trigger => trigger,
                                       :signatorys => signatory_arr)
     end
+
+
   end
+
 
   private
   def populate_participants(participant_ids_hash, participants, participants_arr)
@@ -140,7 +154,6 @@ class ContractRepository
                                           :role => participant[:role])
     end
   end
-
 
 
   private
