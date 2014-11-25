@@ -47,7 +47,6 @@ class ContractRepository
     master_signature_arr = []
     populate_master_signatures(master_signature_arr, master_signatures, participant_ids_hash)
 
-
     ### CONTRACT
     Contract.create(:name => name,
                     :description => description,
@@ -55,8 +54,6 @@ class ContractRepository
                     :conditions => conditions_arr,
                     :participants => participants_arr,
                     :master_signatures => master_signature_arr)
-
-
   end
 
   def update_signature(contract_id, condition_id, signature_id, signature, status)
@@ -134,10 +131,7 @@ class ContractRepository
                                       :trigger => trigger,
                                       :signatorys => signatory_arr)
     end
-
-
   end
-
 
   private
   def populate_participants(participant_ids_hash, participants, participants_arr)
@@ -154,7 +148,6 @@ class ContractRepository
                                           :role => participant[:role])
     end
   end
-
 
   private
   def db_contracts
