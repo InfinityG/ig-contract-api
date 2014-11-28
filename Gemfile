@@ -8,3 +8,9 @@ gem 'rest-client'
 gem 'bson_ext'
 gem 'mongo'
 gem 'mongo_mapper'
+
+## http://blog.davidegrayson.com/2014/04/introducing-ruby-ecdsa-gem.html
+## https://github.com/DavidEGrayson/ruby_ecdsa
+gem 'ecdsa'
+
+gem 'minitest'
