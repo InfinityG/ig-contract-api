@@ -1,5 +1,9 @@
-class Webhook
-  include MongoMapper::EmbeddedDocument
+module SmartContract
+  module Models
+    class Webhook
+      include MongoMapper::EmbeddedDocument
 
-  key :uri, String
+      key :uri, String
+    end
+  end
 end

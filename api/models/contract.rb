@@ -1,12 +1,17 @@
-class Contract
-  include MongoMapper::Document
+module SmartContract
+  module Models
+    class Contract
 
-  key :name, String, :required => true
-  key :description, String, :required => true
-  key :expires, Integer, :required => true
+      include MongoMapper::Document
 
-  many :conditions
-  many :participants
-  many :master_signatures
+      key :name, String, :required => true
+      key :description, String, :required => true
+      key :expires, Integer, :required => true
 
+      many :conditions, :class_name => 'SmartContract::Models::Condition'
+      many :participants, :class_name => 'SmartContract::Models::Participant'
+      many :signatures, :class_name => 'SmartContract::Models::Signature'
+
+    end
+  end
 end

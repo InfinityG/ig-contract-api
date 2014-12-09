@@ -1,10 +1,14 @@
-class Transaction
-  include MongoMapper::EmbeddedDocument
+module SmartContract
+  module Models
+    class Transaction
+      include MongoMapper::EmbeddedDocument
 
-  key :from_participant, String
-  key :to_participant, String
-  key :amount, Integer
-  key :currency, String
-  key :status, String
-  key :ledger_transaction_hash, String
+      key :from_participant, String
+      key :to_participant, String
+      key :amount, Integer
+      key :currency, String
+      key :status, String
+      key :ledger_transaction_hash, String
+    end
+  end
 end

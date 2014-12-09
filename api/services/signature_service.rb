@@ -1,6 +1,7 @@
 require 'ecdsa'
 require 'securerandom'
 require 'base64'
+require 'openssl'
 
 class SignatureService
 
@@ -35,6 +36,22 @@ class SignatureService
     encoded_public_key = create_encoded_public_key unencoded_private_key
 
     {secret: encoded_private_key, :public => encoded_public_key}
+  end
+
+  # This method is specific to CryptoCoinJS signed messages. Uses OpenSSL only
+  def validate_cryptocoin_js_signature(digest, signature, public_key)
+    decoded_signature = Base64.decode64 signature
+    decoded_digest = Base64.decode64 digest
+    decoded_public_key = Base64.decode64 public_key
+
+    group_name = 'secp256k1'
+
+    curve = OpenSSL::PKey::EC.new(group_name)
+    key_bn = OpenSSL::BN.new(decoded_public_key, 2)
+    group = OpenSSL::PKey::EC::Group.new(group_name)
+    curve.public_key = OpenSSL::PKey::EC::Point.new(group, key_bn)
+
+    curve.dsa_verify_asn1(decoded_digest, decoded_signature)
   end
 
   private

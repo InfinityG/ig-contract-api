@@ -86,7 +86,7 @@ module Sinatra
 
         data = JSON.parse(request.body.read, :symbolize_names => true)
 
-        signature = data[:signature]
+        signature = data[:value]
         status = data[:status]
 
         if (contract_id != nil && contract_id != '') && (condition_id != nil && condition_id != '') && (signature_id != nil && signature_id != '')

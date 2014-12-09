@@ -8,10 +8,10 @@ class ContractService
     expires = data[:expires]
     conditions = data[:conditions]
     participants = data[:participants]
-    master_signatures = data[:master_signatures]
+    signatures = data[:signatures]
 
     repository = ContractRepository.new
-    repository.save_contract name, description, expires, conditions, participants, master_signatures
+    repository.save_contract name, description, expires, conditions, participants, signatures
   end
 
   def get_contract(contract_id)
