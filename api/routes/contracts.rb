@@ -78,6 +78,28 @@ module Sinatra
 
       end
 
+      # Sign a contract
+      app.put '/contracts/:contract_id/signatures/:signature_id' do
+
+        contract_id = params[:contract_id]
+        signature_id = params[:signature_id]
+
+        data = JSON.parse(request.body.read, :symbolize_names => true)
+
+        signature_value = data[:value]
+        digest = data[:digest]
+        participant_id = data[:participant_id]
+
+        if (contract_id != nil && contract_id != '') && (signature_id != nil && signature_id != '')
+          ContractService.new.sign_contract(contract_id, signature_id, participant_id, signature_value, digest)
+          return  status 200
+        end
+
+        return status 404
+
+      end
+
+       # Sign a condition
       app.put '/contracts/:contract_id/conditions/:condition_id/signatures/:signature_id' do
 
         contract_id = params[:contract_id]
@@ -86,12 +108,15 @@ module Sinatra
 
         data = JSON.parse(request.body.read, :symbolize_names => true)
 
-        signature = data[:value]
-        status = data[:status]
+        signature_value = data[:value]
+        digest = data[:digest]
+        participant_id = data[:participant_id]
 
-        if (contract_id != nil && contract_id != '') && (condition_id != nil && condition_id != '') && (signature_id != nil && signature_id != '')
+        if (contract_id != nil && contract_id != '') && (condition_id != nil && condition_id != '') &&
+            (signature_id != nil && signature_id != '')
 
-          ContractService.new.update_condition(contract_id, condition_id, signature_id, signature, status)
+          ContractService.new.sign_condition(contract_id, condition_id, signature_id, participant_id,
+                                             signature_value, digest)
           return  status 200
         end
 
