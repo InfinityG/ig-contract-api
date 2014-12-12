@@ -88,11 +88,10 @@ module Sinatra
 
         signature_value = data[:value]
         digest = data[:digest]
-        participant_id = data[:participant_id]
 
         if (contract_id != nil && contract_id != '') && (signature_id != nil && signature_id != '')
-          ContractService.new.sign_contract(contract_id, signature_id, participant_id, signature_value, digest)
-          return  status 200
+          status 200
+          return ContractService.new.sign_contract(contract_id, signature_id, signature_value, digest)
         end
 
         return status 404
@@ -110,12 +109,11 @@ module Sinatra
 
         signature_value = data[:value]
         digest = data[:digest]
-        participant_id = data[:participant_id]
 
         if (contract_id != nil && contract_id != '') && (condition_id != nil && condition_id != '') &&
             (signature_id != nil && signature_id != '')
 
-          ContractService.new.sign_condition(contract_id, condition_id, signature_id, participant_id,
+          ContractService.new.sign_condition(contract_id, condition_id, signature_id,
                                              signature_value, digest)
           return  status 200
         end

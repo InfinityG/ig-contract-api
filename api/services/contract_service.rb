@@ -25,22 +25,18 @@ class ContractService
     @contract_repository.save_contract name, description, expires, conditions, participants, signatures
   end
 
-  def sign_contract(contract_id, signature_id, participant_id, signature_value, digest)
+  def sign_contract(contract_id, signature_id, signature_value, digest)
 
     # get the public key of the participant
-    public_key = get_public_key(contract_id, participant_id)
+    public_key = get_public_key_for_signature(contract_id, signature_id)
+
+    raise 'No public key found to validate signature!' if public_key == nil
 
     # check signature validity
-    validate_signature(digest, public_key, signature_value)
+    # validate_signature(digest, public_key, signature_value)
 
-    updated_contract = @contract_repository.update_contract_signature contract_id, signature_id, participant_id, signature_value, digest
-
-    # update the contract status if all signatures have been gathered
-    status = check_contract_status updated_contract
-
-    if status == 'active'
-
-    end
+    # update the signature
+    @contract_repository.update_contract_signature contract_id, signature_id, signature_value, digest
 
   end
 
@@ -64,16 +60,18 @@ class ContractService
 
   ## CONDITIONS
 
-  def sign_condition(contract_id, condition_id, signature_id, participant_id, signature_value, digest)
+  def sign_condition(contract_id, condition_id, signature_id, signature_value, digest)
 
     # get the public key of the participant
-    public_key = get_public_key(contract_id, participant_id)
+    public_key = get_public_key_for_signature(contract_id, signature_id)
+
+    raise 'No public key found to validate signature!' if public_key == nil
 
     # check signature validity
     validate_signature(digest, public_key, signature_value)
 
     # if valid, then update
-    updated_condition = @contract_repository.update_condition_signature(contract_id, condition_id, signature_id, participant_id,
+    updated_condition = @contract_repository.update_condition_signature(contract_id, condition_id, signature_id,
                                           signature_value, digest)
 
     # process the trigger...
@@ -94,6 +92,12 @@ class ContractService
   private
   def get_public_key(contract_id, participant_id)
     participant = @contract_repository.get_participant contract_id, participant_id
+    participant[:public_key]
+  end
+
+  private
+  def get_public_key_for_signature(contract_id, signature_id)
+    participant = @contract_repository.get_participant_for_signature contract_id, signature_id
     participant[:public_key]
   end
 end
