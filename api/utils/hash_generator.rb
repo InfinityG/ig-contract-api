@@ -16,6 +16,10 @@ class HashGenerator
     SecureRandom.uuid
   end
 
+  def generate_random_number
+    SecureRandom.random_number 500
+  end
+
   #http://stackoverflow.com/questions/2754449/bitwise-operations-on-strings-with-ruby
   def generate_bitwise_xor
 

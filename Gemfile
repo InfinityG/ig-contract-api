@@ -2,6 +2,7 @@
 source 'https://rubygems.org'
 
 # gem "rails"
+
 gem 'sinatra'
 gem 'rubysl-securerandom'
 gem 'rest-client'
@@ -13,4 +14,9 @@ gem 'mongo_mapper'
 ## https://github.com/DavidEGrayson/ruby_ecdsa
 gem 'ecdsa'
 
-gem 'minitest'
+
+group :test, :development do
+  gem 'minitest'
+  gem 'cucumber'
+  gem 'cucumber-sinatra'
+end

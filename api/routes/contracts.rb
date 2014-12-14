@@ -10,12 +10,12 @@ module Sinatra
       app.post '/contracts' do
         data = JSON.parse(request.body.read, :symbolize_names => true)
 
-        # validation_result = ContractValidator.new.validate_contract data
-        #
-        # unless validation_result[:valid]
-        #   status 500
-        #   return validation_result.to_json
-        # end
+        validation_result = ContractValidator.new.validate_new_contract data
+
+        unless validation_result[:valid]
+          status 400 # bad request
+          return validation_result.to_json
+        end
 
         result = ContractService.new.create_contract(data)
 
@@ -85,6 +85,13 @@ module Sinatra
         signature_id = params[:signature_id]
 
         data = JSON.parse(request.body.read, :symbolize_names => true)
+
+        validation_result = ContractValidator.new.validate_updated_signature data
+
+        unless validation_result[:valid]
+          status 400 # bad request
+          return validation_result.to_json
+        end
 
         signature_value = data[:value]
         digest = data[:digest]
