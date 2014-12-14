@@ -1,3 +1,5 @@
+require 'date'
+
 class ContractValidator
 
   # new contracts don't require a signature
@@ -5,9 +7,9 @@ class ContractValidator
     errors = []
 
     #fields
-    errors.push 'Invalid transaction name' unless validate_string data[:name]
-    errors.push 'Invalid transaction description' unless validate_string data[:description]
-    errors.push 'Invalid transaction expires' unless validate_integer data[:expires]
+    errors.push 'Invalid contract name' unless validate_string data[:name]
+    errors.push 'Invalid contract description' unless validate_string data[:description]
+    errors.push 'Invalid contract UNIX expiry date' unless validate_unix_datetime data[:expires]
 
     #arrays
     conditions_result = validate_new_conditions data[:conditions]
@@ -21,7 +23,6 @@ class ContractValidator
     errors.concat signatures_result
 
     (errors.count > 0) ? {:valid => false, :errors => errors} : {:valid => true}
-
   end
 
   # new conditions don't yet need a signature
@@ -32,6 +33,7 @@ class ContractValidator
       result << 'Invalid condition name' unless validate_string condition[:name]
       result << 'Invalid condition description' unless validate_string condition[:description]
       result << 'Invalid condition sequence number' unless validate_integer condition[:sequence_number]
+      result << 'Invalid condition UNIX expiry date' unless validate_unix_datetime condition[:expires]
 
       signature_result = validate_new_signatures condition[:signatures]
       trigger_result = validate_trigger condition[:trigger]
@@ -45,7 +47,7 @@ class ContractValidator
   end
 
   def validate_updated_signature(signature)
-    result << 'Invalid signature participant_id' unless validate_uuid signature[:participant_id]
+    result << 'Invalid signature participant_id' unless validate_hex signature[:participant_id]
     result << 'Invalid signature value' unless validate_string signature[:value]
     result << 'Invalid digest value' unless validate_string signature[:digest]
 
@@ -142,5 +144,21 @@ class ContractValidator
   private
   def validate_uuid(value)
     value =~ /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    end
+
+  private
+  def validate_hex(value)
+    value =~ /^[a-f\d]{24}$/i
+    end
+
+  private
+  def validate_unix_datetime(value)
+    begin
+      now = Date.today.to_time
+      time_to_validate = Time.at value
+      return time_to_validate > now
+    rescue
+      return false
+    end
   end
 end

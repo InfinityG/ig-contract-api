@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3249df37-3263-4591-a8be-5c812b240fe7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/features/contract_create.feature" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile.lock" afterPath="$PROJECT_DIR$/Gemfile.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Gemfile" afterPath="$PROJECT_DIR$/Gemfile" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/validators/contract_validator.rb" afterPath="$PROJECT_DIR$/api/validators/contract_validator.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/routes/contracts.rb" afterPath="$PROJECT_DIR$/api/routes/contracts.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/utils/hash_generator.rb" afterPath="$PROJECT_DIR$/api/utils/hash_generator.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ig-contract-api.iml" afterPath="$PROJECT_DIR$/.idea/ig-contract-api.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/utils/rest_util.rb" afterPath="$PROJECT_DIR$/api/utils/rest_util.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ig-contract-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,7 +27,7 @@
     <SUITE FILE_PATH="coverage/ig-contract-api@test_2__ig_contract_api.coverage" NAME="test_2: ig-contract-api Coverage Results" MODIFIED="1417607053782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_full_ecdsa_cycle_openssl__ig_contract_api.coverage" NAME="test_full_ecdsa_cycle_openssl: ig-contract-api Coverage Results" MODIFIED="1417607664413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_correctly__ig_contract_api.coverage" NAME="test_signature_validates_correctly: ig-contract-api Coverage Results" MODIFIED="1417091274384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1418559418365" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1418566740643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_false__ig_contract_api.coverage" NAME="test_signature_validates_false: ig-contract-api Coverage Results" MODIFIED="1417101809591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_externally_signed_message_validates_false_when_digest_modified__ig_contract_api.coverage" NAME="test_externally_signed_message_validates_false_when_digest_modified: ig-contract-api Coverage Results" MODIFIED="1417606961964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_false_when_message_tampered__ig_contract_api.coverage" NAME="test_signature_validates_false_when_message_tampered: ig-contract-api Coverage Results" MODIFIED="1417101991206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
@@ -60,8 +52,8 @@
       <file leaf-file-name="contract_repository.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/repositories/contract_repository.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1860" max-vertical-offset="4395">
-              <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="763" max-vertical-offset="4395">
+              <caret line="161" column="25" selection-start-line="161" selection-start-column="25" selection-end-line="161" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -70,8 +62,8 @@
       <file leaf-file-name="contracts.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/routes/contracts.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2085">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2310">
+              <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -81,7 +73,7 @@
         <entry file="file://$PROJECT_DIR$/api/utils/rest_util.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
-              <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
+              <caret line="29" column="30" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -90,8 +82,8 @@
       <file leaf-file-name="contract_service.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/services/contract_service.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1620">
-              <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="155" max-vertical-offset="1620">
+              <caret line="38" column="48" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -120,8 +112,8 @@
       <file leaf-file-name="contract_validator.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/validators/contract_validator.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6981383" vertical-offset="0" max-vertical-offset="2265">
-              <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
+            <state vertical-scroll-proportion="-2.5894737" vertical-offset="1560" max-vertical-offset="2535">
+              <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -167,11 +159,11 @@
         <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/contract-creation-steps.rb" />
         <option value="$PROJECT_DIR$/api/utils/hash_generator.rb" />
-        <option value="$PROJECT_DIR$/api/routes/contracts.rb" />
-        <option value="$PROJECT_DIR$/api/validators/contract_validator.rb" />
         <option value="$PROJECT_DIR$/api/utils/rest_util.rb" />
         <option value="$PROJECT_DIR$/tests/features/contract_create.feature" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb" />
+        <option value="$PROJECT_DIR$/api/routes/contracts.rb" />
+        <option value="$PROJECT_DIR$/api/validators/contract_validator.rb" />
       </list>
     </option>
   </component>
@@ -419,8 +411,9 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../ig-contract-client" />
+    <property name="last.edited.regexp" value="548d8e85b85a54e7aa00001a" />
   </component>
-  <component name="RunManager" selected="Cucumber.contract_create: ig-contract-api">
+  <component name="RunManager" selected="Rack.Unnamed">
     <configuration default="false" name="test_2: ig-contract-api" type="TestUnitRunConfigurationType" factoryName="Test::Unit/Shoulda/Minitest" temporary="true">
       <predefined_log_file id="RUBY_TESTUNIT" enabled="true" />
       <module name="ig-contract-api" />
@@ -792,7 +785,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="48" y="22" width="1320" height="846" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32435897" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -805,8 +798,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32820514" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24960877" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32081378" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3551282" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32081378" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3551282" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -836,17 +829,17 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/api/routes/contracts.rb</url>
-          <line>83</line>
+          <line>89</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/api/routes/contracts.rb</url>
-          <line>103</line>
+          <line>116</line>
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/api/routes/contracts.rb</url>
-          <line>99</line>
+          <line>110</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
@@ -1129,11 +1122,26 @@
           <line>74</line>
           <option name="timeStamp" value="214" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="ruby-line">
+          <url>file://$PROJECT_DIR$/api/validators/contract_validator.rb</url>
+          <line>157</line>
+          <option name="timeStamp" value="224" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="ruby-line">
+          <url>file://$PROJECT_DIR$/api/validators/contract_validator.rb</url>
+          <line>160</line>
+          <option name="timeStamp" value="225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="ruby-line">
+          <url>file://$PROJECT_DIR$/api/validators/contract_validator.rb</url>
+          <line>158</line>
+          <option name="timeStamp" value="227" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="224" />
+      <option name="time" value="228" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1447,22 +1455,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/repositories/contract_repository.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1860" max-vertical-offset="4395">
-          <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/routes/contracts.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2085">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Ruby/Gems/2.0.0/gems/rest-client-1.7.2/lib/restclient/request.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.9305263" vertical-offset="1237" max-vertical-offset="8970">
@@ -1475,22 +1467,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39578947" vertical-offset="802" max-vertical-offset="2610">
           <caret line="66" column="18" selection-start-line="66" selection-start-column="18" selection-end-line="66" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/services/contract_service.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1620">
-          <caret line="10" column="20" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/utils/rest_util.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
-          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1511,10 +1487,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/api/utils/rest_util.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
+          <caret line="29" column="30" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/services/contract_service.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="155" max-vertical-offset="1620">
+          <caret line="38" column="48" selection-start-line="38" selection-start-column="48" selection-end-line="38" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/routes/contracts.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2310">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/repositories/contract_repository.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="763" max-vertical-offset="4395">
+          <caret line="161" column="25" selection-start-line="161" selection-start-column="25" selection-end-line="161" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api/validators/contract_validator.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6981383" vertical-offset="0" max-vertical-offset="2265">
-          <caret line="35" column="63" selection-start-line="35" selection-start-column="63" selection-end-line="35" selection-end-column="63" />
+        <state vertical-scroll-proportion="-2.5894737" vertical-offset="1560" max-vertical-offset="2535">
+          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
           <folding />
         </state>
       </provider>

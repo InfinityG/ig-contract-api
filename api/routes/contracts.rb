@@ -8,7 +8,13 @@ module Sinatra
     def self.registered(app)
 
       app.post '/contracts' do
-        data = JSON.parse(request.body.read, :symbolize_names => true)
+
+        data = begin
+          JSON.parse(request.body.read, :symbolize_names => true)
+        rescue
+          status 400
+          return 'Unable to parse JSON!'.to_json
+        end
 
         validation_result = ContractValidator.new.validate_new_contract data
 
@@ -84,7 +90,12 @@ module Sinatra
         contract_id = params[:contract_id]
         signature_id = params[:signature_id]
 
-        data = JSON.parse(request.body.read, :symbolize_names => true)
+        data = begin
+          JSON.parse(request.body.read, :symbolize_names => true)
+        rescue
+          status 400  # bad request
+          return 'Unable to parse JSON!'.to_json
+        end
 
         validation_result = ContractValidator.new.validate_updated_signature data
 
@@ -96,13 +107,14 @@ module Sinatra
         signature_value = data[:value]
         digest = data[:digest]
 
-        if (contract_id != nil && contract_id != '') && (signature_id != nil && signature_id != '')
-          status 200
-          return ContractService.new.sign_contract(contract_id, signature_id, signature_value, digest)
+        if (contract_id.to_s != '') && (signature_id.to_s != '')
+          signature = ContractService.new.sign_contract(contract_id, signature_id, signature_value, digest)
+
+          status 200  # OK
+          return signature.to_json
         end
 
-        return status 404
-
+        status 404  # not found
       end
 
        # Sign a condition
@@ -112,21 +124,24 @@ module Sinatra
         condition_id = params[:condition_id]
         signature_id = params[:signature_id]
 
-        data = JSON.parse(request.body.read, :symbolize_names => true)
+        data = begin
+          JSON.parse(request.body.read, :symbolize_names => true)
+        rescue
+          status 400
+          return 'Unable to parse JSON!'.to_json
+        end
 
         signature_value = data[:value]
         digest = data[:digest]
 
-        if (contract_id != nil && contract_id != '') && (condition_id != nil && condition_id != '') &&
-            (signature_id != nil && signature_id != '')
-
-          ContractService.new.sign_condition(contract_id, condition_id, signature_id,
+        if (contract_id.to_s != '') && (condition_id.to_s != '') && (signature_id.to_s != '')
+          condition = ContractService.new.sign_condition(contract_id, condition_id, signature_id,
                                              signature_value, digest)
-          return  status 200
+          status 200  # OK
+          return condition.to_json
         end
 
-        return status 404
-
+        status 404  # not found
       end
     end
   end
