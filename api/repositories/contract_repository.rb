@@ -11,28 +11,32 @@ require './api/models/condition'
 require './api/models/transaction'
 require './api/models/webhook'
 
+# CRUD operations on MongoDB
+
 class ContractRepository
   include Mongo
   include MongoMapper
   include BSON
   include SmartContract::Models
 
-  def get_contracts
+  def retrieve_contracts
     # db_contracts.find.to_a
     Contract.all
   end
 
-  def get_contract(contract_id)
-    # db_contracts.find({:contract_id => contract_id}).to_a[0]
+  def retrieve_contract(contract_id)
     Contract.find contract_id
   end
 
-  def get_contracts_by_status(status)
-    # db_contracts.find({:status => status}).to_a
+  def retrieve_contracts_by_status(status)
     Contract.find_by_status status
   end
 
-  def save_contract(name, description, expires, conditions, participants, signatures)
+  def retrieve_condition(condition_id)
+    Condition.find condition_id
+  end
+
+  def create_contract(name, description, expires, conditions, participants, signatures)
 
     #see http://mongomapper.com/documentation/embedded-document.html
 
@@ -49,88 +53,39 @@ class ContractRepository
     Contract.create(name: name,
                     description: description,
                     expires: expires,
+                    status: 'pending',
                     conditions: conditions_arr,
                     participants: participants_arr,
                     signatures: signature_arr)
   end
 
-  def update_contract_signature(contract_id, signature_id, signature_value, digest)
-    contract = get_contract contract_id
+  # def get_participant(contract_id, participant_id)
+  #   contract = retrieve_contract contract_id
+  #
+  #   contract.participants.detect do |participant|
+  #     participant.id.to_s == participant_id
+  #   end
+  # end
 
-    selected_sig = contract.signatures.detect do |sig|
-      sig.id.to_s == signature_id
-    end
-
-    if selected_sig != nil
-
-      #  update the signature
-      selected_sig.value = signature_value
-      selected_sig.digest = digest
-
-      # update the contract status
-      update_contract_status contract
-
-       selected_sig.save
-      return selected_sig
-
-    end
-
-    raise 'Signature not found!'
-  end
-
-  def update_condition_signature(contract_id, condition_id, signature_id, signature_value, digest)
-    contract = get_contract contract_id
-
-    contract.conditions.each do |condition|
-      if condition.id == condition_id
-        condition.signatures.each do |sig|
-          if sig.id == signature_id
-            sig.value = signature_value
-            sig.digest = digest
-
-            Contract.update({:contract_id => contract['contract_id']}, contract)
-
-            return condition
-          end
-        end
-      end
-    end
-
-  end
-
-  def get_participant(contract_id, participant_id)
-    contract = get_contract contract_id
-
-    contract.participants.detect do |participant|
-      participant.id.to_s == participant_id
-    end
-  end
-
-  def get_participant_for_signature(contract_id, signature_id)
-    contract = get_contract contract_id
-
-    selected_sig = contract.signatures.detect do |sig|
-      sig.id.to_s == signature_id
-    end
-
-    contract.participants.detect do |participant|
-      participant.id.to_s == selected_sig.participant_id.to_s
-    end
-
-  end
+  # update secret for wallet
+  # we need to get the contract (instead of the secret only) so that we can be sure the correct secret is being updated for the correct wallet
+  # def update_wallet_secret(contract_id, participant_id, secret_value)
+  #   participant = get_participant contract_id, participant_id
+  #
+  #   if participant != nil && participant.wallet != nil
+  #     if participant.wallet.secret != nil
+  #       secret = participant.wallet.secret
+  #       if secret.fragments.count < secret.min_fragments
+  #         secret.fragments << secret_value
+  #         secret.save
+  #       end
+  #     end
+  #   else
+  #     raise 'Could not find the wallet!'
+  #   end
+  # end
 
   # Helpers
-
-  private
-  def update_contract_status(contract)
-    signature_count = 0
-
-    contract.signatures.each do |signature|
-      signature_count += 1 if (signature.value.to_s != '') && (signature.digest.to_s != '')
-    end
-
-    contract.status = 'active' if signature_count == contract.signatures.count
-  end
 
   private
   def create_signatures_array(signatures, participants_arr)
@@ -178,8 +133,10 @@ class ContractRepository
 
     condition[:signatures].each do |signature|
       external_id = signature[:participant_external_id]
+      type = signature[:type]
       participant_id = get_participant_id participants_arr, external_id
-      signature_arr << Signature.new(:participant_id => participant_id.to_s)
+      signature_arr << Signature.new(:participant_id => participant_id.to_s,
+                                     :type => type)
     end
 
     signature_arr

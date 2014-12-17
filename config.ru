@@ -17,9 +17,6 @@ LOGGER = Logger.new 'app_log.log', 10, 1024000
 DEFAULT_REQUEST_TIMEOUT = 60
 ALLOWED_ORIGIN = 'http://localhost:8001'
 
-#Configure MongoMapper
-MongoMapper.connection = Mongo::Connection.new('localhost', 27017)
-MongoMapper.database = 'ig-contracts'
 
 run ApiApp
 

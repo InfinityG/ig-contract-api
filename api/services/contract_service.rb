@@ -1,17 +1,19 @@
 require './api/repositories/contract_repository'
 require './api/services/signature_service'
-require './api/services/trigger_service'
+require './api/services/queue_processor_service'
+require './api/errors/contract_error'
+require './api/constants/error_constants'
 
 class ContractService
+  include ErrorConstants::ContractErrors
 
-  def initialize(contract_repository = ContractRepository, signature_service = SignatureService,
-                 trigger_service = TriggerService)
+  def initialize(contract_repository = ContractRepository,
+                 queue_service = QueueService,
+                 signature_service = SignatureService)
     @contract_repository = contract_repository.new
     @signature_service = signature_service.new
-    @trigger_service = trigger_service.new
+    @queue_service = queue_service.new
   end
-
-  ## CONTRACTS
 
   def create_contract(data)
 
@@ -22,65 +24,118 @@ class ContractService
     participants = data[:participants]
     signatures = data[:signatures]
 
-    @contract_repository.save_contract name, description, expires, conditions, participants, signatures
+    @contract_repository.create_contract name, description, expires, conditions, participants, signatures
+  end
+
+  def get_contract(contract_id)
+    @contract_repository.retrieve_contract contract_id
+  end
+
+  def get_contracts
+    @contract_repository.retrieve_contracts
   end
 
   def sign_contract(contract_id, signature_id, signature_value, digest)
 
-    # get the public key of the participant
-    public_key = get_public_key_for_signature(contract_id, signature_id)
+    # get the contract
+    contract = get_contract contract_id
+    raise ContractError, NO_CONTRACT_FOUND % contract_id if contract == nil
 
-    raise 'No public key found to validate signature!' if public_key == nil
+    # get the signature
+    signature = find_signature contract, signature_id
+    raise ContractError, NO_SIGNATURE_FOUND % signature_id if signature == nil
+
+    # get the participant
+    participant = find_participant_for_signature(contract, signature)
+    raise ContractError, NO_PARTICIPANT_FOUND if participant == nil
 
     # check signature validity
-    # validate_signature(digest, public_key, signature_value)
+    # validate_signature(digest, participant[:public_key], signature_value)
 
     # update the signature
-    @contract_repository.update_contract_signature contract_id, signature_id, signature_value, digest
+    update_ecdsa_signature signature, signature_value, digest
+
+    # update the contract status if applicable
+    set_contract_status contract
+
+    # save the contract
+    contract.save
+
+    signature
 
   end
-
-  def check_contract_status(contract)
-    contract[:signatures].each do |signature|
-      unless (signature[:value] != nil && signature[:value] != '') && (signature[:digest] != nil && signature[:digest] != nil)
-        return 'pending'
-      end
-    end
-
-    'active'
-  end
-
-  def get_contract(contract_id)
-    @contract_repository.get_contract contract_id
-  end
-
-  def get_contracts
-    @contract_repository.get_contracts
-  end
-
-  ## CONDITIONS
 
   def sign_condition(contract_id, condition_id, signature_id, signature_value, digest)
 
-    # get the public key of the participant
-    public_key = get_public_key_for_signature(contract_id, signature_id)
+    # get the contract; check if it is active
+    contract = get_contract contract_id
+    raise ContractError, NO_CONTRACT_FOUND % contract_id if contract == nil
+    raise ContractError, INACTIVE_CONTRACT % contract_id unless is_contract_active contract
 
-    raise 'No public key found to validate signature!' if public_key == nil
+    # get the condition to be signed
+    condition = find_condition contract, condition_id
+    raise ContractError, NO_CONDITION_FOUND % condition_id if condition == nil
 
-    # check signature validity
-    validate_signature(digest, public_key, signature_value)
+    # get the signature
+    signature = find_signature condition, signature_id
+    raise ContractError, NO_SIGNATURE_FOUND % signature_id if signature == nil
 
-    # if valid, then update
-    updated_condition = @contract_repository.update_condition_signature(contract_id, condition_id, signature_id,
-                                          signature_value, digest)
+    # check the type of the signature
+    type = signature.type
 
-    # process the trigger...
-    @trigger_service.process_trigger updated_condition[:trigger]
+    case type
+      when 'ecdsa'
+        # get the participant
+        participant = find_participant_for_signature(contract, signature)
 
-    updated_condition
+        raise ContractError, NO_PARTICIPANT_FOUND if participant == nil
+
+        # check signature validity
+        # validate_signature(digest, participant[:public_key], signature_value)
+
+        # if valid, then update
+        update_ecdsa_signature(signature, signature_value, digest)
+
+        # add to the trigger queue
+        # TODO: check if all signatures have been signed
+        # @queue_service.add_trigger_to_queue contract_id, condition_id, condition.trigger.id
+
+        return signature
+      when 'ss_key'
+
+      else
+        raise ContractError, UNKNOWN_SIGNATURE_TYPE
+    end
   end
 
+  # def update_wallet_secret(contract_id, participant_id, secret_value)
+  #   @contract_repository.update_wallet_secret contract_id, participant_id, secret_value
+  # end
+
+  #
   # HELPERS
+  #
+
+  private
+  def find_condition(contract, condition_id)
+    contract.conditions.detect do |condition|
+      condition_id == condition.id.to_s
+    end
+  end
+
+  private
+  def find_signature(item, signature_id)
+    item.signatures.detect do |signature|
+      signature_id == signature.id.to_s
+    end
+  end
+
+  private
+  def find_participant_for_signature(contract, signature)
+    contract.participants.detect do |participant|
+      participant.id.to_s == signature.participant_id
+    end
+  end
 
   private
   def validate_signature(digest, public_key, signature_value)
@@ -90,14 +145,24 @@ class ContractService
   end
 
   private
-  def get_public_key(contract_id, participant_id)
-    participant = @contract_repository.get_participant contract_id, participant_id
-    participant[:public_key]
+  def update_ecdsa_signature(signature, signature_value, digest)
+    signature.value = signature_value
+    signature.digest = digest
+    signature.save
+  end
+
+  def is_contract_active(contract)
+    contract.status == 'active' ? true : false
   end
 
   private
-  def get_public_key_for_signature(contract_id, signature_id)
-    participant = @contract_repository.get_participant_for_signature contract_id, signature_id
-    participant[:public_key]
+  def set_contract_status(contract)
+    signature_count = 0
+
+    contract.signatures.each do |signature|
+      signature_count += 1 if (signature.value.to_s != '') && (signature.digest.to_s != '')
+    end
+
+    contract.status = 'active' if signature_count == contract.signatures.count
   end
 end

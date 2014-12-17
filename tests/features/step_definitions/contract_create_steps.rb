@@ -16,6 +16,10 @@ Given(/^I have the following participants:$/) do |table|
   end
 end
 
+Given(/^I have no participants$/) do
+  @participants_arr = nil
+end
+
 And(/^I have a single contract signature from the "([^"]*)"$/) do |arg|
   @contract_signatures_arr = []
 
@@ -29,28 +33,32 @@ And(/^I have no contract signature$/) do
   @contract_signatures_arr = nil
 end
 
-And(/^the contract is set to expire in (\d+) days$/) do |arg|
-  @contract_expires = arg
+And(/^the contract expiry date is (\d+)$/) do |arg|
+  @contract_expires = arg.to_i
 end
 
-And(/^I require a single condition with a signature from the "([^"]*)"$/) do |arg|
+And(/^I require a single condition with an ecdsa signature from the "([^"]*)"$/) do |arg|
 
   @conditions_arr = []
 
   participant = @participants_arr.detect do |participant|
     participant[:role] == arg
-  end
+  end if @participants_arr != nil
+
+  participant_id = participant != nil ? participant[:external_id] : nil
 
   @conditions_arr << {:name => 'Test condition 1',
                       :description => 'Test condition 1 description',
                       :sequence_number => 1,
                       :signatures => [
-                          {:participant_external_id => participant[:external_id]}
+                          {:participant_external_id => participant_id,
+                           :type => 'ecdsa'}
                       ]}
 end
 
-And(/^the condition is set to expire in (\d+) day$/) do |arg|
-  @conditions_arr[0][:expires] = arg
+
+And(/^the condition expiry date is (\d+)$/) do |arg|
+  @conditions_arr[0][:expires] = arg.to_i
 end
 
 And(/^the condition has a single webhook$/) do
@@ -74,3 +82,4 @@ end
 Then(/^the API should respond with a (\d+) response code$/) do |arg|
   assert @result.response_code.to_s == arg
 end
+

@@ -1,71 +1,96 @@
 require 'date'
+require 'json'
+require './api/errors/validation_error'
 
 class ContractValidator
+  include ErrorConstants::ValidationErrors
 
   # new contracts don't require a signature
   def validate_new_contract(data)
     errors = []
 
     #fields
-    errors.push 'Invalid contract name' unless validate_string data[:name]
-    errors.push 'Invalid contract description' unless validate_string data[:description]
-    errors.push 'Invalid contract UNIX expiry date' unless validate_unix_datetime data[:expires]
+    errors.push INVALID_CONTRACT_NAME unless validate_string data[:name]
+    errors.push INVALID_CONTRACT_DESCRIPTION unless validate_string data[:description]
+    errors.push INVALID_CONTRACT_EXPIRY unless validate_unix_datetime data[:expires]
 
     #arrays
     conditions_result = validate_new_conditions data[:conditions]
     transactions_result = validate_transactions data[:transactions]
     participants_result = validate_participants data[:participants]
-    signatures_result = validate_new_signatures data[:signatures]
+    signatures_result = validate_new_contract_signatures data[:signatures]
 
     errors.concat conditions_result
     errors.concat transactions_result
     errors.concat participants_result
     errors.concat signatures_result
 
-    (errors.count > 0) ? {:valid => false, :errors => errors} : {:valid => true}
+    raise ValidationError, {:valid => false, :errors => errors}.to_json if errors.count > 0
   end
 
-  # new conditions don't yet need a signature
+  def validate_updated_signature(signature)
+    errors = []
+
+    # errors.push 'Invalid signature participant_id' unless validate_hex signature[:participant_id]
+    errors.push INVALID_SIGNATURE_VALUE unless validate_string signature[:value]
+    errors.push INVALID_DIGEST_VALUE unless validate_string signature[:digest]
+
+    raise ValidationError, {:valid => false, :errors => errors}.to_json if errors.count > 0
+  end
+
+  private
   def validate_new_conditions(conditions)
     result = []
 
     conditions.each do |condition|
-      result << 'Invalid condition name' unless validate_string condition[:name]
-      result << 'Invalid condition description' unless validate_string condition[:description]
-      result << 'Invalid condition sequence number' unless validate_integer condition[:sequence_number]
-      result << 'Invalid condition UNIX expiry date' unless validate_unix_datetime condition[:expires]
+      result << INVALID_CONDITION_NAME unless validate_string condition[:name]
+      result << INVALID_CONDITION_DESCRIPTION unless validate_string condition[:description]
+      result << INVALID_CONDITION_SEQUENCE unless validate_integer condition[:sequence_number]
+      result << INVALID_CONDITION_EXPIRY unless validate_unix_datetime condition[:expires]
 
-      signature_result = validate_new_signatures condition[:signatures]
+      signature_result = validate_new_condition_signatures condition[:signatures]
       trigger_result = validate_trigger condition[:trigger]
 
       result.concat signature_result
       result.concat trigger_result
-
     end
 
     result
   end
 
-  def validate_updated_signature(signature)
-    result << 'Invalid signature participant_id' unless validate_hex signature[:participant_id]
-    result << 'Invalid signature value' unless validate_string signature[:value]
-    result << 'Invalid digest value' unless validate_string signature[:digest]
+  private
+  def validate_new_contract_signatures(signatures)
+    result = []
 
-    (errors.count > 0) ? {:valid => false, :errors => errors} : {:valid => true}
+    result.concat validate_new_signatures signatures
+
+    signatures.each do |signature|
+      result << INVALID_PARTICIPANT_CONTRACT_SIGNATURE unless validate_string signature[:participant_external_id].to_s
+    end if signatures != nil
+
+    result
   end
 
-  # HELPERS
+  private
+  def validate_new_condition_signatures(signatures)
+    result = []
 
+    result.concat validate_new_signatures signatures
+
+    signatures.each do |signature|
+      result << INVALID_PARTICIPANT_CONDITION_SIGNATURE unless validate_string signature[:participant_external_id].to_s
+      result << INVALID_SIGNATURE_TYPE_CONDITION unless validate_string signature[:type].to_s
+    end if signatures != nil
+
+    result
+  end
+
+  private
   def validate_new_signatures(signatures)
     result = []
 
     if (signatures == nil) || (signatures.count == 0)
-      result << 'At least 1 signature is required!'
-      return result
-    end
-
-    signatures.each do |signature|
-      result << 'Invalid signature participant_external_id' unless validate_string signature[:participant_external_id].to_s
+      result << SIGNATURE_REQUIRED
     end
 
     result
@@ -78,9 +103,9 @@ class ContractValidator
     result << 'No participants found!' if participants == nil
 
     participants.each do |participant|
-      result << 'Invalid participant external_id' unless validate_string participant[:external_id].to_s
-      result << 'Invalid participant public key' unless validate_string participant[:public_key]
-      result << 'Invalid participant role' unless validate_string participant[:role]
+      result << INVALID_PARTICIPANT_EXTERNAL_ID unless validate_string participant[:external_id].to_s
+      result << INVALID_PARTICIPANT_PUBLIC_KEY unless validate_string participant[:public_key]
+      result << INVALID_PARTICIPANT_ROLE unless validate_string participant[:role]
       #Note: wallet_address and wallet_tag are not required
     end if participants != nil
 
@@ -91,9 +116,9 @@ class ContractValidator
   def validate_trigger(trigger)
     result = []
 
-    result << 'No trigger found!' if trigger == nil
+    result << NO_TRIGGER_FOUND if trigger == nil
 
-    result << 'At least one transaction or webhook must be present in the trigger!' if trigger == nil if trigger[:transactions] == nil && trigger[:webhooks == nil] if trigger[:transactions] != nil && trigger[:transactions].count > 0
+    result << TRANSACTION_OR_WEBHOOK_IN_TRIGGER if trigger == nil if trigger[:transactions] == nil && trigger[:webhooks == nil] if trigger[:transactions] != nil && trigger[:transactions].count > 0
 
     if trigger[:transactions] != nil && trigger[:transactions].count > 0
       result.concat validate_transactions trigger[:transactions]
@@ -111,10 +136,10 @@ class ContractValidator
     result = []
 
     transactions.each do |transaction|
-      result << 'Invalid transaction from_participant_external_id' unless validate_string transaction[:from_participant_external_id]
-      result << 'Invalid transaction to_participant_external_id' unless validate_string transaction[:to_participant_external_id]
-      result << 'Invalid transaction amount' unless validate_integer transaction[:amount]
-      result << 'Invalid transaction currency' unless validate_string transaction[:currency]
+      result << INVALID_TRANSACTION_FROM_PARTICIPANT unless validate_string transaction[:from_participant_external_id]
+      result << INVALID_TRANSACTION_TO_PARTICIPANT unless validate_string transaction[:to_participant_external_id]
+      result << INVALID_TRANSACTION_AMOUNT unless validate_integer transaction[:amount]
+      result << INVALID_TRANSACTION_CURRENCY unless validate_string transaction[:currency]
     end if transactions != nil
 
     result
@@ -125,7 +150,7 @@ class ContractValidator
     result = []
 
     webhooks.each do |webhook|
-      result << 'Invalid webhook for trigger' unless validate_string webhook[:uri]
+      result << INVALID_WEBHOOK unless validate_string webhook[:uri]
     end
 
     result
@@ -139,17 +164,17 @@ class ContractValidator
   private
   def validate_integer(value)
     Float(value) != nil rescue false
-    end
+  end
 
   private
   def validate_uuid(value)
     value =~ /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-    end
+  end
 
   private
   def validate_hex(value)
     value =~ /^[a-f\d]{24}$/i
-    end
+  end
 
   private
   def validate_unix_datetime(value)

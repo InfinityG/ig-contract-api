@@ -9,9 +9,9 @@ Feature: Contract creation
           |payer|
           |payee|
     And I have a single contract signature from the "creator"
-    And the contract is set to expire in 7 days
-    And I require a single condition with a signature from the "oracle"
-    And the condition is set to expire in 1 day
+    And the contract expiry date is 1449878400
+    And I require a single condition with an ecdsa signature from the "oracle"
+    And the condition expiry date is 1449878400
     And the condition has a single webhook
     When I POST the contract to the API
     Then the API should respond with a 200 response code
@@ -24,9 +24,19 @@ Feature: Contract creation
       |payer|
       |payee|
     And I have no contract signature
-    And the contract is set to expire in 7 days
-    And I require a single condition with a signature from the "oracle"
-    And the condition is set to expire in 1 day
+    And the contract expiry date is 1449878400
+    And I require a single condition with an ecdsa signature from the "oracle"
+    And the condition expiry date is 1449878400
+    And the condition has a single webhook
+    When I POST the contract to the API
+    Then the API should respond with a 400 response code
+
+  Scenario: Create new contract with no participants
+    Given I have no participants
+    And I have no contract signature
+    And the contract expiry date is 1449878400
+    And I require a single condition with an ecdsa signature from the "oracle"
+    And the condition expiry date is 1449878400
     And the condition has a single webhook
     When I POST the contract to the API
     Then the API should respond with a 400 response code

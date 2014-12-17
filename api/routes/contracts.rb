@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require './api/services/contract_service'
 require './api/validators/contract_validator'
+require './api/errors/contract_error'
 require 'json'
 
 module Sinatra
@@ -9,6 +10,7 @@ module Sinatra
 
       app.post '/contracts' do
 
+        # parse
         data = begin
           JSON.parse(request.body.read, :symbolize_names => true)
         rescue
@@ -16,17 +18,22 @@ module Sinatra
           return 'Unable to parse JSON!'.to_json
         end
 
-        validation_result = ContractValidator.new.validate_new_contract data
-
-        unless validation_result[:valid]
+        # validate
+        begin
+          ContractValidator.new.validate_new_contract data
+        rescue ValidationError => e
           status 400 # bad request
-          return validation_result.to_json
+          return e.message
         end
 
-        result = ContractService.new.create_contract(data)
-
-        status 200 # not 201 as this has just been submitted.
-        return result.to_json
+        # create
+        begin
+          status 200 # not 201 as this has just been submitted.
+          return ContractService.new.create_contract(data).to_json
+        rescue ContractError => e
+          status 400
+          return e.message
+        end
 
       end
 
@@ -90,40 +97,45 @@ module Sinatra
         contract_id = params[:contract_id]
         signature_id = params[:signature_id]
 
+        # parse
         data = begin
           JSON.parse(request.body.read, :symbolize_names => true)
         rescue
-          status 400  # bad request
+          status 400 # bad request
           return 'Unable to parse JSON!'.to_json
         end
 
-        validation_result = ContractValidator.new.validate_updated_signature data
-
-        unless validation_result[:valid]
+        # validate
+        begin
+          ContractValidator.new.validate_updated_signature data
+        rescue ValidationError => e
           status 400 # bad request
-          return validation_result.to_json
+          return e.message
         end
 
         signature_value = data[:value]
         digest = data[:digest]
 
-        if (contract_id.to_s != '') && (signature_id.to_s != '')
-          signature = ContractService.new.sign_contract(contract_id, signature_id, signature_value, digest)
+        # update
+        begin
+          status 200 # OK
+          return ContractService.new.sign_contract(contract_id, signature_id, signature_value, digest).to_json
+        rescue ContractError => e
+          status 400
+          return e.message
+        end if (contract_id.to_s != '') && (signature_id.to_s != '')
 
-          status 200  # OK
-          return signature.to_json
-        end
-
-        status 404  # not found
+        status 404 # not found
       end
 
-       # Sign a condition
+      # Sign a condition
       app.put '/contracts/:contract_id/conditions/:condition_id/signatures/:signature_id' do
 
         contract_id = params[:contract_id]
         condition_id = params[:condition_id]
         signature_id = params[:signature_id]
 
+        # parse
         data = begin
           JSON.parse(request.body.read, :symbolize_names => true)
         rescue
@@ -134,15 +146,19 @@ module Sinatra
         signature_value = data[:value]
         digest = data[:digest]
 
-        if (contract_id.to_s != '') && (condition_id.to_s != '') && (signature_id.to_s != '')
-          condition = ContractService.new.sign_condition(contract_id, condition_id, signature_id,
-                                             signature_value, digest)
-          status 200  # OK
-          return condition.to_json
-        end
+        # update
+        begin
+          status 200 # OK
+          return ContractService.new.sign_condition(contract_id, condition_id, signature_id,
+                                                    signature_value, digest).to_json
+        rescue ContractError => e
+          status 400
+          return e.message
+        end if (contract_id.to_s != '') && (condition_id.to_s != '') && (signature_id.to_s != '')
 
-        status 404  # not found
+        status 404 # not found
       end
+
     end
   end
 end

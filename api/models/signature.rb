@@ -4,6 +4,7 @@ module SmartContract
       include MongoMapper::EmbeddedDocument
 
       key :participant_id, String, :required => true
+      key :type, String
       key :value, String
       key :digest, String
 
