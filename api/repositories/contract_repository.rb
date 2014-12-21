@@ -204,7 +204,7 @@ class ContractRepository
       result = Participant.new(external_id: participant[:external_id],
                                public_key: participant[:public_key],
                                wallet: wallet,
-                               role: participant[:role])
+                               roles: participant[:roles])
 
       participants_arr << result
     end

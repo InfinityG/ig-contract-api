@@ -105,7 +105,15 @@ class ContractValidator
     participants.each do |participant|
       result << INVALID_PARTICIPANT_EXTERNAL_ID unless validate_string participant[:external_id].to_s
       result << INVALID_PARTICIPANT_PUBLIC_KEY unless validate_string participant[:public_key]
-      result << INVALID_PARTICIPANT_ROLE unless validate_string participant[:role]
+
+      if participant[:roles] == nil || participant[:roles].count == 0
+        result << INVALID_PARTICIPANT_ROLE
+      else
+        participant[:roles].each do |role|
+          result << INVALID_PARTICIPANT_ROLE unless validate_string participant[:role]
+        end
+      end
+
       #Note: wallet_address and wallet_tag are not required
     end if participants != nil
 
