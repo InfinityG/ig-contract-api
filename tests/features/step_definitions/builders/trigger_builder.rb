@@ -6,7 +6,7 @@ class TriggerBuilder
   end
 
   def with_transactions(transactions)
-    @transactions_arr = transactions
+    @transactions_arr.concat transactions
     self
     end
 
@@ -16,7 +16,7 @@ class TriggerBuilder
   end
 
   def with_webhooks(webhooks)
-    @webhooks_arr = webhooks
+    @webhooks_arr.concat webhooks
     self
   end
 

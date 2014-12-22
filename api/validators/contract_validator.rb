@@ -110,7 +110,7 @@ class ContractValidator
         result << INVALID_PARTICIPANT_ROLE
       else
         participant[:roles].each do |role|
-          result << INVALID_PARTICIPANT_ROLE unless validate_string participant[:role]
+          result << INVALID_PARTICIPANT_ROLE unless validate_string role
         end
       end
 

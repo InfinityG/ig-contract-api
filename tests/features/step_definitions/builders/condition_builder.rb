@@ -20,7 +20,7 @@ class ConditionBuilder
   end
 
   def with_signatures(signatures)
-    @signature_arr << signatures
+    @signature_arr.concat signatures
     self
   end
 

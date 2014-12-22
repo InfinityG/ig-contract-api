@@ -133,9 +133,12 @@ class ContractRepository
 
     condition[:signatures].each do |signature|
       external_id = signature[:participant_external_id]
+      delegated_by_id = signature[:delegated_by_external_id]
       type = signature[:type]
       participant_id = get_participant_id participants_arr, external_id
+      delegated_by_participant_id = get_participant_id participants_arr, delegated_by_id
       signature_arr << Signature.new(:participant_id => participant_id.to_s,
+                                     :delegated_by_id => delegated_by_participant_id.to_s,
                                      :type => type)
     end
 

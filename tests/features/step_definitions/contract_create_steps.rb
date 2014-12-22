@@ -82,12 +82,15 @@ And(/^condition (\d+) has the following signatures:$/) do |arg, table|
   # table is a table.hashes.keys # => [:type, :participant_id]
 
   table.hashes.each do |item|
-    @condition_signatures_hash[arg.to_i] << SignatureBuilder.new.with_participant_external_id(item[:participant_id]).with_type(item[:type]).build
+    @condition_signatures_hash[arg.to_i] << SignatureBuilder.new.with_participant_external_id(item[:participant_id])
+                                                .with_type(item[:type])
+                                                .with_delegated_by_external_id(item[:delegated_by])
+                                                .build
   end
 end
 
 And(/^condition (\d+) has an expiry of (\d+)$/) do |arg1, arg2|
-  @condition_expiry_hash[arg1.to_i] = arg2
+  @condition_expiry_hash[arg1.to_i] = arg2.to_i
 end
 
 And(/^condition (\d+) has the following webhooks:$/) do |arg, table|
@@ -100,7 +103,7 @@ And(/^condition (\d+) has the following transactions:$/) do |arg, table|
   table.hashes.each do |item|
     @condition_transactions_hash[arg.to_i] << TransactionBuilder.new
                                              .with_from_participant_external_id(item[:from_participant])
-                                             .with_to_participant_external_id(item[:from_participant])
+                                             .with_to_participant_external_id(item[:to_participant])
                                              .with_currency(item[:currency])
                                              .with_amount(item[:amount])
                                              .build
@@ -112,7 +115,7 @@ And(/^I have no contract signature$/) do
 end
 
 And(/^the contract expiry date is (\d+)$/) do |arg|
-  @contract_expires = arg
+  @contract_expires = arg.to_i
 end
 
 When(/^I POST the contract to the API$/) do
