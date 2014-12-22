@@ -2,15 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3249df37-3263-4591-a8be-5c812b240fe7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/condition_builder.rb" afterPath="$PROJECT_DIR$/tests/features/step_definitions/builders/condition_builder.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/features/contract_create.feature" afterPath="$PROJECT_DIR$/tests/features/contract_create.feature" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tests/features/step_definitions/step_helper.rb" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/features/contract_sign.feature" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/contract_sign_steps.rb" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/condition_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/condition_builder.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/contract_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/contract_builder.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/key_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/key_builder.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/participant_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/participant_builder.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/signature_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/signature_builder.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/transaction_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/transaction_builder.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/trigger_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/trigger_builder.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/wallet_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/wallet_builder.rb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/webhook_builder.rb" afterPath="$PROJECT_DIR$/tests/builders/webhook_builder.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb" afterPath="$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/repositories/contract_repository.rb" afterPath="$PROJECT_DIR$/api/repositories/contract_repository.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/validators/contract_validator.rb" afterPath="$PROJECT_DIR$/api/validators/contract_validator.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ig-contract-api.iml" afterPath="$PROJECT_DIR$/.idea/ig-contract-api.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/models/signature.rb" afterPath="$PROJECT_DIR$/api/models/signature.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/signature_builder.rb" afterPath="$PROJECT_DIR$/tests/features/step_definitions/builders/signature_builder.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/features/step_definitions/builders/trigger_builder.rb" afterPath="$PROJECT_DIR$/tests/features/step_definitions/builders/trigger_builder.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="ig-contract-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,43 +30,49 @@
   </component>
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api Coverage Results" MODIFIED="1419248387588" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@condition_sign__ig_contract_api.coverage" NAME="condition_sign: ig-contract-api Coverage Results" MODIFIED="1418995746341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api Coverage Results" MODIFIED="1419255882455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_generates_key_pair__ig_contract_api.coverage" NAME="test_generates_key_pair: ig-contract-api Coverage Results" MODIFIED="1417273671856" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@condition_sign__ig_contract_api.coverage" NAME="condition_sign: ig-contract-api Coverage Results" MODIFIED="1418995746341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Oracle_signs_an_unsigned_contract_with_ecdsa_signature__ig_contract_api__1_.coverage" NAME="Oracle signs an unsigned contract with ecdsa signature: ig-contract-api (1) Coverage Results" MODIFIED="1419252103559" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_validates_signature__ig_contract_api.coverage" NAME="test_validates_signature: ig-contract-api Coverage Results" MODIFIED="1418923749450" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__4_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (4) Coverage Results" MODIFIED="1419248978445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract__ig_contract_api__3_.coverage" NAME="Create new contract: ig-contract-api (3) Coverage Results" MODIFIED="1419095162911" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__4_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (4) Coverage Results" MODIFIED="1419248978445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_true__ig_contract_api.coverage" NAME="test_signature_validates_true: ig-contract-api Coverage Results" MODIFIED="1417606091217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract__ig_contract_api__4_.coverage" NAME="Create new contract: ig-contract-api (4) Coverage Results" MODIFIED="1419088100513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_2__ig_contract_api.coverage" NAME="test_2: ig-contract-api Coverage Results" MODIFIED="1417607053782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract__ig_contract_api__4_.coverage" NAME="Create new contract: ig-contract-api (4) Coverage Results" MODIFIED="1419088100513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@All_features_in_features__ig_contract_api.coverage" NAME="All features in features: ig-contract-api Coverage Results" MODIFIED="1418825262942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_externally_signed_message_validates_false_when_digest_modified__ig_contract_api.coverage" NAME="test_externally_signed_message_validates_false_when_digest_modified: ig-contract-api Coverage Results" MODIFIED="1417606961964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_false_when_message_tampered__ig_contract_api.coverage" NAME="test_signature_validates_false_when_message_tampered: ig-contract-api Coverage Results" MODIFIED="1417101991206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_base64_encodes_public_key__ig_contract_api.coverage" NAME="test_base64_encodes_public_key: ig-contract-api Coverage Results" MODIFIED="1418921371575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_ecdsa__ig_contract_api.coverage" NAME="test_ecdsa: ig-contract-api Coverage Results" MODIFIED="1417277978464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Oracle_signs_an_unsigned_contract_with_ecdsa_signature__ig_contract_api.coverage" NAME="Oracle signs an unsigned contract with ecdsa signature: ig-contract-api Coverage Results" MODIFIED="1419251923910" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_byte_array__ig_contract_api.coverage" NAME="test_byte_array: ig-contract-api Coverage Results" MODIFIED="1417601003725" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Oracle_signs_an_unsigned_contract_with_ecdsa_signature__ig_contract_api__2_.coverage" NAME="Oracle signs an unsigned contract with ecdsa signature: ig-contract-api (2) Coverage Results" MODIFIED="1419252164203" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract__ig_contract_api__1_.coverage" NAME="Create new contract: ig-contract-api (1) Coverage Results" MODIFIED="1419088230622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_3_participants__creator_and_payer_are_the_same_participant____ig_contract_api.coverage" NAME="Create new contract with 3 participants (creator and payer are the same participant).: ig-contract-api Coverage Results" MODIFIED="1419182740204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Oracle_signs_an_unsigned_contract_with_ecdsa_signature__ig_contract_api__3_.coverage" NAME="Oracle signs an unsigned contract with ecdsa signature: ig-contract-api (3) Coverage Results" MODIFIED="1419252470201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_3_participants__creator_and_payer_are_the_same_participant____ig_contract_api.coverage" NAME="Create new contract with 3 participants (creator and payer are the same participant).: ig-contract-api Coverage Results" MODIFIED="1419250167756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Run_test__SigningServiceTest___ig_contract_api.coverage" NAME="Run test 'SigningServiceTest': ig-contract-api Coverage Results" MODIFIED="1417259797264" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Run_test__OpenSslEcdsaTest___ig_contract_api.coverage" NAME="Run test 'OpenSslEcdsaTest': ig-contract-api Coverage Results" MODIFIED="1417279398557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Run_test__SignatureServiceTest___ig_contract_api.coverage" NAME="Run test 'SignatureServiceTest': ig-contract-api Coverage Results" MODIFIED="1417606173265" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__5_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (5) Coverage Results" MODIFIED="1419249030739" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_generate_validate_openssl_keys__ig_contract_api.coverage" NAME="test_generate_validate_openssl_keys: ig-contract-api Coverage Results" MODIFIED="1417607359528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract__ig_contract_api.coverage" NAME="Create new contract: ig-contract-api Coverage Results" MODIFIED="1419095317095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_correctly__ig_contract_api.coverage" NAME="test_signature_validates_correctly: ig-contract-api Coverage Results" MODIFIED="1417091274384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Oracle_signs_an_unsigned_contract_with_ecdsa_signature__ig_contract_api__5_.coverage" NAME="Oracle signs an unsigned contract with ecdsa signature: ig-contract-api (5) Coverage Results" MODIFIED="1419252928268" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_full_ecdsa_cycle_openssl__ig_contract_api.coverage" NAME="test_full_ecdsa_cycle_openssl: ig-contract-api Coverage Results" MODIFIED="1417607664413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_correctly__ig_contract_api.coverage" NAME="test_signature_validates_correctly: ig-contract-api Coverage Results" MODIFIED="1417091274384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1419248538593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract__ig_contract_api__5_.coverage" NAME="Create new contract: ig-contract-api (5) Coverage Results" MODIFIED="1419088213327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__3_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (3) Coverage Results" MODIFIED="1419249183037" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_false__ig_contract_api.coverage" NAME="test_signature_validates_false: ig-contract-api Coverage Results" MODIFIED="1417101809591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@ecdsa_util_tests.coverage" NAME="ecdsa_util_tests Coverage Results" MODIFIED="1418921056175" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__2_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (2) Coverage Results" MODIFIED="1419249134871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__2_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (2) Coverage Results" MODIFIED="1419255513771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_crypto_coin_js_signature__ig_contract_api.coverage" NAME="test_crypto_coin_js_signature: ig-contract-api Coverage Results" MODIFIED="1417607425278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_creates_key_pair__ig_contract_api.coverage" NAME="test_creates_key_pair: ig-contract-api Coverage Results" MODIFIED="1418921185447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__1_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (1) Coverage Results" MODIFIED="1419248819780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@test_externally_signed_message_validates_false__ig_contract_api.coverage" NAME="test_externally_signed_message_validates_false: ig-contract-api Coverage Results" MODIFIED="1417606831631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_externally_signed_message_validates_true__ig_contract_api.coverage" NAME="test_externally_signed_message_validates_true: ig-contract-api Coverage Results" MODIFIED="1417606133120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@contract_create__ig_contract_api.coverage" NAME="contract_create: ig-contract-api Coverage Results" MODIFIED="1419249538545" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@test_externally_signed_message_validates_false__ig_contract_api.coverage" NAME="test_externally_signed_message_validates_false: ig-contract-api Coverage Results" MODIFIED="1417606831631" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Oracle_signs_an_unsigned_contract_with_ecdsa_signature__ig_contract_api__4_.coverage" NAME="Oracle signs an unsigned contract with ecdsa signature: ig-contract-api (4) Coverage Results" MODIFIED="1419252689436" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__1_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (1) Coverage Results" MODIFIED="1419255311665" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@contract_create__ig_contract_api.coverage" NAME="contract_create: ig-contract-api Coverage Results" MODIFIED="1419256225802" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract__ig_contract_api__2_.coverage" NAME="Create new contract: ig-contract-api (2) Coverage Results" MODIFIED="1419088314577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -78,38 +90,28 @@
       <file leaf-file-name="contract_create.feature" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/features/contract_create.feature">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38043478" vertical-offset="0" max-vertical-offset="1155">
-              <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.32971016" vertical-offset="327" max-vertical-offset="1155">
+              <caret line="40" column="45" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="contract_validator.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/validators/contract_validator.rb">
+      <file leaf-file-name="key_builder.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/builders/key_builder.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1051" max-vertical-offset="3030">
-              <caret line="99" column="19" selection-start-line="99" selection-start-column="19" selection-end-line="99" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
+              <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="error_constants.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/constants/error_constants.rb">
+      <file leaf-file-name="contract_builder.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/builders/contract_builder.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="241" max-vertical-offset="795">
-              <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="contracts.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/routes/contracts.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="181" max-vertical-offset="2550">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -118,18 +120,8 @@
       <file leaf-file-name="contract_repository.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/repositories/contract_repository.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2967" max-vertical-offset="3795">
-              <caret line="231" column="6" selection-start-line="231" selection-start-column="6" selection-end-line="231" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="participant.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/models/participant.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
-              <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2592" max-vertical-offset="3795">
+              <caret line="187" column="0" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -138,38 +130,38 @@
       <file leaf-file-name="contract_create_steps.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1479" max-vertical-offset="2460">
-              <caret line="127" column="10" selection-start-line="127" selection-start-column="10" selection-end-line="127" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1980">
+              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="condition_builder.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/condition_builder.rb">
+      <file leaf-file-name="step_helper.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/step_helper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="780">
-              <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1320">
+              <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="trigger_builder.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/trigger_builder.rb">
+      <file leaf-file-name="condition_sign.feature" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/features/condition_sign.feature">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="signature_builder.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/signature_builder.rb">
+      <file leaf-file-name="transaction_builder.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/builders/transaction_builder.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
-              <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="555">
+              <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -188,9 +180,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Gemfile" />
-        <option value="$PROJECT_DIR$/tests/features/step_definitions/contract-creation-steps.rb" />
-        <option value="$PROJECT_DIR$/api/utils/hash_generator.rb" />
         <option value="$PROJECT_DIR$/api/utils/rest_util.rb" />
         <option value="$PROJECT_DIR$/api/services/webhook_service.rb" />
         <option value="$PROJECT_DIR$/api/services/trigger_service.rb" />
@@ -212,9 +201,7 @@
         <option value="$PROJECT_DIR$/api/errors/validation_error.rb" />
         <option value="$PROJECT_DIR$/api/errors/contract_error.rb" />
         <option value="$PROJECT_DIR$/api/routes/contracts.rb" />
-        <option value="$PROJECT_DIR$/tests/features/contract_sign.feature" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/my_steps.rb" />
-        <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_sign_steps.rb" />
         <option value="$PROJECT_DIR$/tests/features/contract_helper.rb" />
         <option value="$PROJECT_DIR$/tests/ecdsa_util_tests.rb" />
         <option value="$PROJECT_DIR$/tests/ecdsa_util_test.rb" />
@@ -223,7 +210,6 @@
         <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_test_helper.rb" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_test_builder.rb" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_builder.rb" />
-        <option value="$PROJECT_DIR$/tests/features/step_definitions/builders/transaction_builder.rb" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/builders/webhook_builder.rb" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/builders/participant_list_builder.rb" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/builders/key_builder.rb" />
@@ -237,8 +223,14 @@
         <option value="$PROJECT_DIR$/api/validators/contract_validator.rb" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/builders/trigger_builder.rb" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/builders/condition_builder.rb" />
-        <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb" />
         <option value="$PROJECT_DIR$/api/repositories/contract_repository.rb" />
+        <option value="$PROJECT_DIR$/tests/features/step_definitions/builders/transaction_builder.rb" />
+        <option value="$PROJECT_DIR$/tests/features/contract_sign.feature" />
+        <option value="$PROJECT_DIR$/tests/builders/contract_builder.rb" />
+        <option value="$PROJECT_DIR$/tests/builders/key_builder.rb" />
+        <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_sign_steps.rb" />
+        <option value="$PROJECT_DIR$/tests/features/step_definitions/step_helper.rb" />
+        <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb" />
       </list>
     </option>
   </component>
@@ -276,6 +268,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -345,32 +338,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="step_definitions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ig-contract-api" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ig-contract-api" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="step_definitions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="builders" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -534,7 +501,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -552,167 +518,12 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests" />
       <recent name="$PROJECT_DIR$/tests/features/step_definitions/builders" />
       <recent name="$PROJECT_DIR$/tests/features/step_definitions" />
     </key>
   </component>
   <component name="RunManager" selected="Cucumber.contract_create: ig-contract-api">
-    <configuration default="false" name="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (4)" type="CucumberRunConfigurationType" factoryName="Cucumber" temporary="true">
-      <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
-      <module name="ig-contract-api" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$MODULE_DIR$/tests" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
-      <envs>
-        <env name="JRUBY_OPTS" value="-X+O" />
-      </envs>
-      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
-      <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
-        <COVERAGE_PATTERN ENABLED="true">
-          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
-        </COVERAGE_PATTERN>
-      </EXTENSION>
-      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$MODULE_DIR$/tests/features/contract_create.feature" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="^Create new contract with 4 participants \(oracle\, creator\, payer\, payee\)\, 1 ecdsa signature and 1 condition\.$" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
-      <RunnerSettings RunnerId="RubyRunner" />
-      <ConfigurationWrapper RunnerId="RubyRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (5)" type="CucumberRunConfigurationType" factoryName="Cucumber" temporary="true">
-      <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
-      <module name="ig-contract-api" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$MODULE_DIR$/tests" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
-      <envs>
-        <env name="JRUBY_OPTS" value="-X+O" />
-      </envs>
-      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
-      <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
-        <COVERAGE_PATTERN ENABLED="true">
-          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
-        </COVERAGE_PATTERN>
-      </EXTENSION>
-      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$MODULE_DIR$/tests/features/contract_create.feature" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="^Create new contract with 4 participants \(oracle\, creator\, payer\, payee\)\, 1 ecdsa signature and 1 condition\.$" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
-      <RunnerSettings RunnerId="RubyRunner" />
-      <ConfigurationWrapper RunnerId="RubyRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (2)" type="CucumberRunConfigurationType" factoryName="Cucumber" temporary="true">
-      <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
-      <module name="ig-contract-api" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$MODULE_DIR$/tests" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
-      <envs>
-        <env name="JRUBY_OPTS" value="-X+O" />
-      </envs>
-      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
-      <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
-        <COVERAGE_PATTERN ENABLED="true">
-          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
-        </COVERAGE_PATTERN>
-      </EXTENSION>
-      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$MODULE_DIR$/tests/features/contract_create.feature" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="^Create new contract with 4 participants \(oracle\, creator\, payer\, payee\)\, 1 ecdsa signature and 1 condition\.$" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
-      <RunnerSettings RunnerId="RubyRunner" />
-      <ConfigurationWrapper RunnerId="RubyRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (3)" type="CucumberRunConfigurationType" factoryName="Cucumber" temporary="true">
-      <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
-      <module name="ig-contract-api" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$MODULE_DIR$/tests" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
-      <envs>
-        <env name="JRUBY_OPTS" value="-X+O" />
-      </envs>
-      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
-      <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
-      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
-        <COVERAGE_PATTERN ENABLED="true">
-          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
-        </COVERAGE_PATTERN>
-      </EXTENSION>
-      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$MODULE_DIR$/tests/features/contract_create.feature" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="^Create new contract with 4 participants \(oracle\, creator\, payer\, payee\)\, 1 ecdsa signature and 1 condition\.$" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
-      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
-      <RunnerSettings RunnerId="RubyRunner" />
-      <ConfigurationWrapper RunnerId="RubyRunner" />
-      <method />
-    </configuration>
     <configuration default="false" name="contract_create: ig-contract-api" type="CucumberRunConfigurationType" factoryName="Cucumber" temporary="true">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="ig-contract-api" />
@@ -738,6 +549,45 @@
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$MODULE_DIR$/tests/features/contract_create.feature" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="VERBOSE_OPTION" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="DRB" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ZEUS" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SPRING" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_RUNNER_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
+      <RunnerSettings RunnerId="RubyRunner" />
+      <ConfigurationWrapper RunnerId="RubyRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api" type="CucumberRunConfigurationType" factoryName="Cucumber" temporary="true">
+      <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
+      <module name="ig-contract-api" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="WORK DIR" VALUE="$MODULE_DIR$/tests" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SHOULD_USE_SDK" VALUE="false" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="ALTERN_SDK_NAME" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
+      <envs>
+        <env name="JRUBY_OPTS" value="-X+O" />
+      </envs>
+      <EXTENSION ID="BundlerRunConfigurationExtension" bundleExecEnabled="true" />
+      <EXTENSION ID="JRubyRunConfigurationExtension" NailgunExecEnabled="false" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" track_test_folders="true" runner="rcov">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_FILE_MASK" VALUE="**/*.feature" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TEST_TYPE" VALUE="TEST_SCRIPT" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TESTS_FOLDER_PATH" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_SCRIPT_PATH" VALUE="$MODULE_DIR$/tests/features/contract_create.feature" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_TAGS_FILTER" VALUE="" />
+      <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="TEST_NAME_FILTER" VALUE="^Create new contract with 4 participants \(oracle\, creator\, payer\, payee\)\, 1 ecdsa signature and 1 condition\.$" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="CUCUMBER_ARGS" VALUE="--color -r features" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUNNER_VERSION" VALUE="" />
       <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="FULL_BACKTRACE" VALUE="false" />
@@ -901,21 +751,15 @@
       <RACK_CONFIG_SETTINGS_ID NAME="LAUNCH_JS" VALUE="false" />
       <method />
     </configuration>
-    <list size="6">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Rack.Unnamed" />
-      <item index="1" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (4)" />
-      <item index="2" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (5)" />
-      <item index="3" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (2)" />
-      <item index="4" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (3)" />
-      <item index="5" class="java.lang.String" itemvalue="Cucumber.contract_create: ig-contract-api" />
+      <item index="1" class="java.lang.String" itemvalue="Cucumber.contract_create: ig-contract-api" />
+      <item index="2" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api" />
     </list>
     <recent_temporary>
-      <list size="5">
+      <list size="2">
         <item index="0" class="java.lang.String" itemvalue="Cucumber.contract_create: ig-contract-api" />
-        <item index="1" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (3)" />
-        <item index="2" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (2)" />
-        <item index="3" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (5)" />
-        <item index="4" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (4)" />
+        <item index="1" class="java.lang.String" itemvalue="Cucumber.Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api" />
       </list>
     </recent_temporary>
   </component>
@@ -953,28 +797,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="1440" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3224299" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3216783" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32359812" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44392523" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44289044" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3551282" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3271028" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24892704" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32761088" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3319027" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35280374" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1223,7 +1067,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb</url>
-          <line>156</line>
+          <line>120</line>
           <option name="timeStamp" value="214" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
@@ -1298,13 +1142,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb</url>
-          <line>150</line>
+          <line>114</line>
           <option name="timeStamp" value="287" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="ruby-line">
-          <url>file://$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb</url>
-          <line>84</line>
-          <option name="timeStamp" value="291" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/api/repositories/contract_repository.rb</url>
@@ -1320,18 +1159,11 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="294" />
+      <option name="time" value="296" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Gemfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63380283" vertical-offset="0" max-vertical-offset="497">
-          <caret line="21" column="3" selection-start-line="21" selection-start-column="3" selection-end-line="21" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Ruby/Gems/2.0.0/gems/rest-client-1.7.2/lib/restclient/request.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.9305263" vertical-offset="1237" max-vertical-offset="8970">
@@ -1357,13 +1189,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="165">
           <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/services/transaction_service.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1521,34 +1346,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/webhook_builder.rb">
+    <entry file="file://$PROJECT_DIR$/tests/builders/webhook_builder.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
           <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/transaction_builder.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/contract_sign_steps.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/contract_builder.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="437" max-vertical-offset="1035">
-          <caret line="38" column="5" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1557,7 +1358,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
           <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1565,7 +1365,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="300">
           <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1573,11 +1372,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
           <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/wallet_builder.rb">
+    <entry file="file://$PROJECT_DIR$/tests/builders/wallet_builder.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2536232" vertical-offset="0" max-vertical-offset="828">
           <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
@@ -1585,34 +1383,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/participant_builder.rb">
+    <entry file="file://$PROJECT_DIR$/tests/builders/participant_builder.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
           <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/key_builder.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
-          <caret line="19" column="34" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/condition_sign.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/contract_sign.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.072463766" vertical-offset="0" max-vertical-offset="828">
-          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
           <folding />
         </state>
       </provider>
@@ -1621,7 +1395,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
           <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1629,7 +1402,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5163044" vertical-offset="0" max-vertical-offset="552">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1637,7 +1409,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
           <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1653,11 +1424,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="241" max-vertical-offset="795">
           <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/trigger_builder.rb">
+    <entry file="file://$PROJECT_DIR$/tests/builders/trigger_builder.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
@@ -1665,7 +1435,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/signature_builder.rb">
+    <entry file="file://$PROJECT_DIR$/tests/builders/signature_builder.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
           <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="6" />
@@ -1673,7 +1443,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/builders/condition_builder.rb">
+    <entry file="file://$PROJECT_DIR$/tests/builders/condition_builder.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="780">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
@@ -1689,26 +1459,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb">
+    <entry file="file://$PROJECT_DIR$/api/services/transaction_service.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1479" max-vertical-offset="2460">
-          <caret line="127" column="10" selection-start-line="127" selection-start-column="10" selection-end-line="127" selection-end-column="10" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api/repositories/contract_repository.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2967" max-vertical-offset="3795">
-          <caret line="231" column="6" selection-start-line="231" selection-start-column="6" selection-end-line="231" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2592" max-vertical-offset="3795">
+          <caret line="187" column="0" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/builders/transaction_builder.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
+          <caret line="31" column="3" selection-start-line="31" selection-start-column="3" selection-end-line="31" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/builders/contract_builder.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/features/condition_sign.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/builders/key_builder.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
+          <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/contract_create_steps.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1980">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/step_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1320">
+          <caret line="40" column="14" selection-start-line="40" selection-start-column="14" selection-end-line="40" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/features/contract_create.feature">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38043478" vertical-offset="0" max-vertical-offset="1155">
-          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.32971016" vertical-offset="327" max-vertical-offset="1155">
+          <caret line="40" column="45" selection-start-line="40" selection-start-column="45" selection-end-line="40" selection-end-column="45" />
           <folding />
         </state>
       </provider>

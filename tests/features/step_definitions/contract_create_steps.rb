@@ -1,43 +1,24 @@
-require_relative '../../../api/utils/hash_generator'
 require_relative '../../../api/utils/rest_util'
-
-require_relative '../../../api/utils/ecdsa_util'
-
-require_relative '../../features/step_definitions/builders/participant_builder'
-require_relative '../../features/step_definitions/builders/signature_builder'
-require_relative '../../features/step_definitions/builders/trigger_builder'
-require_relative '../../features/step_definitions/builders/contract_builder'
-require_relative '../../features/step_definitions/builders/key_builder'
+require_relative '../../../tests/features/step_definitions/step_helper'
 
 require 'json'
 require 'minitest'
 
 Given(/^I have the following participants:$/) do |table|
-  # table is a table.hashes.keys # => [:role_type]
+  @step_helper = StepHelper.new
 
   @participants_arr = []
   @all_keys = []
 
-  generator = HashGenerator.new
-
   table.hashes.each do |item|
-    # external_id = generator.generate_random_number
     external_id = item[:external_id]
 
-    key_hash = KeyBuilder.new.with_participant_external_id(external_id).build_hash
+    key_hash = @step_helper.create_key_hash external_id
     @all_keys << key_hash
 
     wallet = nil
-    # TODO: complete wallet
-    if item[:has_wallet]
-      wallet = WalletBuilder.new.with_address(generator.generate_uuid).build
-    end
-
-    participant = ParticipantBuilder.new.with_roles(item[:role_types])
-                      .with_external_id(external_id)
-                      .with_public_key(key_hash[external_id][:pk])
-                      .with_wallet(wallet)
-                      .build
+    wallet = @step_helper.create_wallet if item[:has_wallet]
+    participant = @step_helper.create_participant(item[:role_types], external_id, key_hash[external_id][:pk], wallet)
 
     @participants_arr << participant
   end
@@ -55,7 +36,7 @@ And(/^I have contract signatures from the following participants:$/) do |table|
       participant[:external_id] == item[:external_id]
     end
 
-    @contract_signatures_arr << SignatureBuilder.new.with_participant_external_id(participant[:external_id]).build
+    @contract_signatures_arr << @step_helper.create_contract_signature(participant[:external_id])
   end
 
 end
@@ -79,13 +60,10 @@ And(/^I have (\d+) conditions$/) do |arg|
 end
 
 And(/^condition (\d+) has the following signatures:$/) do |arg, table|
-  # table is a table.hashes.keys # => [:type, :participant_id]
-
   table.hashes.each do |item|
-    @condition_signatures_hash[arg.to_i] << SignatureBuilder.new.with_participant_external_id(item[:participant_id])
-                                                .with_type(item[:type])
-                                                .with_delegated_by_external_id(item[:delegated_by])
-                                                .build
+    @condition_signatures_hash[arg.to_i] << @step_helper.create_condition_signature(item[:participant_id],
+                                                                                    item[:type],
+                                                                                    item[:delegated_by])
   end
 end
 
@@ -95,18 +73,16 @@ end
 
 And(/^condition (\d+) has the following webhooks:$/) do |arg, table|
   table.hashes.each do |item|
-    @condition_webhooks_hash[arg.to_i] << WebhookBuilder.new.with_uri(item[:uri]).build
+    @condition_webhooks_hash[arg.to_i] << @step_helper.create_webhook(item[:uri])
   end
 end
 
 And(/^condition (\d+) has the following transactions:$/) do |arg, table|
   table.hashes.each do |item|
-    @condition_transactions_hash[arg.to_i] << TransactionBuilder.new
-                                             .with_from_participant_external_id(item[:from_participant])
-                                             .with_to_participant_external_id(item[:to_participant])
-                                             .with_currency(item[:currency])
-                                             .with_amount(item[:amount])
-                                             .build
+    @condition_transactions_hash[arg.to_i] << @step_helper.create_transaction(item[:from_participant],
+                                                                              item[:to_participant],
+                                                                              item[:currency],
+                                                                              item[:amount])
   end
 end
 
@@ -126,27 +102,15 @@ When(/^I POST the contract to the API$/) do
   while i < @condition_count do
 
     i += 1
-    trigger = TriggerBuilder.new
-                  .with_webhooks(@condition_webhooks_hash[i])
-                  .with_transactions(@condition_transactions_hash[i])
-                  .build
+    trigger = @step_helper.create_trigger(@condition_webhooks_hash[i], @condition_transactions_hash[i])
 
-    conditions_arr << ConditionBuilder.new
-                          .with_trigger(trigger)
-                          .with_name("Test condition #{i}")
-                          .with_description("Test condition #{i} description")
-                          .with_sequence_number(i)
-                          .with_signatures(@condition_signatures_hash[i])
-                          .with_expires(@condition_expiry_hash[i]).build
+    conditions_arr << @step_helper.create_condition(trigger, "Test condition #{i}", "Test condition #{i} description",
+                                                    i, @condition_signatures_hash[i], @condition_expiry_hash[i])
+
   end
 
-  contract = ContractBuilder.new.with_name('Test contract 1')
-                 .with_description('Test contract 1 description')
-                 .with_expires(@contract_expires)
-                 .with_participants(@participants_arr)
-                 .with_conditions(conditions_arr)
-                 .with_signatures(@contract_signatures_arr)
-                 .build
+  contract = @step_helper.create_contract('Test contract 1', 'Test contract 1 description', @contract_expires,
+                                          @participants_arr, conditions_arr, @contract_signatures_arr)
 
   rest_client = RestUtil.new
   @result = rest_client.execute_post 'http://localhost:9000/contracts', contract.to_json
@@ -155,4 +119,8 @@ end
 
 Then(/^the API should respond with a (\d+) response code$/) do |arg|
   assert @result.response_code.to_s == arg
+end
+
+def get_result
+  @result
 end

@@ -1,6 +1,4 @@
-require_relative '../../../../api/utils/hash_generator'
-require_relative '../../../../api/utils/rest_util'
-require_relative '../../../../api/utils/ecdsa_util'
+
 require 'json'
 
 class ContractBuilder
@@ -48,17 +46,4 @@ class ContractBuilder
         :conditions => @conditions
     }
   end
-
-  # def create_contract_signatures(participants)
-  #   signatures_arr = []
-  #
-  #   # signatures for creator only in this example
-  #   participant = participants.detect do |participant|
-  #     participant[:role] == 'creator'
-  #   end
-  #
-  #   signatures_arr << {:participant_external_id => participant[:external_id]}
-  #   signatures_arr
-  # end
-
 end

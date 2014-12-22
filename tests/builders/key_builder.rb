@@ -1,4 +1,4 @@
-require_relative '../../../../api/utils/ecdsa_util'
+require_relative '../../api/utils/ecdsa_util'
 
 class KeyBuilder
 

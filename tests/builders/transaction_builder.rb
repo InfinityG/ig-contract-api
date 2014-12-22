@@ -23,7 +23,7 @@ class TransactionBuilder
   def build
     {
         :from_participant_external_id => @from_participant_external_id,
-        :to_participant_external_id => @from_participant_external_id,
+        :to_participant_external_id => @to_participant_external_id,
         :amount => @amount,
         :currency => @currency
     }
