@@ -3,7 +3,7 @@ module SmartContract
     class Secret
       include MongoMapper::EmbeddedDocument
 
-      key :min_fragments, Integer
+      key :threshold, Integer
       key :fragments, Array
     end
     end

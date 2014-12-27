@@ -24,7 +24,7 @@ class ParticipantBuilder
   def build
     {
         :external_id => @external_id,
-        :roles => [@roles],
+        :roles => @roles,
         :public_key => @public_key,
         :wallet => @wallet
     }

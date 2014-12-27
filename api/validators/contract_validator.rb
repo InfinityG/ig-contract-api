@@ -15,7 +15,7 @@ class ContractValidator
     errors.push INVALID_CONTRACT_EXPIRY unless validate_unix_datetime data[:expires]
 
     #arrays
-    conditions_result = validate_new_conditions data[:conditions]
+    conditions_result = validate_new_conditions data[:conditions], data[:participants]
     transactions_result = validate_transactions data[:transactions]
     participants_result = validate_participants data[:participants]
     signatures_result = validate_new_contract_signatures data[:signatures]
@@ -39,7 +39,7 @@ class ContractValidator
   end
 
   private
-  def validate_new_conditions(conditions)
+  def validate_new_conditions(conditions, participants)
     result = []
 
     conditions.each do |condition|
@@ -48,7 +48,7 @@ class ContractValidator
       result << INVALID_CONDITION_SEQUENCE unless validate_integer condition[:sequence_number]
       result << INVALID_CONDITION_EXPIRY unless validate_unix_datetime condition[:expires]
 
-      signature_result = validate_new_condition_signatures condition[:signatures]
+      signature_result = validate_new_condition_signatures condition[:signatures], participants
       trigger_result = validate_trigger condition[:trigger]
 
       result.concat signature_result
@@ -72,7 +72,7 @@ class ContractValidator
   end
 
   private
-  def validate_new_condition_signatures(signatures)
+  def validate_new_condition_signatures(signatures, participants)
     result = []
 
     result.concat validate_new_signatures signatures
@@ -80,7 +80,29 @@ class ContractValidator
     signatures.each do |signature|
       result << INVALID_PARTICIPANT_CONDITION_SIGNATURE unless validate_string signature[:participant_external_id].to_s
       result << INVALID_SIGNATURE_TYPE_CONDITION unless validate_string signature[:type].to_s
+
+      if signature[:type].to_s == 'ss_key'
+        result.concat(validate_delegated_participant(signature[:delegated_by_external_id], participants))
+      end
+
     end if signatures != nil
+
+    result
+  end
+
+  private
+  def validate_delegated_participant(delegated_participant_id, participants)
+    result = []
+
+    if delegated_participant_id.to_s != ''
+      delegate = participants.detect do |participant|
+        participant[:external_id].to_s == delegated_participant_id.to_s
+      end
+
+      result << INVALID_DELEGATED_PARTICIPANT unless delegate != nil
+      result << INVALID_SECRET_THRESHOLD unless delegate[:wallet][:secret][:threshold] > 1
+      result << INVALID_SECRET_FRAGMENT_LENGTH unless delegate[:wallet][:secret][:fragments].count >= 1
+    end
 
     result
   end

@@ -7,36 +7,46 @@ require 'minitest'
 Given(/^I have the following participants:$/) do |table|
   @step_helper = StepHelper.new
 
-  @participants_arr = []
-  @all_keys = []
+  @participants_hash = {}
+  @all_keys_hash = {}
 
   table.hashes.each do |item|
     external_id = item[:external_id]
 
-    key_hash = @step_helper.create_key_hash external_id
-    @all_keys << key_hash
+    @all_keys_hash[external_id] = @step_helper.create_key_pair
 
-    wallet = nil
-    wallet = @step_helper.create_wallet if item[:has_wallet]
-    participant = @step_helper.create_participant(item[:role_types], external_id, key_hash[external_id][:pk], wallet)
+    @participants_hash[external_id] = {:roles => item[:role_types].split(','),
+                                       :public_key => @all_keys_hash[external_id][:pk]}
 
-    @participants_arr << participant
+  end
+end
+
+And(/^I have the following wallets:$/) do |table|
+  table.hashes.each do |item|
+    external_id = item[:participant_id]
+
+    secret = nil
+
+    if item[:secret_threshold].to_i > 0
+      secret_value = @all_keys_hash[external_id][:sk]
+      secret = @step_helper.create_secret([secret_value], item[:secret_threshold].to_i)
+    end
+
+    wallet = @step_helper.create_wallet(secret)
+
+    @participants_hash[external_id][:wallet] = wallet
   end
 end
 
 Given(/^I have no participants$/) do
-  @participants_arr = nil
+  @participants_hash = nil
 end
 
 And(/^I have contract signatures from the following participants:$/) do |table|
   @contract_signatures_arr = []
 
   table.hashes.each do |item|
-    participant = @participants_arr.detect do |participant|
-      participant[:external_id] == item[:external_id]
-    end
-
-    @contract_signatures_arr << @step_helper.create_contract_signature(participant[:external_id])
+    @contract_signatures_arr << @step_helper.create_contract_signature(item[:participant_id])
   end
 
 end
@@ -96,6 +106,12 @@ end
 
 When(/^I POST the contract to the API$/) do
 
+  participants_arr = []
+
+  @participants_hash.each do |id, item|
+    participants_arr << @step_helper.create_participant(item[:roles], id, item[:public_key], item[:wallet])
+  end
+
   conditions_arr = []
 
   i = 0
@@ -110,7 +126,7 @@ When(/^I POST the contract to the API$/) do
   end
 
   contract = @step_helper.create_contract('Test contract 1', 'Test contract 1 description', @contract_expires,
-                                          @participants_arr, conditions_arr, @contract_signatures_arr)
+                                          participants_arr, conditions_arr, @contract_signatures_arr)
 
   rest_client = RestUtil.new
   @result = rest_client.execute_post 'http://localhost:9000/contracts', contract.to_json
@@ -121,6 +137,68 @@ Then(/^the API should respond with a (\d+) response code$/) do |arg|
   assert @result.response_code.to_s == arg
 end
 
+Given(/^I have an existing contract$/) do
+  steps '
+    Given I have the following participants:
+      | external_id | role_types |
+      | 1           | creator    |
+      | 2           | oracle     |
+      | 3           | payer      |
+      | 4           | payee      |
+    And I have the following wallets:
+      | participant_id | secret_threshold |
+      | 3              | 1                |
+      | 4              | 0                |
+    And I have contract signatures from the following participants:
+      | participant_id |
+      | 2           |
+    And the contract expiry date is 1449878400
+    And I have 1 conditions
+    And condition 1 has the following signatures:
+      | type  | participant_id | delegated_by |
+      | ecdsa | 2              |              |
+    And condition 1 has an expiry of 1449878400
+    And condition 1 has the following webhooks:
+      | uri                |
+      | www.mywebhook1.com |
+      | www.mywebhook2.com |
+    And I POST the contract to the API
+  '
+end
+
+When(/^I sign the contract as an oracle$/) do
+
+  contract = JSON.parse(@result.response_body, :symbolize_names => true)
+  contract_id = contract[:id]
+  signature_id = contract[:signatures][0][:id]
+
+  # find the oracle id
+  oracle_id = nil
+
+  @participants_hash.each do |id, item|
+    signer = item[:roles].detect do |role|
+      role == 'oracle'
+    end
+    if signer != nil
+      oracle_id = id
+      break
+    end
+  end
+
+  # get the secret key for signing
+  secret_key = @all_keys_hash[oracle_id][:sk]
+
+  # create the signature payload
+  signature = @step_helper.create_updated_contract_signature contract.to_json, secret_key
+
+  # execute the request: /contracts/{id}/signatures/{id}
+  rest_client = RestUtil.new
+  @result = rest_client.execute_post "http://localhost:9000/contracts/#{contract_id}/signatures/#{signature_id}", signature.to_json
+
+end
+
 def get_result
   @result
 end
+
+

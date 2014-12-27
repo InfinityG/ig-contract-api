@@ -25,6 +25,9 @@ module ErrorConstants
     INVALID_PARTICIPANT_CONTRACT_SIGNATURE = 'Invalid participant_external_id for contract signature'
 
     INVALID_PARTICIPANT_CONDITION_SIGNATURE = 'Invalid participant_external_id for condition signature'
+    INVALID_DELEGATED_PARTICIPANT = 'Invalid delegated participant_id for ss_key type signature'
+    INVALID_SECRET_THRESHOLD = 'Secret threshold must be greater than 1 in delegated participant wallet'
+    INVALID_SECRET_FRAGMENT_LENGTH = 'Secret fragment length must be greater than 1 in delegated participant wallet'
     INVALID_SIGNATURE_TYPE_CONDITION = 'Invalid signature type for condition'
 
     SIGNATURE_REQUIRED = 'At least 1 signature is required!'

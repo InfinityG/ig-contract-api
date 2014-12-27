@@ -92,7 +92,7 @@ module Sinatra
       end
 
       # Sign a contract
-      app.put '/contracts/:contract_id/signatures/:signature_id' do
+      app.post '/contracts/:contract_id/signatures/:signature_id' do
 
         contract_id = params[:contract_id]
         signature_id = params[:signature_id]

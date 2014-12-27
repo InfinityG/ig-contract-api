@@ -11,15 +11,21 @@ require_relative '../../../tests/builders/transaction_builder'
 require_relative '../../../tests/builders/webhook_builder'
 require_relative '../../../tests/builders/condition_builder'
 require_relative '../../../tests/builders/contract_builder'
+require_relative '../../../tests/builders/secret_builder'
 
 class StepHelper
 
-  def create_key_hash(participant_external_id)
-    KeyBuilder.new.with_participant_external_id(participant_external_id).build_hash
+  def create_key_pair
+    KeyBuilder.new.build_pair
   end
 
-  def create_wallet
-    WalletBuilder.new.with_address(HashGenerator.new.generate_uuid).build
+  def create_secret(fragments, threshold)
+    SecretBuilder.new.with_fragments(fragments).with_threshold(threshold).build
+  end
+
+  def create_wallet(secret)
+    WalletBuilder.new.with_address(HashGenerator.new.generate_uuid)
+        .with_secret(secret).build
   end
 
   def create_participant(roles, external_id, key, wallet)
@@ -32,6 +38,16 @@ class StepHelper
 
   def create_contract_signature(participant_external_id)
     SignatureBuilder.new.with_participant_external_id(participant_external_id).build
+  end
+
+  def create_updated_contract_signature(data, private_key)
+    ecdsa_util = EcdsaUtil.new
+
+    encoded_digest = HashGenerator.new.generate_hash data
+    signature = ecdsa_util.sign encoded_digest, private_key
+    encoded_signature = ecdsa_util.encode_signature signature
+
+    SignatureBuilder.new.with_value(encoded_signature).with_digest(encoded_digest).build
   end
 
   def create_condition_signature(participant_external_id, type, delegated_by_id)

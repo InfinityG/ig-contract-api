@@ -217,15 +217,16 @@ class ContractRepository
 
   private
   def create_wallet(wallet)
-    result = Wallet.new(address: wallet[:address],
-                        destination_tag: wallet[:destination_tag])
 
+    secret = nil
     if wallet[:secret] != nil
-      result[:secret] = Secret.new(fragments: wallet[:secret][:fragments],
-                                   min_fragments: wallet[:secret][:min_fragments])
+      secret = Secret.new(fragments: wallet[:secret][:fragments],
+                          threshold: wallet[:secret][:threshold].to_i)
     end
 
-    result
+    Wallet.new(address: wallet[:address],
+               destination_tag: wallet[:destination_tag],
+               secret: secret)
   end
 
   private

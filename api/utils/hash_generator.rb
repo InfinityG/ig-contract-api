@@ -3,9 +3,13 @@ require 'digest'
 
 class HashGenerator
 
-  def generate_hash(password, salt)
+  def generate_password_hash(password, salt)
     salted_password = password + salt
-    Digest::SHA2.base64digest salted_password
+    generate_hash salted_password
+  end
+
+  def generate_hash(data)
+    Digest::SHA2.base64digest data
   end
 
   def generate_salt
