@@ -18,7 +18,7 @@ search: true
 
 # Introduction
 
-Welcome to the IG Contract API. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Welcome to the IG SmartContract API. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Contract concepts
 
@@ -26,14 +26,10 @@ Welcome to the IG Contract API. You can view code examples in the dark area to t
 
 Every contract requires a set of participants. Each participant performs a specific role, ie:
 
-* Initiator
-  * The creator of the contract
-* Oracle
-  * A human or machine responsible for approving that conditions have been met
-* Payer
-  * The person sending value to the payee
-* Payee
-  * The person receiving value from the payer
+* **Initiator** - the creator of the contract
+* **Oracle** - a human or machine responsible for approving that conditions have been met
+* **Payer** - the person sending value to the payee
+* **Payee** - the person receiving value from the payer
 
 ## Conditions
 
@@ -48,11 +44,11 @@ A signature is used to sign the condition, to indicate that the it has been met 
 
 Each condition contains a trigger object, which itself may contain an array of **transactions** or **webhooks**. Transactions and/or webhooks are initiated when a condition has been met.
 
-#### Transaction
+**_Transaction_**
 
 Each transaction contains a "from" and "to" component, referring to the "payer" and "payee" participants. It also contains an amount and currency details. Listed transactions will by default be initiated on the Contract API's payment gateway.
 
-#### Webhook
+**_Webhook_**
 
 In contrast to a transaction, a webhook is an endpoint that the Contract API will call when a condition is met. This means that if a different payment gateway is to be used, or the condition does not require a "traditional" value transfer (eg: a gift of a bottle of wine) then an external service can be set up to handle this via the webhook (eg: IronMQ, or IFTTT).
 Request payloads to webhooks are POST by default, and will contain the full contract in JSON format. Webhook endpoints MUST be TLS enabled (HTTPS).
@@ -61,93 +57,21 @@ Request payloads to webhooks are POST by default, and will contain the full cont
 
 When a contract is created, each of the participants (which may or may not include the oracle) is required to sign the contract as a whole. Each signature is attached to the contract. Once this has been done, then the contract is "locked" and cannot be changed (the only thing that is allowed to be updated on the contract is the status and signatures on each condition as they are completed).
 
-# General structure
+# Contract structure
 
-A contract is a JSON document - the typical structure of which is shown on the right. The details and descriptions of the fields can be found in the **"objects"** section.
+## The Contract object
 
 ```
 {
     "id": "",
     "name": "",
     "description": "",
-    "participants": [
-        {
-            "id": "",
-            "external_id": "",
-            "role": ""
-            "public_signing_key": "",
-            "wallet":{
-                "address": "",
-                "destination_tag": "",
-                "secret":{
-                    "fragments":[],
-                    "min_fragments":""
-                }
-            },
-        },
-        ...
-    ],
-    "conditions": [
-        {
-            "id": "",
-            "name": "",
-            "description": "",
-            "sequence_number": "",
-            "signatures": [
-                {
-                    "id":"",
-                    "signatory_participant_external_id": "",
-                    "ss_key_participant_external_id": "",
-                    "value": "",
-                    "digest":""
-                },
-                ...
-            ],
-            "status": "",
-            "trigger": {
-                "id":"",
-                "transactions": [
-                    {
-                        "id": "",
-                        "from_participant_external_id": "",
-                        "to_participant_external_id": "",
-                        "amount": "",
-                        "currency": "",
-                        "status": "",
-                        "ledger_transaction_hash": ""
-                    },
-                    ...
-                ],
-                "webhooks": [
-                    {
-                        "id":"",
-                        "uri:""
-                    },
-                    ...
-                ]
-            },
-            "expires": ""
-        },
-        ...
-    ],
-    "signatures": [
-        {
-            "id":"",
-            "participant_external_id": "",
-            "value": "",
-            "digest":""
-        },
-        ...
-    ],
-    "expires": ""
+    "expires": 0,
+    "conditions": [],
+    "participants":[],
+    "signatures":[]
 }
 ```
-
-# Objects
-
-A contract is a JSON document, and as such, the "objects" that make up a contract are essentially JSON fields.
-
-## The Contract object
 
 | Name         | Type    | Description                                    |
 |--------------|---------|------------------------------------------------|
@@ -155,11 +79,23 @@ A contract is a JSON document, and as such, the "objects" that make up a contrac
 | name         | string  | The name of the contract                       |
 | description  | string  | The description of the contract                |
 | expires      | integer | The expiry date of the contract in UNIX format |
-| conditions   | array   | An array of condition objects                  |
-| participants | array   | An array of participant objects                |
-| signatures   | array   | An array of signature objects                  |
+| conditions   | array   | An array of [condition](#the-condition-object) objects                  |
+| participants | array   | An array of [participant](#the-participant-object) objects                |
+| signatures   | array   | An array of [signature](#the-signature-object) objects                  |
 
 ## The Condition object
+
+```
+{
+    "id": "",
+    "name": "",
+    "description": "",
+    "expires": "",
+    "sequence_number": 0,
+    "status":"",
+    "trigger":{}
+}
+```
 
 | Name            | Type    | Description                                                                 |
 |-----------------|---------|-----------------------------------------------------------------------------|
@@ -169,37 +105,72 @@ A contract is a JSON document, and as such, the "objects" that make up a contrac
 | expires         | integer | The expiry date of the condition in UNIX format                             |
 | sequence_number | integer | A number representing the order in which conditions are processed           |
 | status          | string  | A string (_pending_ or _complete_) representing the status of the condition |
-| trigger         | hash    | An array of signature objects                                               |
+| trigger         | hash    | A hash representing a [trigger](#the-trigger-object) object
 
 ## The Trigger object
+
+```
+{
+    "id": "",
+    "transactions": [],
+    "webhooks": []
+}
+```
 
 | Name         | Type   | Description                                                                          |
 |--------------|--------|--------------------------------------------------------------------------------------|
 | id           | string | A unique identifier generated by the API                                             |
-| transactions | array  | An array of Transaction objects that will be processed when the Trigger is processed |
-| webhooks     | string | An array of Webhook objects that will be processed when the Trigger is processed     |
+| transactions | array  | An array of [transaction](#the-transaction-object) objects that will be processed when the trigger is processed |
+| webhooks     | string | An array of [webhook](#the-webhook-object) objects that will be processed when the trigger is processed     |
 
 
 ## The Participant object
 
+```
+{
+    "id": "",
+    "external_id": "",
+    "public_key": "",
+    "roles": [],
+    "wallet": {}
+}
+```
+
 | Name        | Type   | Description                                                            |
 |-------------|--------|------------------------------------------------------------------------|
 | id          | string | A unique identifier generated by the API                               |
-| external_id | string | The external id of a Participant                                       |
-| public_key  | string | The public key of the Participant used for signing                     |
-| roles       | array  | An array of one or more roles (can be `creator, oracle, payer, payee`) |
-| wallet      | hash   | A Wallet object                                                        |
+| external_id | string | The external id of a participant                                       |
+| public_key  | string | The public key of the participant used for signing                     |
+| roles       | array  | A (string) array of one or more roles (can be `creator, oracle, payer, payee`) |
+| wallet      | hash   | A [wallet](#the-wallet-object) object                                                        |
 
 ## The Wallet object
+
+```
+{
+    "id": "",
+    "address": "",
+    "destination_tag": "",
+    "secret": {}
+}
+```
 
 | Name            | Type   | Description                                                      |
 |-----------------|--------|------------------------------------------------------------------|
 | id              | string | A unique identifier generated by the API                         |
 | address         | string | The (Ripple) address of the wallet                               |
 | destination_tag | string | The destination tag of the wallet (when using managed wallets)   |
-| secret          | hash   | The Secret object representing the secret key (or key fragments) |
+| secret          | hash   | The [secret](#the-secret-object) object representing the secret key (or key fragments) |
 
 ## The Secret object
+
+```
+{
+    "id": "",
+    "threshold": 0,
+    "fragments": []
+}
+```
 
 | Name      | Type    | Description                                                                                        |
 |-----------|---------|----------------------------------------------------------------------------------------------------|
@@ -209,26 +180,53 @@ A contract is a JSON document, and as such, the "objects" that make up a contrac
 
 ## The Signature object
 
+```
+{
+    "id": "",
+    "participant_external_id": "",
+    "participant_id": "",
+    "delegated_by_external_id": "",
+    "delegated_by_id": "",
+    "type":"",
+    "value":"",
+    "digest":""
+}
+```
+
 | Name                     | Type   | Description (when used in Contract)            | Description (when used in Condition)                                                                                          |
 |--------------------------|--------|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | id                       | string | A unique identifier generated by the API       |                                                                                                                               |
-| participant_external_id  | string | The external id of a Participant               |                                                                                                                               |
-| participant_id           | string | The id of the Participant generated by the API |                                                                                                                               |
-| delegated_by_external_id | string | (not used by Contract signatures)              | The external id of a Participant delegated to sign a Condition if `type = ss_key`                                             |
-| delegated_by_id          | string | (not used by Contract signatures)              | The id of the delegated Participant generated by the API                                                                      |
-| type                     | string | (defaults to ecdsa)                            | `_ecdsa_` (when public key signing of a Condition) OR `_ss_key_` (when signing with a shared secret fragment)                 |
-| value                    | string | The public-key signed digest of the Contract   | If `type = ecdsa`, this is the public-key signed digest of the Condition If `type = ss_key`, this is a shared secret fragment |
-| digest                   | string | SHA256 digest of the Contract                  | SHA256 digest of the Condition                                                                                                |
+| participant_external_id  | string | The external id of a [participant](#the-participant-object) |                                                                                                                               |
+| participant_id           | string | The id of the [participant](#the-participant-object) generated by the API |                                                                                                                               |
+| delegated_by_external_id | string | (not used by contract signatures)              | The external id of a [participant](#the-participant-object) delegated to sign a condition if `type = ss_key`                                             |
+| delegated_by_id          | string | (not used by contract signatures)              | The id of the delegated [participant](#the-participant-object) generated by the API                                                                      |
+| type                     | string | (defaults to ecdsa)                            | `_ecdsa_` (when public key signing of a [condition](#the-condition-object)) OR `_ss_key_` (when signing with a shared secret fragment)                 |
+| value                    | string | The public-key signed digest of the contract   | If `type = ecdsa`, this is the public-key signed digest of the [condition](#the-condition-object) If `type = ss_key`, this is a shared secret fragment |
+| digest                   | string | SHA256 digest of the contract                  | SHA256 digest of the condition                                                                                                |
 
 ## The Transaction object
+
+```
+{
+    "id": "",
+    "from_participant_external_id": "",
+    "from_participant": "",
+    "to_participant_external_id": "",
+    "to_participant": "",
+    "amount":0,
+    "currency":"",
+    "status":"",
+    "ledger_transaction_hash":""
+}
+```
 
 | Name                         | Type    | Description                                                                                                  |
 |------------------------------|---------|--------------------------------------------------------------------------------------------------------------|
 | id                           | string  | A unique identifier generated by the API                                                                     |
 | from_participant_external_id | string  | The external id of the Participant from which funds will be sent                                             |
-| from_participant             | string  | A unique identifer of the external id of the Participant from which funds will be sent, generated by the API |
+| from_participant             | string  | A unique identifer of the external id of the participant from which funds will be sent, generated by the API |
 | to_participant_external_id   | string  | The external id of the Participant to which funds will be sent                                               |
-| to_participant               | string  | A unique identifer of the external id of the Participant to which funds will be sent, generated by the API   |
+| to_participant               | string  | A unique identifer of the external id of the participant to which funds will be sent, generated by the API   |
 | amount                       | integer | The amount to be sent                                                                                        |
 | currency                     | string  | The currency (eg: AMP)                                                                                       |
 | status                       | string  | A status flag indicating whether the transaction has been processed (`pending` or `complete`)                |
@@ -236,10 +234,94 @@ A contract is a JSON document, and as such, the "objects" that make up a contrac
 
 ## The Webhook object
 
+```
+{
+    "id": "",
+    "uri": ""
+}
+```
+
 | Name | Type   | Description                                                  |
 |------|--------|--------------------------------------------------------------|
 | id   | string | A unique identifier generated by the API                     |
 | uri  | string | The uri against which a POST request will be made by the API |
+
+
+## Putting it all together
+
+```
+{
+    "id": "",
+    "name": "",
+    "description": "",
+    "expires": "",
+    "conditions": [
+        {
+            "id": "",
+            "name": "",
+            "description": "",
+            "sequence_number": "",
+            "signatures": [
+                {
+                    "id": "",
+                    "participant_external_id": "",
+                    "delegated_by_external_id": "",
+                    "value": "",
+                    "digest": ""
+                }
+            ],
+            "status": "",
+            "trigger": {
+                "id": "",
+                "transactions": [
+                    {
+                        "id": "",
+                        "from_participant_external_id": "",
+                        "to_participant_external_id": "",
+                        "amount": "",
+                        "currency": "",
+                        "status": "",
+                        "ledger_transaction_hash": ""
+                    }
+                ],
+                "webhooks": [
+                    {
+                        "id": "",
+                        "uri": ""
+                    }
+                ]
+            },
+            "expires": ""
+        }
+    ],
+    "participants": [
+        {
+            "id": "",
+            "external_id": "",
+            "role": "",
+            "public_key": "",
+            "wallet": {
+                "address": "",
+                "destination_tag": "",
+                "secret": {
+                    "fragments": [],
+                    "threshold": ""
+                }
+            }
+        }
+    ],
+    "signatures": [
+        {
+            "id": "",
+            "participant_external_id": "",
+            "value": "",
+            "digest": ""
+        }
+    ]
+}
+```
+
+The general JSON structure of a typical contract can be found on the right.
 
 
 # Requests
@@ -565,7 +647,7 @@ curl "http://localhost:9000/contracts/54a040b6b85a5428ea000042"
 
 `GET http://localhost:9000/contracts/{contract_id}`
 
-### Uri parameters identifiers
+### Uri parameters
 
 Parameter  | Description
 --------- | -----------
@@ -578,4 +660,4 @@ Remember the Authorization header!
 
 This endpoint retrieves a specific contract.
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+<aside class="warning">A 403 response will be received if an Authorization header is not set!</aside>
