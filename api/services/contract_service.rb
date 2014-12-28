@@ -50,7 +50,7 @@ class ContractService
     raise ContractError, NO_PARTICIPANT_FOUND if participant == nil
 
     # check signature validity
-    # validate_signature(digest, participant[:public_key], signature_value)
+    validate_signature(digest, participant[:public_key], signature_value)
 
     # update the signature
     update_ecdsa_signature signature, signature_value, digest

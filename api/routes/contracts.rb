@@ -32,7 +32,7 @@ module Sinatra
           return ContractService.new.create_contract(data).to_json
         rescue ContractError => e
           status 400
-          return e.message
+          return e.message.to_json
         end
 
       end
@@ -122,14 +122,14 @@ module Sinatra
           return ContractService.new.sign_contract(contract_id, signature_id, signature_value, digest).to_json
         rescue ContractError => e
           status 400
-          return e.message
+          return e.message.to_json
         end if (contract_id.to_s != '') && (signature_id.to_s != '')
 
         status 404 # not found
       end
 
       # Sign a condition
-      app.put '/contracts/:contract_id/conditions/:condition_id/signatures/:signature_id' do
+      app.post '/contracts/:contract_id/conditions/:condition_id/signatures/:signature_id' do
 
         contract_id = params[:contract_id]
         condition_id = params[:condition_id]
@@ -153,7 +153,7 @@ module Sinatra
                                                     signature_value, digest).to_json
         rescue ContractError => e
           status 400
-          return e.message
+          return e.message.to_json
         end if (contract_id.to_s != '') && (condition_id.to_s != '') && (signature_id.to_s != '')
 
         status 404 # not found

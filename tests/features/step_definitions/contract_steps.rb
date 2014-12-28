@@ -1,3 +1,4 @@
+require_relative '../../../tests/config'
 require_relative '../../../api/utils/rest_util'
 require_relative '../../../tests/features/step_definitions/step_helper'
 
@@ -77,8 +78,9 @@ And(/^condition (\d+) has the following signatures:$/) do |arg, table|
   end
 end
 
-And(/^condition (\d+) has an expiry of (\d+)$/) do |arg1, arg2|
-  @condition_expiry_hash[arg1.to_i] = arg2.to_i
+And(/^condition (\d+) has an expiry of (\d+) days from now$/) do |arg1, arg2|
+  unix_date = get_unix_date arg2.to_i
+  @condition_expiry_hash[arg1.to_i] = unix_date
 end
 
 And(/^condition (\d+) has the following webhooks:$/) do |arg, table|
@@ -100,8 +102,9 @@ And(/^I have no contract signature$/) do
   @contract_signatures_arr = nil
 end
 
-And(/^the contract expiry date is (\d+)$/) do |arg|
-  @contract_expires = arg.to_i
+And(/^the contract expiry date is (\d+) days from now$/) do |arg|
+  unix_date = get_unix_date arg.to_i
+  @contract_expires = unix_date
 end
 
 When(/^I POST the contract to the API$/) do
@@ -129,7 +132,7 @@ When(/^I POST the contract to the API$/) do
                                           participants_arr, conditions_arr, @contract_signatures_arr)
 
   rest_client = RestUtil.new
-  @result = rest_client.execute_post 'http://localhost:9000/contracts', contract.to_json
+  @result = rest_client.execute_post CONTRACT_API_URI, contract.to_json
 
 end
 
@@ -166,39 +169,71 @@ Given(/^I have an existing contract$/) do
   '
 end
 
-When(/^I sign the contract as an oracle$/) do
+When(/^I sign the contract$/) do
+  @result = sign_contract
+end
+
+And(/^The contract state is "([^"]*)"/) do |arg|
+  if arg == 'active'
+    sign_contract
+  end
+end
+
+When(/^I sign a condition$/) do
 
   contract = JSON.parse(@result.response_body, :symbolize_names => true)
   contract_id = contract[:id]
-  signature_id = contract[:signatures][0][:id]
+  condition = contract[:conditions][0]
+  condition_id = condition[:id]
+  condition_signature = condition[:signatures][0]
+  signature_id = condition_signature[:id]
 
-  # find the oracle id
-  oracle_id = nil
-
-  @participants_hash.each do |id, item|
-    signer = item[:roles].detect do |role|
-      role == 'oracle'
-    end
-    if signer != nil
-      oracle_id = id
-      break
-    end
+  signer = contract[:participants].detect do |participant|
+    participant[:id] == condition_signature[:participant_id]
   end
 
+  signer_id = signer[:external_id].to_s
+
   # get the secret key for signing
-  secret_key = @all_keys_hash[oracle_id][:sk]
+  secret_key = @all_keys_hash[signer_id][:sk]
+
+  # create the signature payload
+  signature = @step_helper.create_updated_condition_signature contract.to_json, secret_key
+
+  # execute the request: /contracts/{id}/conditions/{id}/signatures/{id}
+  rest_client = RestUtil.new
+  @result = rest_client.execute_post "#{CONTRACT_API_URI}/#{contract_id}/conditions/#{condition_id}/signatures/#{signature_id}",
+                                     signature.to_json
+
+end
+
+private
+def sign_contract
+  contract = JSON.parse(@result.response_body, :symbolize_names => true)
+  contract_id = contract[:id]
+  contract_signature = contract[:signatures][0]
+  signature_id = contract_signature[:id]
+
+  signer = contract[:participants].detect do |participant|
+    participant[:id] == contract_signature[:participant_id]
+  end
+
+  signer_id = signer[:external_id].to_s
+
+  # get the secret key for signing
+  secret_key = @all_keys_hash[signer_id][:sk]
 
   # create the signature payload
   signature = @step_helper.create_updated_contract_signature contract.to_json, secret_key
 
   # execute the request: /contracts/{id}/signatures/{id}
   rest_client = RestUtil.new
-  @result = rest_client.execute_post "http://localhost:9000/contracts/#{contract_id}/signatures/#{signature_id}", signature.to_json
-
+  rest_client.execute_post "#{CONTRACT_API_URI}/#{contract_id}/signatures/#{signature_id}", signature.to_json
 end
 
-def get_result
-  @result
+private
+def get_unix_date(value)
+  (Date.today + value).to_time.to_i
 end
 
 

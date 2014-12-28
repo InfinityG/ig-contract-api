@@ -3,5 +3,5 @@ Feature: Contract signing
 
   Scenario: Sign a contract as an oracle
     Given I have an existing contract
-    When I sign the contract as an oracle
+    When I sign the contract
     Then the API should respond with a 200 response code

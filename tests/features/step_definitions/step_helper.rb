@@ -57,6 +57,16 @@ class StepHelper
         .build
   end
 
+  def create_updated_condition_signature(data, private_key)
+    ecdsa_util = EcdsaUtil.new
+
+    encoded_digest = HashGenerator.new.generate_hash data
+    signature = ecdsa_util.sign encoded_digest, private_key
+    encoded_signature = ecdsa_util.encode_signature signature
+
+    SignatureBuilder.new.with_value(encoded_signature).with_digest(encoded_digest).build
+  end
+
   def create_webhook(uri)
     WebhookBuilder.new.with_uri(uri).build
   end
