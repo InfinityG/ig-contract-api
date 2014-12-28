@@ -48,10 +48,13 @@ A signature is used to sign the condition, to indicate that the it has been met 
 
 Each condition contains a trigger object, which itself may contain an array of **transactions** or **webhooks**. Transactions and/or webhooks are initiated when a condition has been met.
 
+#### Transaction
+
 Each transaction contains a "from" and "to" component, referring to the "payer" and "payee" participants. It also contains an amount and currency details. Listed transactions will by default be initiated on the Contract API's payment gateway.
 
-In contrast to a transaction, a webhook is an endpoint that the Contract API will call when a condition is met. This means that if a different payment gateway is to be used, or the condition does not require a "traditional" value transfer (eg: a gift of a bottle of wine) then an external service can be set up to handle this via the webhook (eg: IronMQ, or IFTTT).
+#### Webhook
 
+In contrast to a transaction, a webhook is an endpoint that the Contract API will call when a condition is met. This means that if a different payment gateway is to be used, or the condition does not require a "traditional" value transfer (eg: a gift of a bottle of wine) then an external service can be set up to handle this via the webhook (eg: IronMQ, or IFTTT).
 Request payloads to webhooks are POST by default, and will contain the full contract in JSON format. Webhook endpoints MUST be TLS enabled (HTTPS).
 
 ## Contract Signatures
