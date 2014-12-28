@@ -40,13 +40,13 @@ Every contract requires a set of participants. Each participant performs a speci
 Each contract has one or more conditions attached. A condition is a step that must be performed by a participant (generally, but not restricted to, the "payee" - see participants above).
 Each condition must be fulfilled and approved before a contract is marked as complete.
 
-### Signatories
+### Condition Signatures
 
-A signatory is a participant (see above) that is required to sign the condition, to indicate that the it has been met (generally this would be an oracle). A signatory would use a secret key to sign the condition, and the public key (contained in the participant) could be used to validate the signature before the signature is accepted and written into the contract record.
+A signature is used to sign the condition, to indicate that the it has been met (generally this would be an oracle). A signatory would use a secret key to sign the condition, and the public key (contained in the participant) could be used to validate the signature before the signature is accepted and written into the contract record.
 
 ### Trigger
 
-Each condition contains a trigger object, which itself may contain an array of transactions or webhooks. Transactions and/or webhooks are initiated when a condition has been met.
+Each condition contains a trigger object, which itself may contain an array of **transactions** or **webhooks**. Transactions and/or webhooks are initiated when a condition has been met.
 
 Each transaction contains a "from" and "to" component, referring to the "payer" and "payee" participants. It also contains an amount and currency details. Listed transactions will by default be initiated on the Contract API's payment gateway.
 
@@ -54,15 +54,15 @@ In contrast to a transaction, a webhook is an endpoint that the Contract API wil
 
 Request payloads to webhooks are POST by default, and will contain the full contract in JSON format. Webhook endpoints MUST be TLS enabled (HTTPS).
 
-### Signatures
+## Contract Signatures
 
 When a contract is created, each of the participants (which may or may not include the oracle) is required to sign the contract as a whole. Each signature is attached to the contract. Once this has been done, then the contract is "locked" and cannot be changed (the only thing that is allowed to be updated on the contract is the status and signatures on each condition as they are completed).
 
 # General structure
 
-A contract is a JSON document. The general structure of the document is shown below. The details and descriptions of the fields can be found in the **"objects"** section.
+A contract is a JSON document - the typical structure of which is shown on the right. The details and descriptions of the fields can be found in the **"objects"** section.
 
-`
+```
 {
     "id": "",
     "name": "",
@@ -138,7 +138,7 @@ A contract is a JSON document. The general structure of the document is shown be
     ],
     "expires": ""
 }
-`
+```
 
 # Objects
 
