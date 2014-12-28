@@ -20,27 +20,6 @@ search: true
 
 Welcome to the IG Contract API. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-# Authentication
-
-> To authorize, use this code:
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: [key]"
-```
-
-> Make sure to replace `[key]` with your API key.
-
-API keys are required to access the API. API keys must be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: [key]`
-
-<aside class="notice">
-You must replace `[key]` with your personal API key.
-</aside>
-
-
 # Contract concepts
 
 ## Participants
@@ -79,8 +58,91 @@ Request payloads to webhooks are POST by default, and will contain the full cont
 
 When a contract is created, each of the participants (which may or may not include the oracle) is required to sign the contract as a whole. Each signature is attached to the contract. Once this has been done, then the contract is "locked" and cannot be changed (the only thing that is allowed to be updated on the contract is the status and signatures on each condition as they are completed).
 
+# General structure
+
+A contract is a JSON document. The general structure of the document is shown below. The details and descriptions of the fields can be found in the **"objects"** section.
+
+`
+{
+    "id": "",
+    "name": "",
+    "description": "",
+    "participants": [
+        {
+            "id": "",
+            "external_id": "",
+            "role": ""
+            "public_signing_key": "",
+            "wallet":{
+                "address": "",
+                "destination_tag": "",
+                "secret":{
+                    "fragments":[],
+                    "min_fragments":""
+                }
+            },
+        },
+        ...
+    ],
+    "conditions": [
+        {
+            "id": "",
+            "name": "",
+            "description": "",
+            "sequence_number": "",
+            "signatures": [
+                {
+                    "id":"",
+                    "signatory_participant_external_id": "",
+                    "ss_key_participant_external_id": "",
+                    "value": "",
+                    "digest":""
+                },
+                ...
+            ],
+            "status": "",
+            "trigger": {
+                "id":"",
+                "transactions": [
+                    {
+                        "id": "",
+                        "from_participant_external_id": "",
+                        "to_participant_external_id": "",
+                        "amount": "",
+                        "currency": "",
+                        "status": "",
+                        "ledger_transaction_hash": ""
+                    },
+                    ...
+                ],
+                "webhooks": [
+                    {
+                        "id":"",
+                        "uri:""
+                    },
+                    ...
+                ]
+            },
+            "expires": ""
+        },
+        ...
+    ],
+    "signatures": [
+        {
+            "id":"",
+            "participant_external_id": "",
+            "value": "",
+            "digest":""
+        },
+        ...
+    ],
+    "expires": ""
+}
+`
 
 # Objects
+
+A contract is a JSON document, and as such, the "objects" that make up a contract are essentially JSON fields.
 
 ## The Contract object
 
@@ -179,7 +241,29 @@ When a contract is created, each of the participants (which may or may not inclu
 
 # Requests
 
+## Authentication
+
+> To authorize, use this code:
+
+```shell
+# With shell, you can just pass the correct header with each request
+curl "api_endpoint_here"
+  -H "Authorization: [key]"
+```
+
+> Make sure to replace `[key]` with your API key.
+
+API keys are required to access the API. API keys must be included in all API requests to the server in a header that looks like the following:
+
+`Authorization: [key]`
+
+<aside class="notice">
+You must replace `[key]` with your personal API key.
+</aside>
+
 ## Create new Contract
+
+
 
 ```ruby
 ```
