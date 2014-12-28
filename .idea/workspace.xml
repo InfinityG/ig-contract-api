@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3249df37-3263-4591-a8be-5c812b240fe7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/services/contract_service.rb" afterPath="$PROJECT_DIR$/api/services/contract_service.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/features/step_definitions/contract_steps.rb" afterPath="$PROJECT_DIR$/tests/features/step_definitions/contract_steps.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.md" afterPath="$PROJECT_DIR$/docs/index.md" />
     </list>
     <ignored path="ig-contract-api.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,8 +65,8 @@
     <SUITE FILE_PATH="coverage/ig-contract-api@test_signature_validates_false__ig_contract_api.coverage" NAME="test_signature_validates_false: ig-contract-api Coverage Results" MODIFIED="1417101809591" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract_with_4_participants__oracle__creator__payer__payee___1_ecdsa_signature_and_1_condition___ig_contract_api__2_.coverage" NAME="Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.: ig-contract-api (2) Coverage Results" MODIFIED="1419682572083" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@test_creates_key_pair__ig_contract_api.coverage" NAME="test_creates_key_pair: ig-contract-api Coverage Results" MODIFIED="1418921185447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
+    <SUITE FILE_PATH="coverage/ig-contract-api@contract_create__ig_contract_api.coverage" NAME="contract_create: ig-contract-api Coverage Results" MODIFIED="1419788431349" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
     <SUITE FILE_PATH="coverage/ig-contract-api@Create_new_contract__ig_contract_api__2_.coverage" NAME="Create new contract: ig-contract-api (2) Coverage Results" MODIFIED="1419088314577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
-    <SUITE FILE_PATH="coverage/ig-contract-api@contract_create__ig_contract_api.coverage" NAME="contract_create: ig-contract-api Coverage Results" MODIFIED="1419771565699" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" MODULE_NAME="ig-contract-api" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -82,11 +80,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="contract.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/models/contract.rb">
+      <file leaf-file-name="contract_create.feature" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/features/contract_create.feature">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
-              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1335">
+              <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -142,6 +140,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="contract_steps.rb" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/contract_steps.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1861" max-vertical-offset="3675">
+              <caret line="133" column="28" selection-start-line="133" selection-start-column="28" selection-end-line="133" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="transaction.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/models/transaction.rb">
           <provider selected="true" editor-type-id="text-editor">
@@ -168,18 +176,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6048387" vertical-offset="0" max-vertical-offset="3780">
-              <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="trigger.rb" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/models/trigger.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="240">
-              <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.5704057" vertical-offset="4486" max-vertical-offset="5970">
+              <caret line="315" column="13" selection-start-line="315" selection-start-column="13" selection-end-line="315" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -198,7 +196,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/config.ru" />
         <option value="$PROJECT_DIR$/app.rb" />
         <option value="$PROJECT_DIR$/api/models/queue_item.rb" />
         <option value="$PROJECT_DIR$/api/services/queue_processor_service.rb" />
@@ -249,6 +246,7 @@
         <option value="$PROJECT_DIR$/api/services/config_service.rb" />
         <option value="$PROJECT_DIR$/api/services/contract_service.rb" />
         <option value="$PROJECT_DIR$/tests/features/step_definitions/contract_steps.rb" />
+        <option value="$PROJECT_DIR$/docs/index.md" />
       </list>
     </option>
   </component>
@@ -351,6 +349,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="features" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="step_definitions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ig-contract-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ig-contract-api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="builders" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -426,7 +446,7 @@
       <recent name="$PROJECT_DIR$/tests/features/step_definitions" />
     </key>
   </component>
-  <component name="RunManager" selected="Cucumber.condition_sign: ig-contract-api">
+  <component name="RunManager" selected="Cucumber.contract_create: ig-contract-api">
     <configuration default="false" name="contract_create: ig-contract-api" type="CucumberRunConfigurationType" factoryName="Cucumber" temporary="true">
       <predefined_log_file id="RUBY_CUCUMBER" enabled="true" />
       <module name="ig-contract-api" />
@@ -787,11 +807,11 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Cucumber.Sign a condition on an active contract: ig-contract-api" />
-        <item index="1" class="java.lang.String" itemvalue="Cucumber.condition_sign: ig-contract-api" />
-        <item index="2" class="java.lang.String" itemvalue="Cucumber.contract_sign: ig-contract-api" />
-        <item index="3" class="java.lang.String" itemvalue="Cucumber.Create new contract with 3 participants (creator and payer are the same participant).: ig-contract-api (1)" />
-        <item index="4" class="java.lang.String" itemvalue="Cucumber.contract_create: ig-contract-api" />
+        <item index="0" class="java.lang.String" itemvalue="Cucumber.contract_create: ig-contract-api" />
+        <item index="1" class="java.lang.String" itemvalue="Cucumber.Sign a condition on an active contract: ig-contract-api" />
+        <item index="2" class="java.lang.String" itemvalue="Cucumber.condition_sign: ig-contract-api" />
+        <item index="3" class="java.lang.String" itemvalue="Cucumber.contract_sign: ig-contract-api" />
+        <item index="4" class="java.lang.String" itemvalue="Cucumber.Create new contract with 3 participants (creator and payer are the same participant).: ig-contract-api (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -839,8 +859,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33762518" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18597998" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.442757" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35280374" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.442757" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35280374" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35397196" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1182,14 +1202,14 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/tests/features/step_definitions/contract_steps.rb</url>
-          <line>106</line>
-          <option name="timeStamp" value="325" />
+          <line>134</line>
+          <option name="timeStamp" value="326" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="326" />
+      <option name="time" value="327" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1198,6 +1218,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1219,6 +1240,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1226,6 +1248,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
           <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1240,6 +1263,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="450">
           <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1289,6 +1313,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
           <caret line="34" column="3" selection-start-line="34" selection-start-column="3" selection-end-line="34" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1311,6 +1336,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
           <caret line="29" column="30" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1347,6 +1373,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="489" max-vertical-offset="1710">
           <caret line="56" column="14" selection-start-line="56" selection-start-column="14" selection-end-line="56" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1361,6 +1388,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1437,22 +1465,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="972" max-vertical-offset="2595">
           <caret line="93" column="43" selection-start-line="93" selection-start-column="43" selection-end-line="93" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/contract_create.feature">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1335">
-          <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/contract_steps.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2030" max-vertical-offset="3675">
-          <caret line="159" column="49" selection-start-line="159" selection-start-column="49" selection-end-line="159" selection-end-column="49" />
           <folding />
         </state>
       </provider>
@@ -1545,13 +1557,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/features/step_definitions/contract_steps.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1861" max-vertical-offset="3675">
+          <caret line="133" column="28" selection-start-line="133" selection-start-column="28" selection-end-line="133" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/features/contract_create.feature">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="1335">
+          <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/docs/index.md">
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6048387" vertical-offset="0" max-vertical-offset="3780">
-          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.5704057" vertical-offset="4486" max-vertical-offset="5970">
+          <caret line="315" column="13" selection-start-line="315" selection-start-column="13" selection-end-line="315" selection-end-column="13" />
           <folding />
         </state>
       </provider>
