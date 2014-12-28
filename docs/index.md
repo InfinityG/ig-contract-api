@@ -40,11 +40,49 @@ API keys are required to access the API. API keys must be included in all API re
 You must replace `[key]` with your personal API key.
 </aside>
 
-# Contracts
 
-## Contract structure
+# Contract concepts
 
-### The Contract object
+## Participants
+
+Every contract requires a set of participants. Each participant performs a specific role, ie:
+
+* Initiator
+  * The creator of the contract
+* Oracle
+  * A human or machine responsible for approving that conditions have been met
+* Payer
+  * The person sending value to the payee
+* Payee
+  * The person receiving value from the payer
+
+## Conditions
+
+Each contract has one or more conditions attached. A condition is a step that must be performed by a participant (generally, but not restricted to, the "payee" - see participants above).
+Each condition must be fulfilled and approved before a contract is marked as complete.
+
+### Signatories
+
+A signatory is a participant (see above) that is required to sign the condition, to indicate that the it has been met (generally this would be an oracle). A signatory would use a secret key to sign the condition, and the public key (contained in the participant) could be used to validate the signature before the signature is accepted and written into the contract record.
+
+### Trigger
+
+Each condition contains a trigger object, which itself may contain an array of transactions or webhooks. Transactions and/or webhooks are initiated when a condition has been met.
+
+Each transaction contains a "from" and "to" component, referring to the "payer" and "payee" participants. It also contains an amount and currency details. Listed transactions will by default be initiated on the Contract API's payment gateway.
+
+In contrast to a transaction, a webhook is an endpoint that the Contract API will call when a condition is met. This means that if a different payment gateway is to be used, or the condition does not require a "traditional" value transfer (eg: a gift of a bottle of wine) then an external service can be set up to handle this via the webhook (eg: IronMQ, or IFTTT).
+
+Request payloads to webhooks are POST by default, and will contain the full contract in JSON format. Webhook endpoints MUST be TLS enabled (HTTPS).
+
+### Signatures
+
+When a contract is created, each of the participants (which may or may not include the oracle) is required to sign the contract as a whole. Each signature is attached to the contract. Once this has been done, then the contract is "locked" and cannot be changed (the only thing that is allowed to be updated on the contract is the status and signatures on each condition as they are completed).
+
+
+# Objects
+
+## The Contract object
 
 | Name         | Type    | Description                                    |
 |--------------|---------|------------------------------------------------|
@@ -56,7 +94,7 @@ You must replace `[key]` with your personal API key.
 | participants | array   | An array of participant objects                |
 | signatures   | array   | An array of signature objects                  |
 
-### The Condition object
+## The Condition object
 
 | Name            | Type    | Description                                                                 |
 |-----------------|---------|-----------------------------------------------------------------------------|
@@ -68,7 +106,7 @@ You must replace `[key]` with your personal API key.
 | status          | string  | A string (_pending_ or _complete_) representing the status of the condition |
 | trigger         | hash    | An array of signature objects                                               |
 
-### The Trigger object
+## The Trigger object
 
 | Name         | Type   | Description                                                                          |
 |--------------|--------|--------------------------------------------------------------------------------------|
@@ -77,7 +115,7 @@ You must replace `[key]` with your personal API key.
 | webhooks     | string | An array of Webhook objects that will be processed when the Trigger is processed     |
 
 
-### The Participant object
+## The Participant object
 
 | Name        | Type   | Description                                                            |
 |-------------|--------|------------------------------------------------------------------------|
@@ -87,7 +125,7 @@ You must replace `[key]` with your personal API key.
 | roles       | array  | An array of one or more roles (can be `creator, oracle, payer, payee`) |
 | wallet      | hash   | A Wallet object                                                        |
 
-### The Wallet object
+## The Wallet object
 
 | Name            | Type   | Description                                                      |
 |-----------------|--------|------------------------------------------------------------------|
@@ -96,7 +134,7 @@ You must replace `[key]` with your personal API key.
 | destination_tag | string | The destination tag of the wallet (when using managed wallets)   |
 | secret          | hash   | The Secret object representing the secret key (or key fragments) |
 
-### The Secret object
+## The Secret object
 
 | Name      | Type    | Description                                                                                        |
 |-----------|---------|----------------------------------------------------------------------------------------------------|
@@ -104,7 +142,7 @@ You must replace `[key]` with your personal API key.
 | threshold | integer | The minimum number of fragments required to generate the secret key                                |
 | fragments | array   | An array of secret fragments. If `threshold = 1` then this will simply be the unfragmented secret. |
 
-### The Signature object
+## The Signature object
 
 | Name                     | Type   | Description (when used in Contract)            | Description (when used in Condition)                                                                                          |
 |--------------------------|--------|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
@@ -117,7 +155,7 @@ You must replace `[key]` with your personal API key.
 | value                    | string | The public-key signed digest of the Contract   | If `type = ecdsa`, this is the public-key signed digest of the Condition If `type = ss_key`, this is a shared secret fragment |
 | digest                   | string | SHA256 digest of the Contract                  | SHA256 digest of the Condition                                                                                                |
 
-### The Transaction object
+## The Transaction object
 
 | Name                         | Type    | Description                                                                                                  |
 |------------------------------|---------|--------------------------------------------------------------------------------------------------------------|
@@ -131,13 +169,15 @@ You must replace `[key]` with your personal API key.
 | status                       | string  | A status flag indicating whether the transaction has been processed (`pending` or `complete`)                |
 | ledger_transaction_hash      | string  |                                                                                                              |
 
-### The Webhook object
+## The Webhook object
 
 | Name | Type   | Description                                                  |
 |------|--------|--------------------------------------------------------------|
 | id   | string | A unique identifier generated by the API                     |
 | uri  | string | The uri against which a POST request will be made by the API |
 
+
+# Requests
 
 ## Create new Contract
 
