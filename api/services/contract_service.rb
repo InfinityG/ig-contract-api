@@ -91,7 +91,7 @@ class ContractService
         raise ContractError, NO_PARTICIPANT_FOUND if participant == nil
 
         # check signature validity
-        # validate_signature(digest, participant[:public_key], signature_value)
+        validate_signature(digest, participant[:public_key], signature_value)
 
         # if valid, then update
         update_ecdsa_signature(signature, signature_value, digest)
@@ -102,7 +102,7 @@ class ContractService
 
         return signature
       when 'ss_key'
-
+        # TODO:look up the relevant participant id associated with the delegate id and add ss_key to fragment array
       else
         raise ContractError, UNKNOWN_SIGNATURE_TYPE
     end

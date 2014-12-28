@@ -155,12 +155,12 @@ Given(/^I have an existing contract$/) do
     And I have contract signatures from the following participants:
       | participant_id |
       | 2           |
-    And the contract expiry date is 1449878400
+    And the contract expiry date is 2 days from now
     And I have 1 conditions
     And condition 1 has the following signatures:
       | type  | participant_id | delegated_by |
       | ecdsa | 2              |              |
-    And condition 1 has an expiry of 1449878400
+    And condition 1 has an expiry of 3 days from now
     And condition 1 has the following webhooks:
       | uri                |
       | www.mywebhook1.com |
