@@ -264,9 +264,8 @@ API keys are required to access the API. API keys must be included in all API re
 You must replace `[key]` with your personal API key.
 </aside>
 
+
 ## Create new Contract
-
-
 
 ```ruby
 ```
@@ -453,67 +452,130 @@ curl "http://localhost:9000/contracts"
 }
 ```
 
-This endpoint retrieves all kittens.
+This endpoint creates a new contract.
 
-### HTTP Request
-
-`GET http://example.com/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
+## Get Contract
 
 ```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
 ```
 
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
 ```
 
 ```shell
-curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
+curl "http://localhost:9000/contracts/54a040b6b85a5428ea000042"
+  -H "Authorization: [key]"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+    "conditions": [
+        {
+            "description": "Test condition 1 description",
+            "expires": 1419984000,
+            "id": "54a040b6b85a5428ea000040",
+            "name": "Test condition 1",
+            "sequence_number": 1,
+            "signatures": [
+                {
+                    "delegated_by_id": "",
+                    "id": "54a040b6b85a5428ea00003d",
+                    "participant_id": "54a040b6b85a5428ea00003a",
+                    "type": "ecdsa"
+                }
+            ],
+            "status": "pending",
+            "trigger": {
+                "id": "54a040b6b85a5428ea00003f",
+                "transactions": [
+                    {
+                        "amount": 100,
+                        "currency": "PDC",
+                        "from_participant_id": "54a040b6b85a5428ea000039",
+                        "id": "54a040b6b85a5428ea00003e",
+                        "status": "pending",
+                        "to_participant_id": "54a040b6b85a5428ea00003c"
+                    }
+                ],
+                "webhooks": []
+            }
+        }
+    ],
+    "description": "Test contract 1 description",
+    "expires": 1419897600,
+    "id": "54a040b6b85a5428ea000042",
+    "name": "Test contract 1",
+    "participants": [
+        {
+            "external_id": 1,
+            "id": "54a040b6b85a5428ea000039",
+            "public_key": "BKID9EgNllR9zNcwXDxdMbU76s0WwpMeD31vrTaxyDg3k53W/NFIo0G6ggO1\nzonI2zsgRbeQutIFfFqpHHPEY3Q=\n",
+            "roles": [
+                "creator",
+                "payer"
+            ],
+            "wallet": {
+                "address": "2147d348-6a31-484c-b974-f4452f006e81",
+                "id": "54a040b6b85a5428ea000038",
+                "secret": {
+                    "fragments": [
+                        "TaWs+hB2uowc5ZOzZZ0er9S/rZ+yNgjOAMmhM0Mpkgg=\n"
+                    ],
+                    "id": "54a040b6b85a5428ea000037",
+                    "threshold": 1
+                }
+            }
+        },
+        {
+            "external_id": 2,
+            "id": "54a040b6b85a5428ea00003a",
+            "public_key": "BI+vVlovs0j+wSxrUoZZf3GRjvy0bi9cXb8ksd4mR0WYPUAAwIbIAcPP++Qy\n++RoDJ0sgyaIjZPV10E9s2byd1s=\n",
+            "roles": [
+                "oracle"
+            ],
+            "wallet": null
+        },
+        {
+            "external_id": 3,
+            "id": "54a040b6b85a5428ea00003c",
+            "public_key": "BOnjAl6WzsGR6cfjR0DvB321hnveTErmXt/UpQUbeTrUdrJir13Agv/pRq2F\nt4kvtm7wh9kRZb3pNHe1dOQKmoE=\n",
+            "roles": [
+                "payee"
+            ],
+            "wallet": {
+                "address": "38c7cf68-dcb8-409d-b686-5ba212f0951e",
+                "id": "54a040b6b85a5428ea00003b",
+                "secret": null
+            }
+        }
+    ],
+    "signatures": [
+        {
+            "id": "54a040b6b85a5428ea000041",
+            "participant_id": "54a040b6b85a5428ea00003a"
+        }
+    ],
+    "status": "pending"
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
-
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET http://localhost:9000/contracts/{contract_id}`
 
-### URL Parameters
+### Uri parameters identifiers
 
-Parameter | Description
+Parameter  | Description
 --------- | -----------
-ID | The ID of the cat to retrieve
+contract_id | The id of the contract to retrieve
 
+<aside class="success">
+Remember the Authorization header!
+</aside>
+
+
+This endpoint retrieves a specific contract.
+
+<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
