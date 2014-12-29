@@ -1,9 +1,12 @@
 require 'date'
 require 'json'
 require './api/errors/validation_error'
+require './api/constants/contract_constants'
+require './api/constants/error_constants'
 
 class ContractValidator
   include ErrorConstants::ValidationErrors
+  include GeneralConstants::ContractConstants
 
   # new contracts don't require a signature
   def validate_new_contract(data)
@@ -81,7 +84,7 @@ class ContractValidator
       result << INVALID_PARTICIPANT_CONDITION_SIGNATURE unless validate_string signature[:participant_external_id].to_s
       result << INVALID_SIGNATURE_TYPE_CONDITION unless validate_string signature[:type].to_s
 
-      if signature[:type].to_s == 'ss_key'
+      if signature[:type].to_s == SHARED_SECRET
         result.concat(validate_delegated_participant(signature[:delegated_by_external_id], participants))
       end
 
@@ -128,13 +131,14 @@ class ContractValidator
       result << INVALID_PARTICIPANT_EXTERNAL_ID unless validate_string participant[:external_id].to_s
       result << INVALID_PARTICIPANT_PUBLIC_KEY unless validate_string participant[:public_key]
 
-      if participant[:roles] == nil || participant[:roles].count == 0
-        result << INVALID_PARTICIPANT_ROLE
-      else
-        participant[:roles].each do |role|
-          result << INVALID_PARTICIPANT_ROLE unless validate_string role
-        end
-      end
+      (participant[:roles] == nil || participant[:roles].count == 0) ?
+          result << INVALID_PARTICIPANT_ROLE :
+          participant[:roles].each do |role|
+            result << INVALID_PARTICIPANT_ROLE unless validate_string role
+            result << INVALID_PARTICIPANT_ROLE unless ROLES.detect do |item|
+              role == item
+            end
+          end
 
       #Note: wallet_address and wallet_tag are not required
     end if participants != nil
