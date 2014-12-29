@@ -1,14 +1,14 @@
 Feature: Contract creation
   Should be able to create a new contract on the API
 
-  Scenario: Create new contract with 4 participants (oracle, creator, payer, payee), 1 ecdsa signature and 1 condition.
+  Scenario: Create new contract with 4 participants (oracle, initiator, sender, receiver), 1 ecdsa signature and 1 condition.
   Condition trigger has a single webhook and no transactions.
     Given I have the following participants:
       | external_id | role_types |
-      | 1           | creator    |
+      | 1           | initiator    |
       | 2           | oracle     |
-      | 3           | payer      |
-      | 4           | payee      |
+      | 3           | sender      |
+      | 4           | receiver      |
     And I have the following wallets:
       | participant_id | secret_threshold |
       | 3              | 1                |
@@ -29,13 +29,13 @@ Feature: Contract creation
     And I POST the contract to the API
     Then the API should respond with a 200 response code
 
-  Scenario: Create new contract with 3 participants (creator and payer are the same participant).
+  Scenario: Create new contract with 3 participants (initiator and sender are the same participant).
   Condition has a single transaction with an ecdsa signature.
     Given I have the following participants:
       | external_id | role_types    |
-      | 1           | creator,payer |
+      | 1           | initiator,sender |
       | 2           | oracle        |
-      | 3           | payee         |
+      | 3           | receiver         |
     And I have the following wallets:
       | participant_id | secret_threshold |
       | 1              | 1                |
@@ -55,13 +55,13 @@ Feature: Contract creation
     And I POST the contract to the API
     Then the API should respond with a 200 response code
 
-  Scenario: Create new contract with 3 participants (creator and payer are the same participant).
+  Scenario: Create new contract with 3 participants (initiator and sender are the same participant).
   Condition has a single transaction with ss_key signature.
     Given I have the following participants:
       | external_id | role_types    |
-      | 1           | creator,payer |
+      | 1           | initiator,sender |
       | 2           | oracle        |
-      | 3           | payee         |
+      | 3           | receiver         |
     And I have the following wallets:
       | participant_id | secret_threshold |
       | 1              | 2                |

@@ -144,10 +144,10 @@ Given(/^I have an existing contract$/) do
   steps '
     Given I have the following participants:
       | external_id | role_types |
-      | 1           | creator    |
+      | 1           | initiator    |
       | 2           | oracle     |
-      | 3           | payer      |
-      | 4           | payee      |
+      | 3           | sender      |
+      | 4           | receiver      |
     And I have the following wallets:
       | participant_id | secret_threshold |
       | 3              | 1                |
