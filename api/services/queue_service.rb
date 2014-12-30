@@ -13,4 +13,8 @@ class QueueService
   def get_pending_triggers
     @queue_repository.get_pending_queue_items
   end
+
+  def update_queue_item(id, status)
+    @queue_repository.update_queue_item id, status
+  end
 end

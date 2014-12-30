@@ -62,7 +62,6 @@ class ContractService
     contract.save
 
     signature
-
   end
 
   def sign_condition(contract_id, condition_id, signature_id, signature_value, digest)
@@ -96,13 +95,13 @@ class ContractService
         # if valid, then update
         update_ecdsa_signature(signature, signature_value, digest)
 
-        # add to the trigger queue
-        # TODO: check if all signatures have been signed
-        # @queue_service.add_trigger_to_queue contract_id, condition_id, condition.trigger.id
+        # confirm all condition signatures have been signed - if so, add trigger to queue
+        @queue_service.add_trigger_to_queue contract_id, condition_id, condition.trigger.id if confirm_all_condition_signatures condition
 
         return signature
       when 'ss_key'
         # TODO:look up the relevant participant id associated with the delegate id and add ss_key to fragment array
+        raise 'Not implemented!'
       else
         raise ContractError, UNKNOWN_SIGNATURE_TYPE
     end
@@ -139,7 +138,7 @@ class ContractService
 
   private
   def validate_signature(digest, public_key, signature_value)
-    unless @signature_service.validate_cryptocoin_js_signature digest, signature_value, public_key
+    unless @signature_service.validate_signature digest, signature_value, public_key
       raise 'Signature could not be verified!'
     end
   end
@@ -164,5 +163,15 @@ class ContractService
     end
 
     contract.status = 'active' if signature_count == contract.signatures.count
+  end
+
+  private
+  def confirm_all_condition_signatures(condition)
+    condition.signatures.each do |signature|
+      if signature[:value].to_s == '' || signature[:digest].to_s == ''
+        return false
+      end
+    end
+    true
   end
 end

@@ -14,6 +14,6 @@ class TransactionService
   def process_transaction(transaction, from_participant, to_participant)
     # TODO: parse transaction; reassemble shared secret (if applicable); execute POST request to payment gateway
 
-
+    LOGGER.info "Processing transaction:#{transaction.id}"
   end
 end

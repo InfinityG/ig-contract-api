@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require 'openssl'
 require 'base64'
 
-require '../api/utils/ecdsa_util'
+require_relative '../../api/utils/ecdsa_util'
 
 class EcdsaUtilTest < MiniTest::Test
   include OpenSSL
@@ -11,16 +11,16 @@ class EcdsaUtilTest < MiniTest::Test
   def test_creates_key_pair
     util = EcdsaUtil.new
 
-    pair = util.create_ecdsa_key_pair
+    pair = util.create_key_pair
 
-    assert pair[:sk] != nil
-    assert pair[:pk] != nil
+    refute_nil pair[:sk]
+    refute_nil pair[:pk]
   end
 
   def test_base64_encodes_public_key
     util = EcdsaUtil.new
 
-    pair = util.create_ecdsa_key_pair
+    pair = util.create_key_pair
     encoded_key = util.encode_public_key pair[:pk]
 
     assert encoded_key != nil
@@ -29,7 +29,7 @@ class EcdsaUtilTest < MiniTest::Test
   def test_validates_signature
     util = EcdsaUtil.new
 
-    pair = util.create_ecdsa_key_pair
+    pair = util.create_key_pair
     data = 'My test data'
 
     encoded_private_key = util.encode_private_key pair[:sk]

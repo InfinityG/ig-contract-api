@@ -4,7 +4,7 @@ class KeyBuilder
 
   def build_pair
     ecdsa_util = EcdsaUtil.new
-    key_pair = ecdsa_util.create_ecdsa_key_pair
+    key_pair = ecdsa_util.create_key_pair
     public_key = key_pair[:pk]
     secret_key = key_pair[:sk]
 

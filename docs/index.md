@@ -398,6 +398,7 @@ An API key is required to access the API. This key must be included in all reque
 You must replace `[key]` with your personal API key.
 </aside>
 
+<aside class="warning">A 403 response will be received if an Authorization header is not set!</aside>
 
 ## Create Contract
 
@@ -875,9 +876,6 @@ condition_id    | The id of the condition to retrieve
 <aside class="success">
 Remember the Authorization header!
 </aside>
-
-<aside class="warning">A 403 response will be received if an Authorization header is not set!</aside>
-
 
 ## Update Condition Signature
 

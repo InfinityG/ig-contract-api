@@ -3,7 +3,7 @@ require 'base64'
 require 'openssl'
 
 class EcdsaUtil
-  def create_ecdsa_key_pair
+  def create_key_pair
     group_name = 'secp256k1'
 
     curve = OpenSSL::PKey::EC.new(group_name)

@@ -25,11 +25,11 @@ class QueueProcessorService
 
             # get the condition
             current_condition = contract.conditions.detect do |condition|
-              condition.id == queue_item.condition_id
+              condition.id.to_s == queue_item.condition_id.to_s
             end
 
             # get the trigger for the condition
-            current_trigger = current_condition[:trigger]
+            current_trigger = current_condition.trigger
 
             # process transactions
             if (current_trigger.transactions != nil) && (current_trigger.transactions.count > 0)
@@ -37,12 +37,12 @@ class QueueProcessorService
 
                 # from participant
                 from_participant = contract.participants.detect do |participant|
-                  participant.id == transaction.from_participant_id
+                  participant.id.to_s == transaction.from_participant_id.to_s
                   end
 
                 # to participant
                 to_participant = contract.participants.detect do |participant|
-                  participant.id == transaction.to_participant_id
+                  participant.id.to_s == transaction.to_participant_id.to_s
                 end
 
                 transaction_service.process_transaction transaction, from_participant, to_participant
@@ -50,12 +50,13 @@ class QueueProcessorService
             end
 
             # process webhooks
-            if (current_trigger[:webhooks] != nil) && (current_trigger[:webhooks].count > 0)
-              current_trigger[:webhooks].each do |webhook|
+            if (current_trigger.webhooks != nil) && (current_trigger.webhooks.count > 0)
+              current_trigger.webhooks.each do |webhook|
                 webhook_service.process_webhook webhook
               end
             end
 
+            queue_service.update_queue_item queue_item.id, 'complete'
           end
 
         rescue Exception => e
