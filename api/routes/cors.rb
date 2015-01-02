@@ -6,7 +6,7 @@ module Sinatra
 
       app.options '*' do
         response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
-        response.headers['Access-Control-Allow-Origin'] = ALLOWED_ORIGIN
+        response.headers['Access-Control-Allow-Origin'] = settings.allowed_origin
         response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, OPTIONS'
       end
 
@@ -14,7 +14,7 @@ module Sinatra
         # if request.request_method == 'OPTIONS'
           # Needed for AngularJS
           response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
-          response.headers['Access-Control-Allow-Origin'] = ALLOWED_ORIGIN
+          response.headers['Access-Control-Allow-Origin'] = settings.allowed_origin
           response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, OPTIONS'
 
           # halt 200

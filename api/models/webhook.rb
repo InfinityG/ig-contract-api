@@ -4,6 +4,8 @@ module SmartContract
       include MongoMapper::EmbeddedDocument
 
       key :uri, String
+      key :headers, Array
+      key :body, String
     end
   end
 end

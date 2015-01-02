@@ -6,18 +6,9 @@
 
 # Bundler.require
 
-require 'logger'
 require './app'
-require 'mongo'
-require 'mongo_mapper'
-
-# Global constants
-GATEWAY_WEBHOOK_URI = 'http://localhost:8001/notifications'
-LOGGER = Logger.new 'app_log.log', 10, 1024000
-DEFAULT_REQUEST_TIMEOUT = 60
-ALLOWED_ORIGIN = 'http://localhost:8001'
-
 
 run ApiApp
 
-# start this with 'rackup -p 8000' to start on port 8000
+# start this with 'rackup -p 9000' to start on port 9000
+# start this with 'rackup -p 9000 -E development' to start on port 9000, for development environment

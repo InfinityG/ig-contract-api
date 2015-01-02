@@ -1,0 +1,1292 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="javascripts/all.js" type="text/javascript"></script>
+
+      <script>
+        $(function() {
+          setupLanguages(["shell","ruby","python"]);
+        });
+      </script>
+  </head>
+
+  <body class="index">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+      <img src="images/logo.png" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="ruby">ruby</a>
+              <a href="#" data-language-name="python">python</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc">
+      </div>
+        <ul class="toc-footer">
+            <li><a href='#'>Sign Up for a Developer Key</a></li>
+            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to the Smart Contract API, a RESTful API used to manage the creation and maintenance of digital contracts. It attempts to be as generic as possible to cater for very different use-cases.</p>
+
+<p><strong><em>Contract definition: &ldquo;&hellip;an agreement with specific terms between two or more persons or entities in which there is a promise to do something in return for a valuable benefit &hellip;&rdquo;</em></strong></p>
+
+<p>This document is intended for use primarily by developers, and as such, assumes basic knowledge of HTTP, RESTful API&rsquo;s and JSON data structures.</p>
+
+<p>You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<h1 id='concepts'>Concepts</h1><h2 id='participants'>Participants</h2>
+<p>Every contract requires a set of participants. Each participant performs a specific role, ie:</p>
+
+<ul>
+<li><strong>Initiator</strong> - the creator of the contract</li>
+<li><strong>Oracle</strong> - a human or machine responsible for approving that conditions have been met</li>
+<li><strong>Sender</strong> - the person sending value to the receiver. This may have monetary value (in the case of a transaction) or simply a transfer of information (in the case of a webhook)</li>
+<li><strong>Receiver</strong> - the person receiving value from the sender</li>
+</ul>
+<h2 id='signatures'>Signatures</h2>
+<p>Once a contract has been created, one or more participants (which may or may not include the oracle) is required to sign the contract as a whole. Each signature is attached to the contract.</p>
+
+<p>A contract is marked as <em>&ldquo;pending&rdquo;</em> until all signatures have been received. Once all signatures are present, the contract is then marked as <em>&ldquo;active&rdquo;</em>.</p>
+
+<p>An <em>&ldquo;active&rdquo;</em> contract is effectively locked and cannot be changed (except for condition signatures as they are completed - see below).</p>
+<h2 id='conditions'>Conditions</h2>
+<p>Each contract has one or more conditions attached. A condition is a step that must be performed by a participant (generally, but not restricted to, the &ldquo;receiver&rdquo; - see participants above).
+Each condition must be fulfilled and approved before a contract is marked as complete.</p>
+<h3 id='condition-signatures'>Condition Signatures</h3>
+<p>A signature is used to sign the condition, to indicate that the it has been met (generally this would be an oracle). A signatory would use a secret key to sign the condition, and the public key (contained in the participant) could be used to validate the signature before the signature is accepted and written into the contract record.</p>
+<h3 id='trigger'>Trigger</h3>
+<p>Each condition contains a trigger object, which itself may contain an array of <strong>transactions</strong> or <strong>webhooks</strong>. Transactions and/or webhooks are initiated when a condition has been met.</p>
+
+<p><strong><em>Transaction</em></strong></p>
+
+<p>Each transaction contains a &ldquo;from&rdquo; and &ldquo;to&rdquo; component, referring to the &ldquo;sender&rdquo; and &ldquo;receiver&rdquo; participants. It also contains an amount and currency details. Listed transactions will by default be initiated on the Contract API&rsquo;s payment gateway.</p>
+
+<p><strong><em>Webhook</em></strong></p>
+
+<p>In contrast to a transaction, a webhook is an endpoint that the Contract API will call when a condition is met. This means that if a different payment gateway is to be used, or the condition does not require a &ldquo;traditional&rdquo; value transfer (eg: a gift of a bottle of wine) then an external service can be set up to handle this via the webhook (eg: IronMQ, or IFTTT).
+Request payloads to webhooks are POST by default, and may contain user-specified data. Webhook endpoints MUST be TLS enabled (HTTPS).</p>
+<h1 id='objects'>Objects</h1>
+<p>A contract is a JSON document, which can be broken down into related entities as listed below.</p>
+<h2 id='contract-object'>Contract object</h2>
+<p>The &ldquo;top level&rdquo; object which contains all other objects.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"participants"</span><span class="p">:[],</span><span class="w">
+    </span><span class="s2">"signatures"</span><span class="p">:[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the contract</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>The description of the contract</td>
+</tr>
+<tr>
+<td>expires</td>
+<td>integer</td>
+<td>The expiry date of the contract in UNIX format</td>
+</tr>
+<tr>
+<td>conditions</td>
+<td>array</td>
+<td>An array of <a href="#condition-object">condition</a> objects</td>
+</tr>
+<tr>
+<td>participants</td>
+<td>array</td>
+<td>An array of <a href="#participant-object">participant</a> objects</td>
+</tr>
+<tr>
+<td>signatures</td>
+<td>array</td>
+<td>An array of <a href="#signature-object">signature</a> objects</td>
+</tr>
+</tbody></table>
+<h2 id='condition-object'>Condition object</h2>
+<p>An object that defines a requirement that must be fulfilled.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"trigger"</span><span class="p">:{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>The name of the condition</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>The description of the condition</td>
+</tr>
+<tr>
+<td>expires</td>
+<td>integer</td>
+<td>The expiry date of the condition in UNIX format</td>
+</tr>
+<tr>
+<td>sequence_number</td>
+<td>integer</td>
+<td>A number representing the order in which conditions are processed</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>A string (<em>pending</em> or <em>complete</em>) representing the status of the condition</td>
+</tr>
+<tr>
+<td>trigger</td>
+<td>hash</td>
+<td>A hash representing a <a href="#trigger-object">trigger</a> object</td>
+</tr>
+</tbody></table>
+<h2 id='participant-object'>Participant object</h2><pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>external_id</td>
+<td>string</td>
+<td>The external id of a participant</td>
+</tr>
+<tr>
+<td>public_key</td>
+<td>string</td>
+<td>The public key of the participant used for signing</td>
+</tr>
+<tr>
+<td>roles</td>
+<td>array</td>
+<td>A (string) array of one or more roles (can be <code class="prettyprint">initiator, oracle, sender, receiver</code>)</td>
+</tr>
+<tr>
+<td>wallet</td>
+<td>hash</td>
+<td>A <a href="#wallet-object">wallet</a> object</td>
+</tr>
+</tbody></table>
+<h2 id='signature-object'>Signature object</h2>
+<p>Signatures can be found at both the contract and condition level.</p>
+
+<ul>
+<li><strong>Contract:</strong> signatures indicate approval of the contract as a whole</li>
+<li><strong>Condition:</strong> signatures indicate that a condition has been met</li>
+</ul>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delegated_by_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"digest"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description (contract)</th>
+<th>Description (condition)</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>participant_external_id</td>
+<td>string</td>
+<td>The external id of a <a href="#participant-object">participant</a></td>
+<td>The external id of a <a href="#participant-object">participant</a></td>
+</tr>
+<tr>
+<td>participant_id</td>
+<td>string</td>
+<td>The id of the <a href="#participant-object">participant</a> generated by the API</td>
+<td>The id of the <a href="#participant-object">participant</a> generated by the API</td>
+</tr>
+<tr>
+<td>delegated_by_external_id</td>
+<td>string</td>
+<td>(not used by contract signatures)</td>
+<td>The external id of a <a href="#participant-object">participant</a> delegated to sign a condition if <code class="prettyprint">type = ss_key</code></td>
+</tr>
+<tr>
+<td>delegated_by_id</td>
+<td>string</td>
+<td>(not used by contract signatures)</td>
+<td>The id of the delegated <a href="#participant-object">participant</a> generated by the API</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>(defaults to ecdsa)</td>
+<td><code class="prettyprint">ecdsa</code> (when signing with a public key) OR <code class="prettyprint">ss_key</code> (when signing with a shared secret fragment)</td>
+</tr>
+<tr>
+<td>value</td>
+<td>string</td>
+<td>The private-key signed digest of the contract</td>
+<td>If <code class="prettyprint">type = ecdsa</code>, this is the private-key signed digest of the <a href="#condition-object">condition</a>. If <code class="prettyprint">type = ss_key</code>, this is a shared secret fragment</td>
+</tr>
+<tr>
+<td>digest</td>
+<td>string</td>
+<td>SHA256 digest of the contract</td>
+<td>SHA256 digest of the condition</td>
+</tr>
+</tbody></table>
+<h2 id='trigger-object'>Trigger object</h2>
+<p>A trigger is an object that is processed once a condition has been met (ie: all signatures for the condition have been received).</p>
+
+<p>A trigger can contain one or more <strong>transactions</strong> and/or one or more <strong>webhooks</strong>, each of which is processed once the trigger is initiated.
+(note: transactions and webhooks are optional; however at least one of either must be present for a trigger to be valid).</p>
+
+<p>A trigger is processed <strong>asynchronously</strong>, ie: once a condition has been met, the trigger is placed on a queue which is handled on a separate
+thread.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>transactions</td>
+<td>array</td>
+<td>An array of <a href="#transaction-object">transaction</a> objects that will be processed when the trigger is processed</td>
+</tr>
+<tr>
+<td>webhooks</td>
+<td>string</td>
+<td>An array of <a href="#webhook-object">webhook</a> objects that will be processed when the trigger is processed</td>
+</tr>
+</tbody></table>
+<h2 id='wallet-object'>Wallet object</h2>
+<p>A wallet is a container for a participant&rsquo;s cryptocurrency wallet details. Currently this only supports <strong>Ripple</strong> wallets, but in future will
+support a number of different cryptocurrencies including <strong>Bitcoin</strong>.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"destination_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>The (Ripple) address of the wallet</td>
+</tr>
+<tr>
+<td>destination_tag</td>
+<td>string</td>
+<td>The destination tag of the wallet (when using managed wallets)</td>
+</tr>
+<tr>
+<td>secret</td>
+<td>hash</td>
+<td>The <a href="#secret-object">secret</a> object representing the secret key (or key fragments)</td>
+</tr>
+</tbody></table>
+<h2 id='secret-object'>Secret object</h2>
+<p>A secret represents the secret key of a cryptocurrency wallet. The <em>threshold</em> value indicates how many fragments are required to
+recreate a secret key using <strong><a href="http://en.wikipedia.org/wiki/Shamir's_Secret_Sharing">Shamir&rsquo;s Secret Sharing Algorithm</a> (SSSA)</strong>.</p>
+
+<p>If the threshold is set to <strong>1</strong> then the secret key <strong>has not</strong> been split using SSSA. The <em>fragments</em> array will then only contain 1 item,
+which is the original secret key.</p>
+
+<p>If the threshold is <strong>&gt;1</strong>, then the original key <strong>has</strong> been split using SSSA. Collection of the fragments is done via the
+condition signing process, when the specific signature type is <strong><em>ss_key</em></strong>. This means that a condition can be set to receive
+a number of separate <strong><em>ss_key</em></strong> signatures, each of which adds an ss_key fragment to the <em>fragments</em> array of the secret. Once
+the threshold has been reached then the original secret can be re-created for use in a transaction.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>threshold</td>
+<td>integer</td>
+<td>The minimum number of fragments required to generate the secret key</td>
+</tr>
+<tr>
+<td>fragments</td>
+<td>array</td>
+<td>An array of secret fragments. If <code class="prettyprint">threshold = 1</code> then this will simply be the unfragmented secret.</td>
+</tr>
+</tbody></table>
+<h2 id='transaction-object'>Transaction object</h2>
+<p>The transaction object contains the details of a specific transfer of value from one participant to another. The <em>from_participant</em>
+represents the <strong><em>sender</em></strong> and the <em>to_participant</em> represents the <strong><em>receiver</em></strong>.</p>
+
+<p>Transactions are only initiated once a trigger has been processed.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"from_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"from_participant"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"to_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"to_participant"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"amount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currency"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ledger_transaction_hash"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>from_participant_external_id</td>
+<td>string</td>
+<td>The external id of the <a href="#participant-object">participant</a> from which funds will be sent</td>
+</tr>
+<tr>
+<td>from_participant</td>
+<td>string</td>
+<td>A unique identifer of the external id of the <a href="#participant-object">participant</a> from which funds will be sent, generated by the API</td>
+</tr>
+<tr>
+<td>to_participant_external_id</td>
+<td>string</td>
+<td>The external id of the <a href="#participant-object">participant</a> to which funds will be sent</td>
+</tr>
+<tr>
+<td>to_participant</td>
+<td>string</td>
+<td>A unique identifer of the external id of the <a href="#participant-object">participant</a> to which funds will be sent, generated by the API</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>integer</td>
+<td>The amount to be sent</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>string</td>
+<td>The currency (eg: AMP)</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>A status flag indicating whether the transaction has been processed (<code class="prettyprint">pending</code> or <code class="prettyprint">complete</code>)</td>
+</tr>
+<tr>
+<td>ledger_transaction_hash</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id='webhook-object'>Webhook object</h2>
+<p>A webhook simply represents an HTTP endpoint. When a webhook is processed, the API will execute a <strong>POST</strong> request via <strong>HTTPS</strong>
+to the specified uri. The payload of the request will be details of the condition in which the webhook resides.</p>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"headers"</span><span class="p">:[],</span><span class="w">
+    </span><span class="s2">"body"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>A unique identifier generated by the API</td>
+</tr>
+<tr>
+<td>uri</td>
+<td>string</td>
+<td>The uri against which a POST request will be made by the API</td>
+</tr>
+<tr>
+<td>headers</td>
+<td>array</td>
+<td>An array of header hashes (key:value pairs)</td>
+</tr>
+<tr>
+<td>body</td>
+<td>string</td>
+<td>The payload to be sent to the webhook uri</td>
+</tr>
+</tbody></table>
+<h2 id='putting-it-all-together'>Putting it all together</h2><pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"delegated_by_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"digest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"from_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"to_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"ledger_transaction_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"destination_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                    </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"digest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+
+<p>The JSON representation to the right shows the relationships between the objects discussed above.</p>
+<h1 id='requests'>Requests</h1><h2 id='authentication'>Authentication</h2>
+<blockquote>
+<p>To authorize, use this code:</p>
+</blockquote>
+<pre><code class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
+curl <span class="s2">"api_endpoint_here"</span>
+  -H <span class="s2">"Authorization:[key]"</span>
+</code></pre>
+
+<blockquote>
+<p>Make sure to replace <code class="prettyprint">[key]</code> with your API key.</p>
+</blockquote>
+
+<p>An API key is required to access the API. This key must be included in all requests to the server in a header that looks like the following:</p>
+
+<p><code class="prettyprint">Authorization:[key]</code></p>
+
+<p><aside class="notice">
+You must replace <code class="prettyprint">[key]</code> with your personal API key.
+</aside></p>
+
+<p><aside class="warning">A 403 response will be received if an Authorization header is not set!</aside></p>
+<h2 id='create-contract'>Create Contract</h2>
+<p>This endpoint creates a new contract.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">POST https://api.infinity-g.com/v1/contracts</code></p>
+<h3 id='json-payload'>JSON Payload</h3>
+<table><thead>
+<tr>
+<th>Field name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>The name of the contract</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>description</td>
+<td>The description of the contract</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>expires</td>
+<td>The UNIX expiry date of the contract</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>participants</td>
+<td>An array of participants (see <a href="#participant-object">participant</a>)</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>signatures</td>
+<td>An array of signatures (see <a href="#participant-object">signature</a>)</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>conditions</td>
+<td>An array of conditions (see <a href="#condition-object">condition</a>)</td>
+<td>Y</td>
+</tr>
+</tbody></table>
+
+<p><aside class="notice">
+Creation of a new contract is a single-step operation. Once created, a contract cannot be updated (except for updating signature values).
+This means that a consuming system must be clear in what it is trying to achieve when creating the contract structure.
+</aside></p>
+
+<p><aside class="success">
+Remember the Authorization header!
+</aside></p>
+<pre><code class="highlight ruby"></code></pre>
+<pre><code class="highlight python"></code></pre>
+<pre><code class="highlight shell">curl <span class="s2">"https://api.infinity-g.com/v1/contracts"</span>
+  -H <span class="s2">"Authorization:[key]"</span>
+  -H <span class="s2">"Accept: application/json"</span>
+  -X POST
+  -d <span class="s1">'{
+          "name": "Test contract 1",
+          "description": "Test contract 1 description",
+          "expires": 1419897600,
+          "participants": [
+              {
+                  "external_id": "1",
+                  "roles": [
+                      "initiator",
+                      "sender"
+                  ],
+                  "public_key": "BKID9EgNllR9zNcwXDxdMbU76s0WwpMeD31vrTaxyDg3k53W/NFIo0G6ggO1\nzonI2zsgRbeQutIFfFqpHHPEY3Q=\n",
+                  "wallet": {
+                      "address": "2147d348-6a31-484c-b974-f4452f006e81",
+                      "destination_tag": null,
+                      "secret": {
+                          "fragments": [
+                              "TaWs+hB2uowc5ZOzZZ0er9S/rZ+yNgjOAMmhM0Mpkgg=\n"
+                          ],
+                          "threshold": 1
+                      }
+                  }
+              },
+              {
+                  "external_id": "2",
+                  "roles": [
+                      "oracle"
+                  ],
+                  "public_key": "BI+vVlovs0j+wSxrUoZZf3GRjvy0bi9cXb8ksd4mR0WYPUAAwIbIAcPP++Qy\n++RoDJ0sgyaIjZPV10E9s2byd1s=\n",
+                  "wallet": null
+              },
+              {
+                  "external_id": "3",
+                  "roles": [
+                      "receiver"
+                  ],
+                  "public_key": "BOnjAl6WzsGR6cfjR0DvB321hnveTErmXt/UpQUbeTrUdrJir13Agv/pRq2F\nt4kvtm7wh9kRZb3pNHe1dOQKmoE=\n",
+                  "wallet": {
+                      "address": "38c7cf68-dcb8-409d-b686-5ba212f0951e",
+                      "destination_tag": null,
+                      "secret": null
+                  }
+              }
+          ],
+          "signatures": [
+              {
+                  "participant_external_id": "2",
+                  "type": null,
+                  "delegated_by_external_id": null
+              }
+          ],
+          "conditions": [
+              {
+                  "name": "Test condition 1",
+                  "description": "Test condition 1 description",
+                  "sequence_number": 1,
+                  "signatures": [
+                      {
+                          "participant_external_id": "2",
+                          "type": "ecdsa",
+                          "delegated_by_external_id": ""
+                      }
+                  ],
+                  "trigger": {
+                      "transactions": [
+                          {
+                              "from_participant_external_id": "1",
+                              "to_participant_external_id": "3",
+                              "amount": "100",
+                              "currency": "PDC"
+                          }
+                      ],
+                      "webhooks": []
+                  },
+                  "expires": 1419984000
+              }
+          ]
+      }'</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1 description"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419897600</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000042"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BKID9EgNllR9zNcwXDxdMbU76s0WwpMeD31vrTaxyDg3k53W/NFIo0G6ggO1\nzonI2zsgRbeQutIFfFqpHHPEY3Q=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"initiator"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"sender"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147d348-6a31-484c-b974-f4452f006e81"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000038"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="s2">"TaWs+hB2uowc5ZOzZZ0er9S/rZ+yNgjOAMmhM0Mpkgg=\n"</span><span class="w">
+                    </span><span class="p">],</span><span class="w">
+                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000037"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BI+vVlovs0j+wSxrUoZZf3GRjvy0bi9cXb8ksd4mR0WYPUAAwIbIAcPP++Qy\n++RoDJ0sgyaIjZPV10E9s2byd1s=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"oracle"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BOnjAl6WzsGR6cfjR0DvB321hnveTErmXt/UpQUbeTrUdrJir13Agv/pRq2F\nt4kvtm7wh9kRZb3pNHe1dOQKmoE=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"receiver"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38c7cf68-dcb8-409d-b686-5ba212f0951e"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003b"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000041"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id='sample'>Sample</h3>
+<p>The sample to the right demonstrates the following scenario:</p>
+
+<p><strong>Participants</strong></p>
+
+<ul>
+<li>Participant 1:
+
+<ul>
+<li>Roles: <code class="prettyprint">initiator</code> and <code class="prettyprint">sender</code> (the creator of the contract will also send funds)</li>
+<li>Wallet: contains public address and a single secret key (unfragmented)</li>
+</ul></li>
+<li>Participant 2:
+
+<ul>
+<li>Roles: <code class="prettyprint">oracle</code></li>
+<li>Wallet: none</li>
+</ul></li>
+<li>Participant 3:
+
+<ul>
+<li>Roles: <code class="prettyprint">receiver</code></li>
+<li>Wallet: public address to receive funds. <em>No</em> secret key</li>
+</ul></li>
+</ul>
+
+<p><strong>Contract signatures</strong></p>
+
+<ul>
+<li>One signature:
+
+<ul>
+<li>required from the <code class="prettyprint">initiator</code></li>
+</ul></li>
+</ul>
+
+<p><strong>Conditions</strong></p>
+
+<ul>
+<li>One condition:
+
+<ul>
+<li>Signatures: single signature required (ECDSA)</li>
+<li>Trigger:
+
+<ul>
+<li>Transactions: single transaction from <code class="prettyprint">sender</code> participant to <code class="prettyprint">receiver</code> participant</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id='get-contract'>Get Contract</h2>
+<p>This endpoint retrieves a specific contract.</p>
+<pre><code class="highlight ruby"></code></pre>
+<pre><code class="highlight python"></code></pre>
+<pre><code class="highlight shell">curl <span class="s2">"https://api.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042"</span>
+  -H <span class="s2">"Authorization: [key]"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1 description"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419897600</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000042"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BKID9EgNllR9zNcwXDxdMbU76s0WwpMeD31vrTaxyDg3k53W/NFIo0G6ggO1\nzonI2zsgRbeQutIFfFqpHHPEY3Q=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"initiator"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"sender"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147d348-6a31-484c-b974-f4452f006e81"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000038"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                        </span><span class="s2">"TaWs+hB2uowc5ZOzZZ0er9S/rZ+yNgjOAMmhM0Mpkgg=\n"</span><span class="w">
+                    </span><span class="p">],</span><span class="w">
+                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000037"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BI+vVlovs0j+wSxrUoZZf3GRjvy0bi9cXb8ksd4mR0WYPUAAwIbIAcPP++Qy\n++RoDJ0sgyaIjZPV10E9s2byd1s=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"oracle"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BOnjAl6WzsGR6cfjR0DvB321hnveTErmXt/UpQUbeTrUdrJir13Agv/pRq2F\nt4kvtm7wh9kRZb3pNHe1dOQKmoE=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"receiver"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38c7cf68-dcb8-409d-b686-5ba212f0951e"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003b"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000041"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://api.infinity-g.com/v1/contracts/{contract_id}</code></p>
+<h3 id='uri-parameters'>Uri parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>contract_id</td>
+<td>The id of the contract to retrieve</td>
+</tr>
+</tbody></table>
+
+<p><aside class="success">
+Remember the Authorization header!
+</aside></p>
+<h2 id='update-contract-signature'>Update Contract Signature</h2>
+<p>This endpoint updates a specific signature of a contract.</p>
+<pre><code class="highlight ruby"></code></pre>
+<pre><code class="highlight python"></code></pre>
+<pre><code class="highlight shell">curl <span class="s2">"https://api.infinity-g.com/v1/contracts"</span>
+  -H <span class="s2">"Authorization:[key]"</span>
+  -H <span class="s2">"Accept: application/json"</span>
+  -X POST
+  -d <span class="s1">'{
+    "value": "MEQCIFbMB8M56zrYbyJbCMO1FCw9JioY5aDSjkIwUP8kHEX6AiAC8nxHmkg+\nPsrQxpCbMmrchHb6R5Pzxh34yyyzCo4X6Q==\n",
+    "digest": "5Ri3cW7nHZmFaqSMPtHHWwBi1GOgekhIEL9vQOXPvmw="
+}'</span>
+
+</code></pre>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">POST https://api.infinity-g.com/v1/contracts/{contract_id}/signatures/{signature_id}</code></p>
+<h3 id='uri-parameters'>Uri parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>contract_id</td>
+<td>The id of the contract to sign</td>
+</tr>
+<tr>
+<td>signature_id</td>
+<td>The id of the signature to update</td>
+</tr>
+</tbody></table>
+<h3 id='json-payload'>JSON Payload</h3>
+<table><thead>
+<tr>
+<th>Field name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>The private-key signed digest of the contract</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>digest</td>
+<td>The SHA256 hash of the contract</td>
+<td>Y</td>
+</tr>
+</tbody></table>
+
+<p>The API will use the participant associated with the signature_id to retrieve the relevant public key. This key is then used
+to validate the signature.</p>
+
+<p><aside class="success">
+Remember the Authorization header!
+</aside></p>
+<h2 id='get-condition'>Get Condition</h2>
+<p>This endpoint retrieves a specific condition.</p>
+<pre><code class="highlight ruby"></code></pre>
+<pre><code class="highlight python"></code></pre>
+<pre><code class="highlight shell">curl <span class="s2">"https://api.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042/conditions/54a040b6b85a5428ea000040"</span>
+  -H <span class="s2">"Authorization:[key]"</span>
+</code></pre>
+
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre><code class="highlight json"><span class="p">{</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">GET https://api.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}</code></p>
+<h3 id='uri-parameters'>Uri parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>contract_id</td>
+<td>The id of the contract to which the condition belongs</td>
+</tr>
+<tr>
+<td>condition_id</td>
+<td>The id of the condition to retrieve</td>
+</tr>
+</tbody></table>
+
+<p><aside class="success">
+Remember the Authorization header!
+</aside></p>
+<h2 id='update-condition-signature'>Update Condition Signature</h2>
+<p>This endpoint updates a specific signature for a condition.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code class="prettyprint">POST https://api.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}/signatures/{signature_id}</code></p>
+<h3 id='uri-parameters'>Uri parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>contract_id</td>
+<td>The id of the contract</td>
+</tr>
+<tr>
+<td>condition_id</td>
+<td>The id of the condition to sign</td>
+</tr>
+<tr>
+<td>signature_id</td>
+<td>The id of the signature to update</td>
+</tr>
+</tbody></table>
+<h3 id='json-payload'>JSON Payload</h3>
+<table><thead>
+<tr>
+<th>Field name</th>
+<th>Description</th>
+<th>Required</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>value</td>
+<td>if <code class="prettyprint">type</code>=<code class="prettyprint">ecdsa</code>, this is the private-key signed digest of the condition</td>
+<td>Y if <code class="prettyprint">type</code>=<code class="prettyprint">ecdsa</code></td>
+</tr>
+<tr>
+<td></td>
+<td>if <code class="prettyprint">type</code>=<code class="prettyprint">ss_key</code>, this is a secret key fragment</td>
+<td>Y if <code class="prettyprint">type</code>=<code class="prettyprint">ss_key</code></td>
+</tr>
+<tr>
+<td>digest</td>
+<td>if <code class="prettyprint">type</code>=<code class="prettyprint">ecdsa</code>, this is the SHA256 hash of the contract</td>
+<td>Y if <code class="prettyprint">type</code>=<code class="prettyprint">ecdsa</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>N if <code class="prettyprint">type</code>=<code class="prettyprint">ss_key</code></td>
+</tr>
+</tbody></table>
+
+<p>The API will use the participant associated with the signature_id to retrieve the relevant public key. This key is then used
+to validate the signature.</p>
+
+<p><aside class="success">
+Remember the Authorization header!
+</aside></p>
+
+          <h1 id='errors'>Errors</h1><h2 id='http-errors'>HTTP Errors</h2>
+<p>The SmartContract API uses the following standard HTTP error codes:</p>
+
+<table><thead>
+<tr>
+<th>Error Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td>Bad Request &ndash; the request payload is structured incorrectly, or validation has failed</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized &ndash; incorrect API key</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden &ndash; you do not have access to the requested resource</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found &ndash; resource could not be found</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method Not Allowed &ndash; You tried to access the API with an invalid method</td>
+</tr>
+<tr>
+<td>406</td>
+<td>Not Acceptable &ndash; You requested a format that isn&rsquo;t JSON</td>
+</tr>
+<tr>
+<td>410</td>
+<td>Gone &ndash; The requested resource has been removed from our servers</td>
+</tr>
+<tr>
+<td>418</td>
+<td>&ndash;</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests &ndash; Your request rate is too high</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error &ndash; We had a problem with our server. Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable &ndash; We&rsquo;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
+
+<p><aside class="notice"></aside></p>
+<h2 id='validation-errors'>Validation Errors</h2>
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="python">python</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
