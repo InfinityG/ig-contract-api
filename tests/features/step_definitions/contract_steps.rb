@@ -164,7 +164,7 @@ Given(/^I have an existing contract$/) do
     And condition 1 has the following webhooks:
       | uri                |
       | www.mywebhook1.com |
-      | https://zapier.com/hooks/catch/okjx7q/ |
+      | www.mywebhook2.com |
     And I POST the contract to the API
   '
 end
