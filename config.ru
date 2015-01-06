@@ -13,7 +13,13 @@ require './api/services/config_service'
 options = ConfigurationService.new.get_server_config
 
 # run ApiApp
-Rack::Handler::WEBrick.run ApiApp, options
+Rack::Handler::WEBrick.run ApiApp, options do |server|
+  [:INT, :TERM].each { |sig|
+    trap(sig) {
+      server.stop
+    }
+  }
+end
 
 # start this with 'rackup -p 9000' to start on port 9000
 # start this with 'rackup -p 9000 -E development' to start on port 9000, for development environment

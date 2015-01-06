@@ -25,10 +25,14 @@ class ApiApp < Sinatra::Base
     self.register Sinatra::ContractRoutes
 
     # Configure MongoMapper
-    host = (config[:mongo_host] == 'localhost') ? config[:mongo_host] : "#{config[:mongo_user]}:#{config[:mongo_password]}@#{config[:mongo_host]}"
+    # host = (config[:mongo_host] == 'localhost') ? config[:mongo_host] : "mongodb://#{config[:mongo_db_user]}:#{config[:mongo_db_password]}@#{config[:mongo_host]}"
 
-    MongoMapper.connection = Mongo::MongoClient.new(host, config[:mongo_port])
+    MongoMapper.connection = Mongo::MongoClient.new(config[:mongo_host], config[:mongo_port])
     MongoMapper.database = config[:mongo_db]
+
+    if config[:mongo_host] != 'localhost'
+      MongoMapper.database.authenticate(config['mongo_db_user'], config['mongo_db_password'])
+    end
 
     # Start the queue service for triggers...
     queue_service = QueueProcessorService.new
