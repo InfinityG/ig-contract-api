@@ -2,7 +2,7 @@ module Sinatra
   module DefaultRoutes
     def self.registered(app)
       app.get '/' do
-        redirect 'index.html'
+         send_file 'docs/index.html'
       end
     end
   end
