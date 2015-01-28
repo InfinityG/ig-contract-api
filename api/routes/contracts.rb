@@ -28,6 +28,9 @@ module Sinatra
 
         # create
         begin
+          # set the user_id based on the current logged in user - this is set in the auth route
+          data[:user_id] = @current_user_id
+
           status 200 # not 201 as this has just been submitted.
           return ContractService.new.create_contract(data).to_json
         rescue ContractError => e
@@ -38,8 +41,8 @@ module Sinatra
       end
 
       app.get '/contracts' do
-
-        result = ContractService.new.get_contracts
+        # @current_user_id is set in the auth route - this ensures that a user can only see his own contracts
+        result = ContractService.new.get_contracts_by_user @current_user_id
 
         if result != nil
           status 200

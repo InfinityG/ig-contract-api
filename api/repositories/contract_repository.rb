@@ -29,14 +29,18 @@ class ContractRepository
   end
 
   def retrieve_contracts_by_status(status)
-    Contract.find_by_status status
+    Contract.all :status => status
+  end
+
+  def retrieve_contracts_by_user(user_id)
+    Contract.all :user_id => user_id
   end
 
   def retrieve_condition(condition_id)
     Condition.find condition_id
   end
 
-  def create_contract(name, description, expires, conditions, participants, signatures)
+  def create_contract(external_id, name, description, expires, conditions, participants, signatures)
 
     #see http://mongomapper.com/documentation/embedded-document.html
 
@@ -50,7 +54,8 @@ class ContractRepository
     signature_arr = create_signatures_array(signatures, participants_arr)
 
     ### CONTRACT
-    Contract.create(name: name,
+    Contract.create(external_id: external_id,
+                    name: name,
                     description: description,
                     expires: expires,
                     status: 'pending',

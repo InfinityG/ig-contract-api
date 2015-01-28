@@ -4,6 +4,8 @@ module SmartContract
 
       include MongoMapper::Document
 
+      key :external_id, Integer, :required => true
+      key :user_id, String, :required => true
       key :name, String, :required => true
       key :description, String, :required => true
       key :expires, Integer, :required => true

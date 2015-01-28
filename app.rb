@@ -10,6 +10,8 @@ require './api/routes/cors'
 require './api/routes/default'
 require './api/routes/auth'
 require './api/routes/contracts'
+require './api/routes/users'
+require './api/routes/tokens'
 require './api/services/queue_processor_service'
 require './api/services/config_service'
 
@@ -23,9 +25,11 @@ class ApiApp < Sinatra::Base
     # set :public_folder => config[:public_folder]
 
     # Register routes
+    register Sinatra::CorsRoutes
     register Sinatra::AuthRoutes
     register Sinatra::DefaultRoutes
-    register Sinatra::CorsRoutes
+    register Sinatra::UserRoutes
+    register Sinatra::TokenRoutes
     register Sinatra::ContractRoutes
 
     # Configure MongoMapper

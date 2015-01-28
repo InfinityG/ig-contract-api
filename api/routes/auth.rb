@@ -6,9 +6,10 @@ module Sinatra
   module AuthRoutes
     def self.registered(app)
 
-      #this filter applies to everything except registration of new users and documentation
+      #this filter applies to everything except options, registration of new users and documentation
       app.before do
-        if (request.request_method == 'POST' && request.path_info == '/users') ||
+        if (request.request_method == 'OPTIONS') ||
+            (request.request_method == 'POST' && request.path_info == '/users') ||
             (request.request_method == 'POST' && request.path_info == '/tokens')
           return
         else
@@ -30,12 +31,13 @@ module Sinatra
               halt 401, 'Unauthorized!'
             end
           else
-            config = ConfigurationService.new.get_config
-
             # all other routes are the API - these require the api token
-            if auth_header == nil || auth_header != config[:api_auth_token]
+            if auth_header == nil
               halt 403, 'Unauthorized!'
             end
+
+            token = TokenService.new.get_token(auth_header)
+            (token == nil) ? (halt 403, 'Unauthorized!') : @current_user_id = token[:user_id]
           end
         end
       end

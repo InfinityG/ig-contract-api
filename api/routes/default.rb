@@ -5,6 +5,8 @@ module Sinatra
     def self.registered(app)
       app.get '/' do
         content_type 'text/html'
+        cache_control :no_cache, :no_store, :must_revalidate, :max_age => 0
+
         File.new('docs/index.html').readlines
       end
 
