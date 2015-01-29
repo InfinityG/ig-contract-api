@@ -17,13 +17,13 @@ module Sinatra
           token = TokenService.new.create_token username, password
 
           if token == nil
-            halt 403, 'Unauthorized!'
+            halt 401, 'Unauthorized!'
           end
 
           {:token => token}.to_json
 
         else
-          halt 403, 'Unauthorized!'
+          halt 401, 'Unauthorized!'
         end
       end
 

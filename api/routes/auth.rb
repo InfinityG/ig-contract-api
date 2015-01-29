@@ -33,11 +33,11 @@ module Sinatra
           else
             # all other routes are the API - these require the api token
             if auth_header == nil
-              halt 403, 'Unauthorized!'
+              halt 401, 'Unauthorized!'
             end
 
             token = TokenService.new.get_token(auth_header)
-            (token == nil) ? (halt 403, 'Unauthorized!') : @current_user_id = token[:user_id]
+            (token == nil) ? (halt 401, 'Unauthorized!') : @current_user_id = token[:user_id]
           end
         end
       end
