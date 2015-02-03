@@ -40,7 +40,7 @@ class ContractRepository
     Condition.find condition_id
   end
 
-  def create_contract(external_id, name, description, expires, conditions, participants, signatures)
+  def create_contract(user_id, external_id, name, description, expires, conditions, participants, signatures)
 
     #see http://mongomapper.com/documentation/embedded-document.html
 
@@ -54,7 +54,8 @@ class ContractRepository
     signature_arr = create_signatures_array(signatures, participants_arr)
 
     ### CONTRACT
-    Contract.create(external_id: external_id,
+    Contract.create(user_id: user_id,
+                    external_id: external_id,
                     name: name,
                     description: description,
                     expires: expires,

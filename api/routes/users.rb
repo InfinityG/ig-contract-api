@@ -28,11 +28,11 @@ module Sinatra
           puts user.to_json
 
           #create an auth token for initial login
-          token = TokenService.new.create_token_for_registration user[:id]
+          token = TokenService.new.create_token_for_registration user.id
 
           #final result is simply the user id and the initial auth token
           status 201
-          return {:id => user[:id], :token => token[:uuid]}.to_json
+          return {:id => user.id, :token => token.uuid}.to_json
         end
 
         status 400

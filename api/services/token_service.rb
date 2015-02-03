@@ -33,8 +33,8 @@ class TokenService
       if result == password_hash
         #all good, now save the token for the user
         uuid = @hash_service.generate_uuid
-        save_token user.id, uuid
-        return uuid
+        return save_token user.id, uuid
+        # return uuid
       end
 
       return nil

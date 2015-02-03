@@ -3,7 +3,7 @@ module SmartContract
     class Token
       include MongoMapper::Document
 
-      key :user_id, Integer
+      key :user_id, String
       key :uuid, String,  :key => true
       key :expires, Integer
     end

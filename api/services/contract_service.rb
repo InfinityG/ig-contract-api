@@ -16,6 +16,7 @@ class ContractService
   end
 
   def create_contract(data)
+    user_id = data[:user_id]
     external_id = data[:external_id]
     name = data[:name]
     description = data[:description]
@@ -24,7 +25,7 @@ class ContractService
     participants = data[:participants]
     signatures = data[:signatures]
 
-    @contract_repository.create_contract external_id,  name, description, expires, conditions, participants, signatures
+    @contract_repository.create_contract user_id, external_id,  name, description, expires, conditions, participants, signatures
   end
 
   def get_contract(contract_id)
