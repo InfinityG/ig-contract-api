@@ -9,7 +9,7 @@ class TokenRepository
   include SmartContract::Models
 
   def get_token(uuid)
-    Token.find(:uuid => uuid)
+    Token.where(:uuid => uuid).first
   end
 
   def save_token(user_id, uuid, expires)
