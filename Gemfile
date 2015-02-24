@@ -7,6 +7,8 @@ gem 'rest-client'
 gem 'bson_ext'
 gem 'mongo'
 gem 'mongo_mapper'
+gem 'ig-crypto-utils'
+gem 'ig-identity-rp-validator'
 
 group :test, :development do
   gem 'minitest'

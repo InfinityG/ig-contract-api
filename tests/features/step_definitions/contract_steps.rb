@@ -107,6 +107,16 @@ And(/^the contract expiry date is (\d+) days from now$/) do |arg|
   @contract_expires = unix_date
 end
 
+And(/^I have a valid auth token on the API$/) do
+   auth = @step_helper.create_canned_auth_payload
+
+   rest_client = RestUtil.new
+   result = rest_client.execute_post "#{CONTRACT_API_URI}/tokens", '', auth
+   parsed_result = JSON.parse(result.response_body, :symbolize_names => true)
+
+  @auth_token = parsed_result[:token]
+end
+
 When(/^I POST the contract to the API$/) do
 
   participants_arr = []
@@ -132,7 +142,7 @@ When(/^I POST the contract to the API$/) do
                                           participants_arr, conditions_arr, @contract_signatures_arr)
 
   rest_client = RestUtil.new
-  @result = rest_client.execute_post CONTRACT_API_URI, contract.to_json
+  @result = rest_client.execute_post "#{CONTRACT_API_URI}/contracts", @auth_token, contract.to_json
 
 end
 
@@ -165,6 +175,7 @@ Given(/^I have an existing contract$/) do
       | uri                |
       | www.mywebhook1.com |
       | www.mywebhook2.com |
+    And I have a valid auth token on the API
     And I POST the contract to the API
   '
 end
@@ -202,7 +213,8 @@ When(/^I sign a condition$/) do
 
   # execute the request: /contracts/{id}/conditions/{id}/signatures/{id}
   rest_client = RestUtil.new
-  @result = rest_client.execute_post "#{CONTRACT_API_URI}/#{contract_id}/conditions/#{condition_id}/signatures/#{signature_id}",
+  @result = rest_client.execute_post "#{CONTRACT_API_URI}/contracts/#{contract_id}/conditions/#{condition_id}/signatures/#{signature_id}",
+                                     @auth_token,
                                      signature.to_json
 
 end
@@ -228,12 +240,13 @@ def sign_contract
 
   # execute the request: /contracts/{id}/signatures/{id}
   rest_client = RestUtil.new
-  rest_client.execute_post "#{CONTRACT_API_URI}/#{contract_id}/signatures/#{signature_id}", signature.to_json
+  rest_client.execute_post "#{CONTRACT_API_URI}/contracts/#{contract_id}/signatures/#{signature_id}", @auth_token, signature.to_json
 end
 
 private
 def get_unix_date(value)
   (Date.today + value).to_time.to_i
 end
+
 
 

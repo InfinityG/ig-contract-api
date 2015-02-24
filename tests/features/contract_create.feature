@@ -26,6 +26,7 @@ Feature: Contract creation
       | uri                |
       | www.mywebhook1.com |
       | www.mywebhook2.com |
+    And I have a valid auth token on the API
     And I POST the contract to the API
     Then the API should respond with a 200 response code
 
@@ -52,6 +53,7 @@ Feature: Contract creation
     And condition 1 has the following transactions:
       | from_participant | to_participant | amount | currency |
       | 1                | 3              | 100    | PDC      |
+    And I have a valid auth token on the API
     And I POST the contract to the API
     Then the API should respond with a 200 response code
 
@@ -78,6 +80,7 @@ Feature: Contract creation
     And condition 1 has the following transactions:
       | from_participant | to_participant | amount | currency |
       | 1                | 3              | 100    | PDC      |
+    And I have a valid auth token on the API
     And I POST the contract to the API
     Then the API should respond with a 200 response code
 

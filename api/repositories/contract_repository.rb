@@ -247,9 +247,4 @@ class ContractRepository
     nil
   end
 
-  # private
-  # def db_contracts
-  #   Connection.new('localhost', 27017).db('ig-contracts')['contracts']
-  # end
-
 end

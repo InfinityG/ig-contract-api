@@ -1,9 +1,10 @@
 
-require './api/utils/ecdsa_util'
+# require './api/utils/ecdsa_util'
+require 'ig-crypto-utils'
 
 class SignatureService
 
-  def initialize(ecdsa_util = EcdsaUtil)
+  def initialize(ecdsa_util = CryptoUtils::EcdsaUtil)
     @ecdsa_util = ecdsa_util.new
   end
 

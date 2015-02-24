@@ -20,12 +20,16 @@ class UserRepository
     User.first(:username => username)
   end
 
-  def save_user(first_name, last_name, username, password_salt, password_hash)
-    User.create(first_name:first_name,
-                    last_name: last_name,
-                    username: username,
-                    password_salt: password_salt,
-                    password_hash: password_hash)
+  # def save_user(first_name, last_name, username, password_salt, password_hash)
+  #   User.create(first_name:first_name,
+  #                   last_name: last_name,
+  #                   username: username,
+  #                   password_salt: password_salt,
+  #                   password_hash: password_hash)
+  # end
+
+  def save_user(username, role)
+    User.create(username: username, role: role)
   end
 
   def delete_user(user_id)

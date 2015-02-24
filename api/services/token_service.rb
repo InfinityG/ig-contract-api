@@ -2,51 +2,43 @@ require './api/utils/key_provider'
 require './api/services/hash_service'
 require './api/repositories/token_repository'
 require './api/repositories/user_repository'
+require './api/services/config_service'
+
+require 'ig-identity-rp-validator'
 
 class TokenService
 
   def initialize(key_provider = KeyProvider, hash_service = HashService,
-                 token_repository = TokenRepository, user_repository = UserRepository)
+                 token_repository = TokenRepository, user_repository = UserRepository,
+                 rp_validator = IgIdentity::RelyingParty::AuthValidator,
+                 config_service = ConfigurationService)
     @key_provider = key_provider.new
     @hash_service = hash_service.new
     @token_repository = token_repository.new
     @user_repository = user_repository.new
+    @rp_validator = rp_validator.new
+    @config_service = config_service.new
   end
 
   def get_admin_key
     @key_provider.get_admin_key
   end
 
-  # create a token for an existing user
-  def create_token(username, password)
+  def create_token(auth, iv)
 
-    #get the user first and check if the password matches
+    validated_auth = validate_auth(auth, iv)
+    return nil if validated_auth == nil
+
+    username = validated_auth[:username]
+    role = validated_auth[:role]
+
     user = @user_repository.get_by_username username
+    # create the user if not present in db
+    user = @user_repository.save_user username, role if user == nil
 
-    if user != nil
-      password_salt = user[:password_salt]
-      password_hash = user[:password_hash]
+    uuid = @hash_service.generate_uuid
+    save_token user.id, uuid
 
-      #now check if the hash matches the password
-      result = @hash_service.generate_password_hash password, password_salt
-
-      if result == password_hash
-        #all good, now save the token for the user
-        uuid = @hash_service.generate_uuid
-        return save_token user.id, uuid
-        # return uuid
-      end
-
-      return nil
-    end
-
-    nil
-  end
-
-  # create a token for a new user
-  def create_token_for_registration(user_id)
-    token = @hash_service.generate_uuid
-    save_token user_id, token
   end
 
   def get_token(uuid)
@@ -70,5 +62,23 @@ class TokenService
     expires = timestamp + (60 * 60)
 
     @token_repository.save_token(user_id, token, expires.to_i)
+  end
+
+  private
+  def validate_auth(auth, iv)
+    # validate the auth payload created by the identity provider
+    config = @config_service.get_config
+    aes_key = config[:shared_aes_key]
+    ecdsa_key = config[:id_provider_public_ecdsa_key]
+
+    auth_result = @rp_validator.validate_auth(auth, iv, aes_key, ecdsa_key)
+    # parsed_result = JSON.parse(auth_result, :symbolize_names => true)
+
+    unless auth_result[:valid] && auth_result[:auth][:expiry_date] > Time.now.to_i
+      return nil
+    end
+
+    auth_result[:auth]
+
   end
 end
