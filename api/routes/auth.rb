@@ -37,7 +37,14 @@ module Sinatra
             end
 
             token = TokenService.new.get_token(auth_header)
-            (token == nil) ? (halt 401, 'Unauthorized!') : @current_user_id = token[:user_id]
+            if token == nil
+              (halt 401, 'Unauthorized!')
+            else
+              user = UserService.new.get_by_id token[:user_id]
+
+              @current_user_id = token[:user_id]
+              @current_user_role = user[:role]
+            end
           end
         end
       end

@@ -15,7 +15,7 @@ class UserService
     hashed_password = @hash_service.generate_password_hash password, salt
 
     begin
-      return @user_repository.save_user first_name, last_name, username, salt, hashed_password
+      return @user_repository.save_or_update_user first_name, last_name, username, salt, hashed_password
     rescue
       raise "Unable to save user #{username} on database! || Error: #{$!}"
     end

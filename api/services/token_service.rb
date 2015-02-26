@@ -32,9 +32,7 @@ class TokenService
     username = validated_auth[:username]
     role = validated_auth[:role]
 
-    user = @user_repository.get_by_username username
-    # create the user if not present in db
-    user = @user_repository.save_user username, role if user == nil
+    user = @user_repository.save_or_update_user username, role
 
     uuid = @hash_service.generate_uuid
     save_token user.id, uuid

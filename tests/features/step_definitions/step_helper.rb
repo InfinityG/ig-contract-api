@@ -1,5 +1,6 @@
+require 'ig-crypto-utils'
+
 require_relative '../../../api/utils/hash_generator'
-require_relative '../../../api/utils/ecdsa_util'
 
 require_relative '../../../tests/builders/participant_builder'
 require_relative '../../../tests/builders/signature_builder'
@@ -47,13 +48,12 @@ class StepHelper
   end
 
   def create_updated_contract_signature(data, private_key)
-    ecdsa_util = EcdsaUtil.new
+    ecdsa_util = CryptoUtils::EcdsaUtil.new
 
     encoded_digest = HashGenerator.new.generate_hash data
     signature = ecdsa_util.sign encoded_digest, private_key
-    encoded_signature = ecdsa_util.encode_signature signature
 
-    SignatureBuilder.new.with_value(encoded_signature).with_digest(encoded_digest).build
+    SignatureBuilder.new.with_value(signature).with_digest(encoded_digest).build
   end
 
   def create_condition_signature(participant_external_id, type, delegated_by_id)
@@ -64,13 +64,12 @@ class StepHelper
   end
 
   def create_updated_condition_signature(data, private_key)
-    ecdsa_util = EcdsaUtil.new
+    ecdsa_util = CryptoUtils::EcdsaUtil.new
 
     encoded_digest = HashGenerator.new.generate_hash data
     signature = ecdsa_util.sign encoded_digest, private_key
-    encoded_signature = ecdsa_util.encode_signature signature
 
-    SignatureBuilder.new.with_value(encoded_signature).with_digest(encoded_digest).build
+    SignatureBuilder.new.with_value(signature).with_digest(encoded_digest).build
   end
 
   def create_webhook(uri)
