@@ -18,7 +18,7 @@ class UserRepository
 
   def get_by_username(username)
     User.first(:username => username)
-  end
+    end
 
   def save_or_update_user(username, role)
     user = get_by_username(username)
