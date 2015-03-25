@@ -38,6 +38,8 @@ class TokenService
     uuid = @hash_service.generate_uuid
     save_token user.id, external_id, uuid
 
+    {:user_id => user.id, :external_id => external_id, :role => role, :token => uuid}
+
   end
 
   def get_token(uuid)

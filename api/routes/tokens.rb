@@ -41,7 +41,7 @@ module Sinatra
             halt 401, 'Unauthorized!'
           end
 
-          {:user_id => token.user_id, :external_id => token.external_id, :token => token.uuid}.to_json
+          token.to_json
 
         else
           halt 401, 'Unauthorized!'

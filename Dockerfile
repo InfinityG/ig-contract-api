@@ -63,3 +63,4 @@ CMD mongod --fork --logpath /var/log/mongodb.log && rackup -E test
 # Delete all containers: sudo docker rm $(docker ps -a -q)
 # Delete all images: sudo docker rmi $(docker images -q)
 # Connect to running container: sudo docker exec -it [container_id] bash
+# Attach to running container: sudo docker attach [container_id]
