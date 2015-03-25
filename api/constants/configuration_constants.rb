@@ -35,7 +35,7 @@ module ConfigurationConstants
         :logger_age => 10,
         :logger_size => 1024000,
         :default_request_timeout => 60,
-        :allowed_origin => 'localhost'
+        :allowed_origin => '*'
         # :static => true,
         # :public_folder => 'docs'
     }
