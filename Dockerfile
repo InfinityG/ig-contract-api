@@ -25,16 +25,6 @@ RUN echo "Host github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 #### Clone Github repos ####
 
 RUN mkdir -p home
-RUN git clone git@github.com:InfinityG/ig-gems.git /home/ig-gems
-RUN \
-  cd /home/ig-gems/ig-crypto-utils && \
-  gem build /home/ig-gems/ig-crypto-utils/ig-crypto-utils.gemspec && \
-  gem install /home/ig-gems/ig-crypto-utils/ig-crypto-utils-0.0.1.gem
-RUN \
-    cd /home/ig-gems/ig-identity-rp-validator && \
-    gem build /home/ig-gems/ig-identity-rp-validator/ig-identity-rp-validator.gemspec && \
-    gem install /home/ig-gems/ig-identity-rp-validator/ig-identity-rp-validator-0.0.1.gem
-
 RUN git clone git@github.com:InfinityG/ig-contract-api.git /home/ig-contract-api
 RUN \
   cd /home/ig-contract-api && \
