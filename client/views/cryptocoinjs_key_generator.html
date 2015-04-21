@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../scripts/ecdsa_bundle.js"></script>
+    <script type="text/javascript">
+
+        /* The CryptoCoinJS library is used for functionality here. It is a NodeJS library that has been
+        exported for client-side use using Browserify.
+
+        CryptoCoinJS: http://cryptocoinjs.com/modules/crypto/ecdsa/#usage
+        Browserify: http://browserify.org/
+         */
+
+        function generate() {
+            var message = document.getElementById('signing_text').value;
+
+            var crypto = require('crypto');
+            var ecdsa = require('ecdsa');
+            var sr = require('secure-random');
+            var CoinKey = require('coinkey');
+            var buf = require('buffer');
+
+            var privateKey = sr.randomBuffer(32);
+            var ck = new CoinKey(privateKey, true); // true => compressed public key / addresses
+
+            var msg = new buf.Buffer(message, 'utf8');
+            var shaMsg = crypto.createHash('sha256').update(msg).digest();
+            var signature = ecdsa.sign(shaMsg, ck.privateKey);
+
+            var encodedPublicKey = ck.publicKey.toString('base64');
+            var encodedPrivateKey = privateKey.toString('base64');
+            var encodedMessage = shaMsg.toString('base64');
+
+            var serializedSig = ecdsa.serializeSig(signature);
+            var encodedSignedMessage = new buf.Buffer(serializedSig).toString('base64');
+
+            document.getElementById('text_to_sign').innerHTML = "Text to sign: " + message;
+            document.getElementById('base64_encoded_public_key').innerHTML = "Base64 encoded public key: " + encodedPublicKey;
+            document.getElementById('base64_encoded_private_key').innerHTML = "Base64 encoded private key: " + encodedPrivateKey;
+            document.getElementById('base64_hashed_message_to_sign').innerHTML = "Base64 hashed message to sign: " + encodedMessage;
+            document.getElementById('base64_encoded_signature').innerHTML = "Base64 encoded signature: " + encodedSignedMessage;
+
+        }
+
+    </script>
+</head>
+
+<body>
+
+<div>
+    <textarea id="signing_text" name="Signing text" cols="50" rows="10"></textarea>
+    <button onclick="generate()" type="button">Generate</button>
+<br/><br/>
+    <div id="text_to_sign"></div>
+</div>
+<br/>
+
+<div id="base64_encoded_public_key" style="font-weight: bold"></div>
+<br/>
+
+<div id="base64_encoded_private_key"></div>
+<br/>
+
+<div id="base64_hashed_message_to_sign" style="font-weight: bold"></div>
+<br/>
+
+<div id="base64_encoded_signature" style="font-weight: bold"></div>
+<br/>
+
+</body>
+</html>

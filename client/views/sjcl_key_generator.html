@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../scripts/sjcl.js"></script>
+    <script type="text/javascript">
+
+        function generate_keys() {
+
+            var pair = sjcl.ecc.ecdsa.generateKeys(sjcl.ecc.curves.k256);
+            var pub = pair.pub.get();
+            var sec = pair.sec.get();
+            var public_key_encoded;
+            var private_key_encoded;
+
+            // Serialized public key:
+            var public_key_concatenated = pub.x.concat(pub.y);    //concat x and y arrays into one
+            public_key_encoded = sjcl.codec.hex.fromBits(public_key_concatenated);
+
+            // Serialized private key:
+            private_key_encoded = sjcl.codec.hex.fromBits(sec);
+
+            //get the text to sign
+            var text_to_sign = document.getElementById('signing_text').innerText;
+            var hashed_text_to_sign = sjcl.hash.sha256.hash(text_to_sign);
+            var base64_hashed_message_to_sign = sjcl.codec.hex.fromBits(hashed_text_to_sign);
+
+            //sign
+            var signature = pair.sec.sign(hashed_text_to_sign);
+            var encoded_signature = sjcl.codec.hex.fromBits(signature);
+
+
+//            document.getElementById('public_item').innerHTML = "Public key: x:" + pub.x + ", y:" + pub.y;
+            document.getElementById('public_key').innerHTML = "Public key: " + JSON.stringify(pub);
+            document.getElementById('private_key').innerHTML = "Private key: " + sec;
+            document.getElementById('public_key_concatenated').innerHTML = "Public key (concatenated): " + public_key_concatenated;
+            document.getElementById('base64_encoded_public_key').innerHTML = "Base64 encoded public key: " + public_key_encoded;
+            document.getElementById('base64_encoded_private_key').innerHTML = "Base64 encoded private key: " + private_key_encoded;
+
+            document.getElementById('hashed_message_to_sign').innerHTML = hashed_text_to_sign;
+            document.getElementById('base64_hashed_message_to_sign').innerHTML = base64_hashed_message_to_sign;
+            document.getElementById('signature').innerHTML = signature;
+            document.getElementById('encoded_signature').innerHTML = encoded_signature;
+
+        }
+
+    </script>
+</head>
+
+<body onload="generate_keys()">
+<div id="signing_text">Hello world
+</div>
+<br/>
+
+<div id="public_key"></div>
+<br/>
+
+<div id="public_key_concatenated"></div>
+<br/>
+
+<div id="private_key"></div>
+<br/>
+
+<div id="base64_encoded_public_key" style="font-weight: bold"></div>
+<br/>
+
+<div id="base64_encoded_private_key"></div>
+<br/>
+
+<div>SHA256 hashed message to sign:
+    <div id="hashed_message_to_sign"></div>
+</div>
+<br/>
+
+<div>Base64-encoded SHA256-hashed message to sign:
+    <div id="base64_hashed_message_to_sign" style="font-weight: bold"></div>
+</div>
+<br/>
+
+<div>Signed message:
+    <div id="signature"></div>
+</div>
+<br/>
+
+<div>Encoded signature:
+    <div id="encoded_signature" style="font-weight: bold"></div>
+</div>
+
+</body>
+</html>
