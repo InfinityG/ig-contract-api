@@ -1,2 +1,5 @@
 .idea
 client/scripts/node_modules
+designer/bower_components
+designer/node_modules
+designer/www
