@@ -47,9 +47,8 @@
                         var binId = this.id;
                         var item = document.getElementById(e.dataTransfer.getData('ElementId'));
                         var itemParent = document.getElementById(e.dataTransfer.getData('ParentId'));
-                        var targetParent = this.parentNode.parentNode;
 
-                        console.debug('ItemParent: ' + itemParent.id);
+                        var targetParent = this.parentNode.parentNode.parentNode;
 
                         //this.appendChild(item);
 

@@ -20,7 +20,7 @@
                     return;
 
                 //don't allow conditions inside conditions
-                if((item.id.toLowerCase().indexOf('condition') > -1) && (targetParent.id.toLowerCase().indexOf('condition') > -1))
+                if((item.id.toLowerCase().indexOf('condition') > -1) && ($scope.searchParentTree(target, 'condition') != null))
                     return;
 
                 $scope.insertItem(itemParent, item, target);
@@ -61,6 +61,15 @@
 
                 //where do you want to place the new element?
                 angular.element(target).append(newElement);
+            };
+
+            $scope.searchParentTree = function(el, idString) {
+                while (el.parentNode) {
+                    el = el.parentNode;
+                    if ((el.id != null) && (el.id.toLowerCase().indexOf(idString) > -1))
+                        return el;
+                }
+                return null;
             };
 
             //init();
