@@ -1,70 +1,66 @@
 (function () {
 
-        var injectParams = ['$scope', '$location'];
+        var injectParams = ['$scope', '$location', '$compile'];
 
-        var DefaultController = function ($scope, $location) {
-
-            $scope.context = null;
-            $scope.conditionCollapsed = true;
-            $scope.triggerCollapsed = true;
+        var DefaultController = function ($scope, $location, $compile) {
 
             $scope.conditionData = [
-                {
-                    'id': 1,
-                    'type': 'signature',
-                    'title': 'Confirmed by Signature',
-                    'fields': null
-                },
-                {
-                    'id': 2,
-                    'type': 'sms',
-                    'title': 'Confirmed by SMS',
-                    'fields': null
-                }
             ];
 
-            $scope.triggerData = [
-                {
-                    'id': 1,
-                    'type': 'webhook',
-                    'title': 'Webhook',
-                    'fields': {
-                        'Url': {'type': 'text', 'data': null},
-                        'Header': {'type': 'text', 'data': null},
-                        'Payload': {'type': 'text', 'data': null}
-                    }
-                },
-                {
-                    'id': 2,
-                    'type': 'transaction',
-                    'title': 'Transaction',
-                    'fields': {
-                        'From': {'type': 'select', 'data': ['Creator', 'Specific wallet']},
-                        'To': {'type': 'select', 'data': ['All recipients', 'Specific recipient']},
-                        'Amount': {'type': 'text', 'data': null}
-                    }
-                },
-                {
-                    'id': 3,
-                    'type': 'email',
-                    'title': 'Email',
-                    'fields': {
-                        'From': {'type': 'select', 'data': ['Creator', 'Specific participant']},
-                        'To': {'type': 'select', 'data': ['All participants', 'Specific participant']},
-                        'Keywords': {'type': 'text', 'data': null}
-                    }
+            $scope.handleDrop = function (itemParent, item, targetParent, target) {
+                console.debug('ItemParent: ' + itemParent.id + ', Item: ' + item.id +
+                    ', TargetParent: ' + targetParent.id + ', Target: ' + target.id);
+
+                //dont create new element if parent and target are the same
+                if(itemParent.id == target.id)
+                    return;
+
+                //ensure that only conditions (not triggers) are allowed in the main template
+                if((item.id.toLowerCase().indexOf('trigger') > -1) && (target.id.toLowerCase().indexOf('contract') > -1))
+                    return;
+
+                //don't allow conditions inside conditions
+                if((item.id.toLowerCase().indexOf('condition') > -1) && (targetParent.id.toLowerCase().indexOf('condition') > -1))
+                    return;
+
+                $scope.insertItem(itemParent, item, target);
+            };
+
+            //http://stackoverflow.com/questions/16656735/insert-directive-programatically-angular
+            $scope.insertItem = function(itemParent, item, target){
+
+                var directiveName;
+
+                switch(item.id){
+                    case 'signatureConditionPanel':
+                        directiveName = 'signature-condition';
+                        break;
+                    case 'smsConditionPanel':
+                        directiveName = 'sms-condition';
+                        break;
+                    case 'smsTriggerPanel':
+                        directiveName = 'sms-trigger';
+                        break;
+                    case 'emailTriggerPanel':
+                        directiveName = 'email-trigger';
+                        break;
+                    case 'transactionTriggerPanel':
+                        directiveName = 'transaction-trigger';
+                        break;
+                    case 'webhookTriggerPanel':
+                        directiveName = 'webhook-trigger';
+                        break;
+                    default:
+                        directiveName = null;
+
                 }
-            ];
 
-            $scope.handleDrop = function (itemId, targetId) {
-                console.debug('Item: ' + itemId + ', Target: ' + targetId);
+                var newElement = angular.element(document.createElement(directiveName));
 
-                //TODO:
-                // 1. clone original to replace it
-                // 2. add item to current items
-                // 3. add a button to remove the item
+                $compile( newElement )( $scope );
 
-
+                //where do you want to place the new element?
+                angular.element(target).append(newElement);
             };
 
             //init();

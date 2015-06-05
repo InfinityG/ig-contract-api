@@ -1,0 +1,17 @@
+<div ng-controller="SigCondDirectiveController" class="panel panel-default" id="signatureConditionPanel" draggable>
+    <div class="panel-heading">
+        <remove></remove>
+        <h3 class="panel-title">
+            Signature Confirmation
+        </h3>
+        <a ng-click="collapsed = !collapsed">
+            (details)
+        </a>
+
+    </div>
+    <div collapse="collapsed">
+        <div class="panel-body" id="signatureConditionTriggerPanel" droppable drop="handleDrop">
+            [Drag your trigger here]
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div ng-controller="TransTrigDirectiveController" class="panel panel-default" id="transactionTriggerPanel" draggable>
+    <div class="panel-heading">
+        <remove></remove>
+        <h3 class="panel-title">
+            Transaction Trigger
+        </h3>
+        <a ng-click="collapsed = !collapsed">
+            (details)
+        </a>
+    </div>
+    <div collapse="collapsed">
+        <div class="panel-body" id="webhookTriggerDetailsPanel">
+            <label for="fromWallet">From wallet:</label>
+            <input id="fromWallet" type="text" class="form-control">
+
+            <label for="toWallet">To Wallet:</label>
+            <input id="toWallet" type="text" class="form-control">
+
+            <label for="amount">Amount:</label>
+            <input id="amount" type="text" class="form-control">
+
+        </div>
+    </div>
+</div>

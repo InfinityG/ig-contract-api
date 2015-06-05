@@ -8,46 +8,53 @@
 
             <accordion close-others="true">
                 <accordion-group heading="Conditions (Inputs)" is-open="true" is-disabled="false">
-                    <div class="panel-body" ng-repeat="condition in conditionData" id="conditionPanel">
-                        <div class="panel panel-default" id="{{condition.type + 'ConditionPanel' + condition.id}}"
-                             draggable>
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    {{condition.title}}
-                                </h3>
-                                <a ng-click="conditionCollapsed = !conditionCollapsed">
-                                    (details)
-                                </a>
-                                <a class="btn" id="test" remove="{{condition.type + 'ConditionPanel' + condition.id}}">Remove</a>
-                            </div>
-                            <div collapse="conditionCollapsed" id="{{condition.type + 'Condition'}}">
-                                <div class="panel-body" id="{{condition.type + 'ConditionDropTarget'}}" droppable
-                                     drop="handleDrop">
-                                    [Drag your trigger here]
-                                </div>
-                            </div>
+                    <div class="panel-body" id="conditionPanel">
+                        <!--<div class="panel panel-default" id="{{condition.type + 'ConditionPanel' + condition.id}}"-->
+                             <!--draggable>-->
+                            <!--<div class="panel-heading">-->
+                                <!--<h3 class="panel-title">-->
+                                    <!--{{condition.title}}-->
+                                <!--</h3>-->
+                                <!--<a ng-click="conditionCollapsed = !conditionCollapsed">-->
+                                    <!--(details)-->
+                                <!--</a>-->
+                                <!--<a class="btn" id="test" remove="{{condition.type + 'ConditionPanel' + condition.id}}">Remove</a>-->
+                            <!--</div>-->
+                            <!--<div collapse="conditionCollapsed" id="{{condition.type + 'Condition'}}">-->
+                                <!--<div class="panel-body" id="{{condition.type + 'ConditionDropTarget'}}" droppable-->
+                                     <!--drop="handleDrop">-->
+                                    <!--[Drag your trigger here]-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    <sms-condition></sms-condition>
+                        <br/>
+                    <signature-condition></signature-condition>
                         </div>
-                    </div>
                 </accordion-group>
                 <accordion-group is-open="false" heading="Triggers" is-disabled="false">
-                    <div class="panel-body" ng-repeat="trigger in triggerData" id="triggerPanel">
-                        <div class="panel panel-default" id="{{trigger.type + 'TriggerPanel' + trigger.id}}" draggable>
-                            <div class="panel-heading">
-                                <h3 class="panel-title">
-                                    {{trigger.title}}
-                                </h3>
-                                <a ng-click="triggerCollapsed = !triggerCollapsed">
-                                    (details)
-                                </a>
-                            </div>
-                            <div collapse="triggerCollapsed" id="{{trigger.type + 'Trigger'}}">
-                                <div class="panel-body" id="{{trigger.type + 'TriggerDropTarget'}}">
-                                    <div ng-repeat="(key,value) in trigger.fields">
-                                        {{key}}
-                                        <input type="text" class="form-control"></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="panel-body" id="triggerPanel">
+                        <!--<div class="panel panel-default" id="{{trigger.type + 'TriggerPanel' + trigger.id}}" draggable>-->
+                            <!--<div class="panel-heading">-->
+                                <!--<h3 class="panel-title">-->
+                                    <!--{{trigger.title}}-->
+                                <!--</h3>-->
+                                <!--<a ng-click="triggerCollapsed = !triggerCollapsed">-->
+                                    <!--(details)-->
+                                <!--</a>-->
+                            <!--</div>-->
+                            <!--<div collapse="triggerCollapsed" id="{{trigger.type + 'Trigger'}}">-->
+                                <!--<div class="panel-body" id="{{trigger.type + 'TriggerDropTarget'}}">-->
+                                    <!--<div ng-repeat="(key,value) in trigger.fields">-->
+                                        <!--{{key}}-->
+                                        <!--<input type="text" class="form-control"></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <webhook-trigger></webhook-trigger>
+                        <br/>
+                        <transaction-trigger></transaction-trigger>
                     </div>
                 </accordion-group>
             </accordion>
@@ -59,7 +66,7 @@
                         Contract template
                     </h3>
                 </div>
-                <div class="panel-body" id="contractDropTarget" droppable drop="handleDrop">
+                <div class="panel-body" id="contractPanel" droppable drop="handleDrop">
                     [Drag your conditions here]
                 </div>
                 <div class="panel-footer">

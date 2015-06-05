@@ -13,7 +13,8 @@
                 'dragstart',
                 function (e) {
                     e.dataTransfer.effectAllowed = 'move';
-                    e.dataTransfer.setData('Text', this.id);
+                    e.dataTransfer.setData('ElementId', this.id);
+                    e.dataTransfer.setData('ParentId', this.parentNode.parentNode.id);
 
                     this.classList.add('drag');
                     return false;

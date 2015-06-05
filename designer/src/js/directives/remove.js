@@ -5,17 +5,15 @@
     var remove = function () {
 
         return {
-            restrict: 'A',
-            scope: {remove: '@'},
-            replace: true,
-            link: function (scope, elem, attrs) {
+            restrict: 'E',
+            template: "<a class='btn btn-default pull-right'>Remove</a>",
+            link: function postLink(scope, elem, attrs) {
 
                 elem.bind('click', function (args) {
 
-                    var targetId = args.currentTarget.attributes['remove'].value;
-                    document.getElementById(targetId).remove();
+                    var removeElement = this.parentNode.parentNode;
+                    removeElement.remove();
 
-                    console.debug(args.currentTarget.attributes['remove'].value);
                 });
             }
         }

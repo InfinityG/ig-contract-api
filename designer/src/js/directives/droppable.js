@@ -45,15 +45,22 @@
                     'drop',
                     function(e) {
                         var binId = this.id;
-                        var item = document.getElementById(e.dataTransfer.getData('Text'));
+                        var item = document.getElementById(e.dataTransfer.getData('ElementId'));
+                        var itemParent = document.getElementById(e.dataTransfer.getData('ParentId'));
+                        var targetParent = this.parentNode.parentNode;
 
-                        this.appendChild(item);
+                        console.debug('ItemParent: ' + itemParent.id);
+
+                        //this.appendChild(item);
+
+                        var self = this;
 
                         // call the passed drop function
                         scope.$apply(function(scope) {
                             var fn = scope.drop();
                             if ('undefined' !== typeof fn) {
-                                fn(item.id, binId);
+                                //fn(item.id, binId);
+                                fn(itemParent, item, targetParent, self);
                             }
                         });
 

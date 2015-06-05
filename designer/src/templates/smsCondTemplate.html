@@ -1,0 +1,24 @@
+<div ng-controller="SmsCondDirectiveController" class="panel panel-default" id="smsConditionPanel" draggable>
+    <div class="panel-heading">
+        <remove></remove>
+        <h3 class="panel-title">
+            SMS Confirmation
+        </h3>
+        <a ng-click="collapsed = !collapsed">
+            (details)
+        </a>
+    </div>
+    <div collapse="collapsed">
+
+        <div class="panel-body" >
+
+            <label for="fromNumber">From number:</label>
+            <input id="fromNumber" type="text" class="form-control">
+
+            <br/>
+            <div class="panel-default" id="smsConditionTriggerPanel" droppable drop="handleDrop">
+            [Drag your trigger here]
+            </div>
+        </div>
+    </div>
+</div>
