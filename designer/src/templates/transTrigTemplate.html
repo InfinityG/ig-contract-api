@@ -1,6 +1,7 @@
-<div ng-controller="TransTrigDirectiveController" class="panel panel-default" id="transactionTriggerPanel" draggable>
+<div ng-controller="TransTrigDirectiveController" class="panel panel-default grabbable" id="transactionTriggerPanel" draggable>
     <div class="panel-heading">
-        <remove></remove>
+        <!--<remove ng-show="showRemoveButton"></remove>-->
+        <a class='btn btn-default pull-right' ng-show="dropActive == true" ng-click="remove()">Remove</a>
         <h3 class="panel-title">
             Transaction Trigger
         </h3>
@@ -10,14 +11,39 @@
     </div>
     <div collapse="collapsed">
         <div class="panel-body" id="webhookTriggerDetailsPanel">
-            <label for="fromWallet">From wallet:</label>
-            <input id="fromWallet" type="text" class="form-control">
+            <div class="panel-body">
 
-            <label for="toWallet">To Wallet:</label>
-            <input id="toWallet" type="text" class="form-control">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false"
+                                ng-click="">From: <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ng-click="">Creator wallet</a></li>
+                            <li><a ng-click="">Specific participant wallet</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control" aria-label="...">
+                </div>
 
-            <label for="amount">Amount:</label>
-            <input id="amount" type="text" class="form-control">
+                <br/>
+
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false"
+                                ng-click="">To: <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ng-click="">Specific participant wallet</a></li>
+                            <li><a ng-click="">All participant wallets</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control" aria-label="...">
+                </div>
+
+            </div>
+
+            <input id="amount" type="text" class="form-control" placeholder="Amount">
 
         </div>
     </div>

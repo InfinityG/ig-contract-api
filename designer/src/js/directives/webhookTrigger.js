@@ -7,6 +7,10 @@
         return {
             templateUrl: 'webhookTrigTemplate.html',
             restrict: 'E',
+            scope:{
+                showRemoveButton:'=',
+                dropActive:'='
+            },
             link: function postLink(scope, element, attrs) {
                 //element.text(template);
             }

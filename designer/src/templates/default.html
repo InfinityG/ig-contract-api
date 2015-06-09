@@ -7,54 +7,42 @@
         <div class="col-md-4">
 
             <accordion close-others="true">
-                <accordion-group heading="Conditions (Inputs)" is-open="true" is-disabled="false">
+                <accordion-group heading="Inputs ('Conditions')" is-open="true" is-disabled="false">
                     <div class="panel-body" id="conditionPanel">
                         <!--<div class="panel panel-default" id="{{condition.type + 'ConditionPanel' + condition.id}}"-->
-                             <!--draggable>-->
-                            <!--<div class="panel-heading">-->
-                                <!--<h3 class="panel-title">-->
-                                    <!--{{condition.title}}-->
-                                <!--</h3>-->
-                                <!--<a ng-click="conditionCollapsed = !conditionCollapsed">-->
-                                    <!--(details)-->
-                                <!--</a>-->
-                                <!--<a class="btn" id="test" remove="{{condition.type + 'ConditionPanel' + condition.id}}">Remove</a>-->
-                            <!--</div>-->
-                            <!--<div collapse="conditionCollapsed" id="{{condition.type + 'Condition'}}">-->
-                                <!--<div class="panel-body" id="{{condition.type + 'ConditionDropTarget'}}" droppable-->
-                                     <!--drop="handleDrop">-->
-                                    <!--[Drag your trigger here]-->
-                                <!--</div>-->
-                            <!--</div>-->
+                        <!--draggable>-->
+                        <!--<div class="panel-heading">-->
+                        <!--<h3 class="panel-title">-->
+                        <!--{{condition.title}}-->
+                        <!--</h3>-->
+                        <!--<a ng-click="conditionCollapsed = !conditionCollapsed">-->
+                        <!--(details)-->
+                        <!--</a>-->
+                        <!--<a class="btn" id="test" remove="{{condition.type + 'ConditionPanel' + condition.id}}">Remove</a>-->
+                        <!--</div>-->
+                        <!--<div collapse="conditionCollapsed" id="{{condition.type + 'Condition'}}">-->
+                        <!--<div class="panel-body" id="{{condition.type + 'ConditionDropTarget'}}" droppable-->
+                        <!--drop="handleDrop">-->
+                        <!--[Drag your trigger here]-->
+                        <!--</div>-->
+                        <!--</div>-->
                         <!--</div>-->
 
-                    <sms-condition></sms-condition>
+                        <sms-condition></sms-condition>
                         <br/>
-                    <signature-condition></signature-condition>
-                        </div>
+                        <signature-condition></signature-condition>
+                    </div>
                 </accordion-group>
                 <accordion-group is-open="false" heading="Triggers" is-disabled="false">
                     <div class="panel-body" id="triggerPanel">
-                        <!--<div class="panel panel-default" id="{{trigger.type + 'TriggerPanel' + trigger.id}}" draggable>-->
-                            <!--<div class="panel-heading">-->
-                                <!--<h3 class="panel-title">-->
-                                    <!--{{trigger.title}}-->
-                                <!--</h3>-->
-                                <!--<a ng-click="triggerCollapsed = !triggerCollapsed">-->
-                                    <!--(details)-->
-                                <!--</a>-->
-                            <!--</div>-->
-                            <!--<div collapse="triggerCollapsed" id="{{trigger.type + 'Trigger'}}">-->
-                                <!--<div class="panel-body" id="{{trigger.type + 'TriggerDropTarget'}}">-->
-                                    <!--<div ng-repeat="(key,value) in trigger.fields">-->
-                                        <!--{{key}}-->
-                                        <!--<input type="text" class="form-control"></div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
                         <webhook-trigger></webhook-trigger>
                         <br/>
                         <transaction-trigger></transaction-trigger>
+                    </div>
+                </accordion-group>
+                <accordion-group is-open="false" heading="Media" is-disabled="false">
+                    <div class="panel-body" id="mediaPanel">
+                        <media></media>
                     </div>
                 </accordion-group>
             </accordion>
@@ -66,7 +54,8 @@
                         Contract template
                     </h3>
                 </div>
-                <div class="panel-body" id="contractPanel" droppable drop="handleDrop">
+                <!--<div class="panel-body" id="contractPanel" droppable drop="handleDrop">-->
+                <div class="panel-body" id="contractPanel" droppable>
                     [Drag your conditions here]
                 </div>
                 <div class="panel-footer">
@@ -75,168 +64,3 @@
         </div>
     </div>
 </div>
-
-<!--<div class="panel-group" id="accordion" ui-state="designerAccordion" ui-default='1'>-->
-<!--<div class="panel panel-default">-->
-<!--<div class="panel-heading" id="headingOne" ui-set="{'designerAccordion':1}">-->
-<!--<h4 class="panel-title">-->
-<!--Inputs (Conditions)-->
-<!--</h4>-->
-<!--</div>-->
-
-<!--<div id="collapseOne" ui-if="designerAccordion==1" ui-scope-context='1'>-->
-<!--&lt;!&ndash;<div class="panel-body" ng-repeat="condition in conditionData" id="conditionPanel">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="panel panel-default" id="{{condition.type + 'InputPanel' + condition.id}}" draggable>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="panel-heading">&ndash;&gt;-->
-<!--&lt;!&ndash;<h3 class="panel-title">&ndash;&gt;-->
-<!--&lt;!&ndash;{{condition.fields.title}}&ndash;&gt;-->
-<!--&lt;!&ndash;</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;<a data-toggle="collapse" href="{{'#' + condition.type + 'Condition'}}" aria-expanded="false"&ndash;&gt;-->
-<!--&lt;!&ndash;aria-controls="{{condition.type + 'Condition'}}">&ndash;&gt;-->
-<!--&lt;!&ndash;(details)&ndash;&gt;-->
-<!--&lt;!&ndash;</a>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="panel-body collapse" id="{{condition.type + 'Condition'}}">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="panel-body" id="{{condition.type + 'InputDropTarget'}}" droppable drop="handleDrop">&ndash;&gt;-->
-<!--&lt;!&ndash;[Drag your trigger here]&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="panel panel-default" id="sigInputPanel" draggable="true"&ndash;&gt;-->
-<!--&lt;!&ndash;ondragstart="drag(event)">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="panel-heading">&ndash;&gt;-->
-<!--&lt;!&ndash;<h3 class="panel-title">&ndash;&gt;-->
-<!--&lt;!&ndash;Confirmed by signature&ndash;&gt;-->
-<!--&lt;!&ndash;</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;<a data-toggle="collapse" href="#sigCondition" aria-expanded="false"&ndash;&gt;-->
-<!--&lt;!&ndash;aria-controls="sigCondition">&ndash;&gt;-->
-<!--&lt;!&ndash;(details)&ndash;&gt;-->
-<!--&lt;!&ndash;</a>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="panel-body collapse" id="sigCondition">&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="panel-body" id="sigInputDropTarget" ondrop="drop(event)"&ndash;&gt;-->
-<!--&lt;!&ndash;ondragover="allowDrop(event)">&ndash;&gt;-->
-<!--&lt;!&ndash;[Drag your trigger here]&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="panel panel-default">-->
-<!--<div class="panel-heading" id="headingTwo" ui-set="{'designerAccordion':2}">-->
-<!--<h4 class="panel-title">-->
-<!--Triggers-->
-<!--</h4>-->
-<!--</div>-->
-<!--<div id="collapseTwo" ui-if="designerAccordion == 2" ui-scope-context='2'>-->
-<!--<div class="panel-body" id="triggerPanel">-->
-<!--<div class="panel panel-default" id="transactionTriggerPanel" draggable="true"-->
-<!--ondragstart="drag(event)">-->
-<!--<div class="panel-heading">-->
-<!--<h3 class="panel-title">-->
-<!--Initiate transaction-->
-<!--</h3>-->
-<!--<a data-toggle="collapse" href="#transactionTrigger" aria-expanded="false"-->
-<!--aria-controls="transactionTrigger">-->
-<!--(details)-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="panel-body collapse" id="transactionTrigger">-->
-<!--<label for="transactionAmount">Amount</label>-->
-<!--<input type="text" class="form-control" id="transactionAmount"-->
-<!--placeholder="Enter amount">-->
-
-<!--<label for="transactionSender">Sender</label>-->
-<!--<select id="transactionSender" class="form-control">-->
-<!--<option>Agreement creator</option>-->
-<!--<option>Another wallet</option>-->
-<!--</select>-->
-
-<!--<label for="transactionReceiver">Receiver</label>-->
-<!--<select id="transactionReceiver" class="form-control">-->
-<!--<option>All participants</option>-->
-<!--</select>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="panel panel-default" id="emailTriggerPanel" draggable="true"-->
-<!--ondragstart="drag(event)">-->
-<!--<div class="panel-heading">-->
-<!--<h3 class="panel-title">-->
-<!--Send email-->
-<!--</h3>-->
-<!--<a data-toggle="collapse" href="#emailTrigger" aria-expanded="false"-->
-<!--aria-controls="emailTrigger">-->
-<!--(details)-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="panel-body collapse" id="emailTrigger">-->
-<!--<label for="emailTriggerAddress">Sender</label>-->
-<!--<select id="emailTriggerAddress" class="form-control">-->
-<!--<option>Agreement creator</option>-->
-<!--<option>All receivers</option>-->
-<!--</select>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="panel panel-default" id="webhookTriggerPanel" draggable="true"-->
-<!--ondragstart="drag(event)">-->
-<!--<div class="panel-heading">-->
-<!--<h3 class="panel-title">-->
-<!--Call webhook-->
-<!--</h3>-->
-<!--<a data-toggle="collapse" href="#webhookTrigger" aria-expanded="false"-->
-<!--aria-controls="webhookTrigger">-->
-<!--(details)-->
-<!--</a>-->
-<!--</div>-->
-<!--<div class="panel-body collapse" id="webhookTrigger">-->
-<!--<label for="webhookUri">Uri</label>-->
-<!--<input type="text" class="form-control" id="webhookUri" placeholder="Enter uri">-->
-
-<!--<label for="webhookPayload">Payload</label>-->
-<!--<input type="text" class="form-control" id="webhookPayload"-->
-<!--placeholder="Enter payload">-->
-
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--</div>-->
-<!--<div class="panel panel-default">-->
-<!--<div class="panel-heading" id="headingThree" ui-set="{'designerAccordion':3}">-->
-<!--<h4 class="panel-title">-->
-<!--Media-->
-<!--</h4>-->
-<!--</div>-->
-<!--<div id="collapseThree" ui-if="designerAccordion == 3" ui-scope-context='3'>-->
-<!--<div class="panel-body">-->
-<!--<div class="panel panel-default">-->
-<!--<div class="panel-heading">-->
-<!--<h3 class="panel-title">-->
-<!--End user media-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="panel-body">-->
-<!--Youtube-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="panel panel-default">-->
-<!--<div class="panel-heading">-->
-<!--<h3 class="panel-title">-->
-<!--Contract creator media-->
-<!--</h3>-->
-<!--</div>-->
-<!--<div class="panel-body">-->
-<!--Youtube-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="col-md-8">-->
-<!-- Contract -->
-
-

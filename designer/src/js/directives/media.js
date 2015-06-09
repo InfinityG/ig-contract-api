@@ -2,20 +2,18 @@
 
 (function () {
 
-    var smsCondition = function () {
+    var media = function () {
 
         return {
-            templateUrl: 'smsCondTemplate.html',
+            templateUrl: 'mediaTemplate.html',
             restrict: 'E',
-            scope:{
-                showRemoveButton:'=',
-                dropActive:'='
-            },
+            scope:{showRemoveButton:'='},
+            controller:'MediaDirectiveController',
             link: function postLink(scope, element, attrs) {
                 //element.text(template);
             }
         };
     };
 
-    angular.module('accord.ly').directive('smsCondition', smsCondition);
+    angular.module('accord.ly').directive('media', media);
 })();

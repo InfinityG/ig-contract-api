@@ -1,12 +1,14 @@
-//http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.htmlz
+//http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html
 
 (function () {
-    var droppable = function() {
+    var injectParams = ['templateService'];
+
+    var droppable = function(templateService) {
         return {
-            scope: {
-                drop: '&', // parent
-                bin: '='    //bi-directional scope
-            },
+            //scope: {
+            //    drop: '&', // parent
+            //    bin: '='    //bi-directional scope
+            //},
             link: function(scope, element) {
                 // again we need the native object
                 var el = element[0];
@@ -44,24 +46,12 @@
                 el.addEventListener(
                     'drop',
                     function(e) {
-                        var binId = this.id;
+                        var target = this;
+
                         var item = document.getElementById(e.dataTransfer.getData('ElementId'));
                         var itemParent = document.getElementById(e.dataTransfer.getData('ParentId'));
 
-                        var targetParent = this.parentNode.parentNode.parentNode;
-
-                        //this.appendChild(item);
-
-                        var self = this;
-
-                        // call the passed drop function
-                        scope.$apply(function(scope) {
-                            var fn = scope.drop();
-                            if ('undefined' !== typeof fn) {
-                                //fn(item.id, binId);
-                                fn(itemParent, item, targetParent, self);
-                            }
-                        });
+                        templateService.handleDrop(itemParent, item, target);
 
                         //prevent event bubbling if this is a nested drop target
                         e.stopPropagation();
@@ -72,6 +62,8 @@
             }
         }
     };
+
+    droppable.$inject = injectParams;
 
     angular.module('accord.ly').directive('droppable', droppable);
 })();

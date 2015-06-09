@@ -1,8 +1,11 @@
-<div ng-controller="SmsCondDirectiveController" class="panel panel-default" id="smsConditionPanel" draggable>
+<div ng-controller="SmsCondDirectiveController" class="panel panel-default grabbable" id="smsConditionPanel" draggable>
     <div class="panel-heading">
-        <remove></remove>
+        <!--<remove ng-show="showRemoveButton"></remove>-->
+        <a class='btn btn-default pull-right' ng-show="dropActive == true" ng-click="remove()">Remove</a>
+
         <h3 class="panel-title">
-            SMS Confirmation
+            <abbr title="SMS confirmations use shared secret keys for signing">SMS</abbr> Confirmation <span
+                ng-show="condition.name.length > 0">{{'(' + condition.name + ')'}}</span>
         </h3>
         <a ng-click="collapsed = !collapsed">
             (details)
@@ -10,15 +13,32 @@
     </div>
     <div collapse="collapsed">
 
-        <div class="panel-body" >
-
-            <label for="fromNumber">From number:</label>
-            <input id="fromNumber" type="text" class="form-control">
-
+        <div class="panel-body">
+            <input id="name" type="text" class="form-control" placeholder="Name" ng-model="condition.name">
             <br/>
-            <div class="panel-default" id="smsConditionTriggerPanel" droppable drop="handleDrop">
-            [Drag your trigger here]
+
+            <input id="description" type="text" class="form-control" placeholder="Description"
+                   ng-model="condition.description">
+            <br/>
+
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false"
+                            ng-click="">From: <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="(key,value) in smsFields">
+                            <a ng-click="typeSelected(key, value)">{{value}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <input type="text" class="form-control" aria-label="..." ng-model="smsDescription">
             </div>
         </div>
+
+        <div class="panel-body" id="signatureConditionTriggerPanel" droppable>
+            [Drag your trigger here]
+        </div>
+
     </div>
 </div>

@@ -1,6 +1,9 @@
-<div ng-controller="WebhookTrigDirectiveController" class="panel panel-default" id="webhookTriggerPanel" draggable>
+<div ng-controller="WebhookTrigDirectiveController" class="panel panel-default grabbable" id="webhookTriggerPanel"
+     draggable>
     <div class="panel-heading">
-        <remove></remove>
+        <!--<remove ng-show="showRemoveButton"></remove>-->
+        <a class='btn btn-default pull-right' ng-show="dropActive == true" ng-click="remove()">Remove</a>
+
         <h3 class="panel-title">
             Webhook Trigger
         </h3>
@@ -10,18 +13,14 @@
     </div>
     <div collapse="collapsed">
         <div class="panel-body" id="webhookTriggerDetailsPanel">
-            <label for="url">Url:</label>
-            <input id="url" type="text" class="form-control">
 
-            <label for="header">Auth Header:</label>
-            <input id="header" type="text" class="form-control">
-
-            <label for="action">Action:</label>
-            <input id="action" type="text" class="form-control">
-
-
-            <label for="payload">Url:</label>
-            <input id="payload" type="text" class="form-control">
+            <input id="url" type="text" class="form-control" placeholder="Url">
+            <br/>
+            <input id="header" type="text" class="form-control" placeholder="Auth header">
+            <br/>
+            <input id="action" type="text" class="form-control" placeholder="Action">
+            <br/>
+            <input id="payload" type="text" class="form-control" placeholder="Payload">
         </div>
     </div>
 </div>

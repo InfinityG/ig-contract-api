@@ -6,9 +6,9 @@
 
         return {
             restrict: 'E',
+            replace:true,
             template: "<a class='btn btn-default pull-right'>Remove</a>",
             link: function postLink(scope, elem, attrs) {
-
                 elem.bind('click', function (args) {
 
                     var removeElement = this.parentNode.parentNode;

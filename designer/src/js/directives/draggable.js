@@ -31,7 +31,7 @@
                 false
             );
         };
-    }
+    };
 
     angular.module('accord.ly').directive('draggable', draggable);
 })();

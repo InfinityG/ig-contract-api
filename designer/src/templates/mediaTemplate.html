@@ -1,0 +1,21 @@
+<div ng-controller="MediaDirectiveController" class="panel panel-default grabbable" id="mediaPanel" draggable>
+    <div class="panel-heading">
+        <remove ng-show="showRemoveButton"></remove>
+        <h3 class="panel-title">
+            External Media Link
+        </h3>
+        <a ng-click="collapsed = !collapsed">
+            (details)
+        </a>
+
+    </div>
+    <div collapse="collapsed">
+        <div class="panel-body" id="mediaDetailsPanel">
+            <label for="url">Url:</label>
+            <input id="url" type="text" class="form-control">
+
+            <a class="embedly-card" href="https://www.youtube.com/watch?v=XU70A9fPTnU">Early Childhood Development</a>
+            <script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+        </div>
+    </div>
+</div>

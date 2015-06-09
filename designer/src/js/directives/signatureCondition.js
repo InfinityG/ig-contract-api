@@ -5,6 +5,10 @@
         return {
             templateUrl: 'sigCondTemplate.html',
             restrict: 'E',
+            scope:{
+                showRemoveButton:'=',
+                dropActive:'='
+            },
             link: function postLink(scope, element, attrs) {
                 //element.innerHTML(template);
             }
