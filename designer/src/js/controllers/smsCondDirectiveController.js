@@ -12,20 +12,20 @@
 
             function init(){
                 //view model
-                $scope.smsFields = modelService.viewModel.conditions.sms.fields;
-
-                if($scope.dropActive == true) {
-                    //condition
-                    $scope.condition = modelService.createClone(modelService.conditionModel);
-
-                    //add the signature model to the condition
-                    $scope.signature = modelService.createClone(modelService.signatureModel);
-                    $scope.condition.signatures.push($scope.signature);
-
-                    //add the condition to the master model
-                    modelService.addCondition($scope.condition);
-                    console.debug('Model updated');
-                }
+                //$scope.smsFields = modelService.viewModel.conditions.sms.fields;
+                //
+                //if($scope.dropActive == true) {
+                //    //condition
+                //    $scope.condition = modelService.createClone(modelService.conditionModel);
+                //
+                //    //add the signature model to the condition
+                //    $scope.signature = modelService.createClone(modelService.signatureModel);
+                //    $scope.condition.signatures.push($scope.signature);
+                //
+                //    //add the condition to the master model
+                //    modelService.addCondition($scope.condition);
+                //    console.debug('Model updated');
+                //}
             }
 
             $scope.typeSelected = function (key, value) {

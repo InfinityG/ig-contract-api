@@ -1,5 +1,4 @@
-<div ng-controller="SigCondDirectiveController" class="panel panel-default grabbable" id="signatureConditionPanel"
-     draggable>
+<div ng-controller="SigCondDirectiveController" ng-model="c" class="panel panel-default grabbable" draggable>
     <div class="panel-heading">
         <!--<remove ng-show="showRemoveButton"></remove>-->
         <a class='btn btn-default pull-right' ng-show="dropActive == true" ng-click="remove()">Remove</a>

@@ -15,18 +15,20 @@
                 //view model
                 $scope.sigFields = modelService.viewModel.conditions.signature.fields;
 
-                if($scope.dropActive == true) {
-                    //condition
-                    $scope.condition = modelService.createClone(modelService.conditionModel);
+                //the data model should have already been created in the templateService
 
-                    //add the signature model to the condition
-                    $scope.signature = modelService.createClone(modelService.signatureModel);
-                    $scope.condition.signatures.push($scope.signature);
-
-                    //add the condition to the master model
-                    modelService.addCondition($scope.condition);
-                    console.debug('Model updated');
-                }
+                //if($scope.dropActive == true) {
+                //    //condition
+                //    $scope.condition = modelService.createClone(modelService.conditionModel);
+                //
+                //    //add the signature model to the condition
+                //    $scope.signature = modelService.createClone(modelService.signatureModel);
+                //    $scope.condition.signatures.push($scope.signature);
+                //
+                //    //add the condition to the master model
+                //    modelService.addCondition($scope.condition);
+                //    console.debug('Model updated');
+                //}
             }
 
             $scope.typeSelected = function (key, value) {

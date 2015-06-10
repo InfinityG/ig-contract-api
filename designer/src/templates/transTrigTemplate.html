@@ -1,7 +1,8 @@
-<div ng-controller="TransTrigDirectiveController" class="panel panel-default grabbable" id="transactionTriggerPanel" draggable>
+<div ng-controller="TransTrigDirectiveController" class="panel panel-default grabbable" draggable>
     <div class="panel-heading">
         <!--<remove ng-show="showRemoveButton"></remove>-->
         <a class='btn btn-default pull-right' ng-show="dropActive == true" ng-click="remove()">Remove</a>
+
         <h3 class="panel-title">
             Transaction Trigger
         </h3>
@@ -19,11 +20,13 @@
                                 aria-expanded="false"
                                 ng-click="">From: <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="">Creator wallet</a></li>
-                            <li><a ng-click="">Specific participant wallet</a></li>
+                            <li ng-repeat="(key,value) in transFields">
+                                <a ng-if="key.indexOf('from_') > -1" ng-click="fromSelected(key, value)">{{value}}</a>
+                            </li>
                         </ul>
                     </div>
-                    <input type="text" class="form-control" aria-label="...">
+                    <input type="text" class="form-control" aria-label="..."
+                           ng-model="transFields[transaction.from_place_holder]">
                 </div>
 
                 <br/>
@@ -34,16 +37,18 @@
                                 aria-expanded="false"
                                 ng-click="">To: <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a ng-click="">Specific participant wallet</a></li>
-                            <li><a ng-click="">All participant wallets</a></li>
+                            <li ng-repeat="(key,value) in transFields">
+                                <a ng-if="key.indexOf('to_') > -1" ng-click="toSelected(key, value)">{{value}}</a>
+                            </li>
                         </ul>
                     </div>
-                    <input type="text" class="form-control" aria-label="...">
+                    <input type="text" class="form-control" aria-label="..."
+                           ng-model="transFields[transaction.to_place_holder]">
                 </div>
 
             </div>
 
-            <input id="amount" type="text" class="form-control" placeholder="Amount">
+            <input id="amount" type="text" class="form-control" placeholder="Amount" ng-model="transaction.amount">
 
         </div>
     </div>

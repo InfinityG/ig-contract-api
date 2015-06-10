@@ -9,40 +9,21 @@
             <accordion close-others="true">
                 <accordion-group heading="Inputs ('Conditions')" is-open="true" is-disabled="false">
                     <div class="panel-body" id="conditionPanel">
-                        <!--<div class="panel panel-default" id="{{condition.type + 'ConditionPanel' + condition.id}}"-->
-                        <!--draggable>-->
-                        <!--<div class="panel-heading">-->
-                        <!--<h3 class="panel-title">-->
-                        <!--{{condition.title}}-->
-                        <!--</h3>-->
-                        <!--<a ng-click="conditionCollapsed = !conditionCollapsed">-->
-                        <!--(details)-->
-                        <!--</a>-->
-                        <!--<a class="btn" id="test" remove="{{condition.type + 'ConditionPanel' + condition.id}}">Remove</a>-->
-                        <!--</div>-->
-                        <!--<div collapse="conditionCollapsed" id="{{condition.type + 'Condition'}}">-->
-                        <!--<div class="panel-body" id="{{condition.type + 'ConditionDropTarget'}}" droppable-->
-                        <!--drop="handleDrop">-->
-                        <!--[Drag your trigger here]-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
-
-                        <sms-condition></sms-condition>
+                        <sms-condition template-id="smsConditionPanel"></sms-condition>
                         <br/>
-                        <signature-condition></signature-condition>
+                        <signature-condition template-id="signatureConditionPanel"></signature-condition>
                     </div>
                 </accordion-group>
                 <accordion-group is-open="false" heading="Triggers" is-disabled="false">
                     <div class="panel-body" id="triggerPanel">
-                        <webhook-trigger></webhook-trigger>
+                        <webhook-trigger template-id="webhookTriggerPanel"></webhook-trigger>
                         <br/>
-                        <transaction-trigger></transaction-trigger>
+                        <transaction-trigger template-id="transactionTriggerPanel"></transaction-trigger>
                     </div>
                 </accordion-group>
                 <accordion-group is-open="false" heading="Media" is-disabled="false">
                     <div class="panel-body" id="mediaPanel">
-                        <media></media>
+                        <!--<media></media>-->
                     </div>
                 </accordion-group>
             </accordion>

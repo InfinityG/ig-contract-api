@@ -7,10 +7,11 @@
             restrict: 'E',
             scope:{
                 showRemoveButton:'=',
-                dropActive:'='
+                dropActive:'=',
+                templateId:'@'
             },
             link: function postLink(scope, element, attrs) {
-                //element.innerHTML(template);
+                element[0].childNodes[0].id = scope.templateId;
             }
         };
     };
