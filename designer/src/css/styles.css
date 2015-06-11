@@ -5,9 +5,33 @@
 }
 
 .contract{
+
+}
+
+.contract:after {
+    content: "\f1b3";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    position: absolute;
+    font-size: 300px;
+    color: lightblue;
+    /*top: 50%;*/
+    top: 50px;
+    left: 50%;
+margin-left: -200px;
+    /*margin: -300px 0 0 -200px;*/
+    z-index: 1;
+}
+
+.contract-inner{
+    position:relative;
     border-style: dashed;
-    min-height: 100px;
-    background-color: #efefef;
+    padding:10px;
+    min-height: 500px;
+    background-color: transparent;
+    z-index: 2;
 }
 
 .condition.panel-default {

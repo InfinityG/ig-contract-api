@@ -1,17 +1,15 @@
 
-
-
 <div class="container">
 
     <div class="page-header">
-        <h1>Accord.ly <small>Agreement Template Designer 0.1 (beta)</small></h1>
+        <h1>accord.ly <small>Agreement Template Designer 0.1 (beta)</small></h1>
     </div>
 
     <div class="row">
         <div class="col-md-4">
 
             <accordion close-others="true">
-                <accordion-group heading="Inputs ('Conditions')" is-open="true" is-disabled="false">
+                <accordion-group heading="Inputs" is-open="true" is-disabled="false">
                     <div class="panel-body" id="Condition">
                         <sms-condition template-id="SmsCond:"></sms-condition>
                         <br/>
@@ -32,17 +30,18 @@
                 </accordion-group>
             </accordion>
         </div>
-        <div class="col-md-8">
-            <div class="contract panel panel-default">
+        <div class="col-md-8 contract">
+            <div class="contract-inner panel panel-default" droppable>
+                [Drag your inputs here]
                 <!--<div class="panel-heading">-->
                     <!--<h3 class="panel-title">-->
                         <!--Contract template-->
                     <!--</h3>-->
                 <!--</div>-->
                 <!--<div class="panel-body" id="contractPanel" droppable drop="handleDrop">-->
-                <div class="panel-body" id="Contract" droppable>
-                    [Drag your conditions here]
-                </div>
+                <!--<div class="panel-body" id="Contract" droppable>-->
+                    <!--[Drag your conditions here]-->
+                <!--</div>-->
                 <!--<div class="panel-footer">-->
                 <!--</div>-->
             </div>
