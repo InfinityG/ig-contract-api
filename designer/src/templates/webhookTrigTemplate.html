@@ -1,17 +1,14 @@
 <div ng-controller="WebhookTrigDirectiveController" class="panel panel-default grabbable" draggable>
     <div class="panel-heading">
-        <!--<remove ng-show="showRemoveButton"></remove>-->
-        <a class='btn btn-default pull-right' ng-show="dropActive == true" ng-click="remove()">Remove</a>
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'" ng-click="collapsed = !collapsed"></i>
+        <i class="fa fa-remove pull-right" ng-show="dropActive == true" ng-click="remove()"></i>
 
         <h3 class="panel-title">
             Webhook Trigger
         </h3>
-        <a ng-click="collapsed = !collapsed">
-            (details)
-        </a>
     </div>
     <div collapse="collapsed">
-        <div class="panel-body" id="webhookTriggerDetailsPanel">
+        <div class="panel-body">
 
             <input id="url" type="text" class="form-control" placeholder="Url">
             <br/>

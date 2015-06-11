@@ -49,9 +49,10 @@
                         var target = this;
 
                         var item = document.getElementById(e.dataTransfer.getData('ElementId'));
+                        var directiveId = e.dataTransfer.getData('DirectiveId');
                         var itemParent = document.getElementById(e.dataTransfer.getData('ParentId'));
 
-                        templateService.handleDrop(itemParent, item, target);
+                        templateService.handleDrop(itemParent, item, directiveId, target);
 
                         //prevent event bubbling if this is a nested drop target
                         e.stopPropagation();

@@ -15,10 +15,8 @@
                 $scope.transFields = modelService.viewModel.triggers.transaction.fields;
 
                 //get the model from the index
-                var indexItem = modelService.modelElementIndex[$scope.templateId];
+                $scope.transaction = modelService.modelElementIndex[$scope.templateId];
 
-                if(indexItem != null)
-                    $scope.transaction = modelService.modelElementIndex[$scope.templateId].model;
             }
 
             $scope.fromSelected = function (key, value) {
@@ -33,7 +31,7 @@
 
             $scope.remove = function(){
                 //delete the model
-                var parentConditionId = modelService.modelElementIndex[$scope.templateId].parentId;
+                var parentConditionId = $scope.templateId.split('_')[1].split(':')[1];
                 modelService.deleteTransaction(parentConditionId, $scope.transaction.id);
 
                 //delete the element

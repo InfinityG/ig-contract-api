@@ -3,3 +3,47 @@
 .grabbable{
     cursor:move;
 }
+
+.contract{
+    border-style: dashed;
+    min-height: 100px;
+    background-color: #efefef;
+}
+
+.condition.panel-default {
+    border-color: #245580;
+}
+
+.condition.panel-heading {
+    background-image: linear-gradient(to bottom, #28a4c9 0%, #245580 100%);
+    border-bottom: none;
+    /*padding:5px;*/
+}
+
+.condition.panel-heading .fa {
+    color: white;
+    cursor:pointer;
+}
+
+.condition h3{
+    color: #ffffff;
+}
+
+.trigger.panel-default {
+    border-color: #FF5839;
+}
+
+.trigger.panel-heading {
+    background-image: linear-gradient(to bottom, #FF7B63 0%, #FF5839 100%);
+    border-bottom: none;
+    /*padding:5px;*/
+}
+
+.trigger h3{
+    color: #ffffff;
+}
+
+.trigger.panel-heading .fa {
+    color: white;
+    cursor:pointer;
+}

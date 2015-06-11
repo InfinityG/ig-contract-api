@@ -163,7 +163,7 @@
         };
 
         /*
-        Transactions
+         Transactions
          */
 
         factory.createTransaction = function () {
@@ -187,29 +187,29 @@
             return null;
         };
 
-        factory.getTransaction = function(conditionId, transactionId){
-           var condition = factory.getCondition(conditionId);
+        factory.getTransaction = function (conditionId, transactionId) {
+            var condition = factory.getCondition(conditionId);
 
             if (condition != null) {
                 var trigger = condition.trigger;
 
-                for(var x=0; x<trigger.transactions.length; x++){
-                    if(trigger.transactions[x].id == transactionId)
+                for (var x = 0; x < trigger.transactions.length; x++) {
+                    if (trigger.transactions[x].id == transactionId)
                         return trigger.transactions[x];
                 }
             }
 
             return null;
-        } ;
+        };
 
-        factory.deleteTransaction = function(parentConditionId, transactionId){
+        factory.deleteTransaction = function (parentConditionId, transactionId) {
             var condition = factory.getCondition(parentConditionId);
 
-            if(condition != null){
+            if (condition != null) {
                 console.debug('Condition id: ' + parentConditionId + ', Transaction id: ' + transactionId);
 
-                for(var x=0; x<condition.trigger.transactions.length; x++){
-                    if(condition.trigger.transactions[x].id == transactionId) {
+                for (var x = 0; x < condition.trigger.transactions.length; x++) {
+                    if (condition.trigger.transactions[x].id == transactionId) {
                         condition.trigger.transactions.splice(x, 1);
                         break;
                     }
@@ -218,11 +218,65 @@
         };
 
         /*
-        Model-element index
+         Webhooks
          */
 
-        factory.addElementToModelIndex = function(elementId, parentModelId, model){
-            factory.modelElementIndex[elementId] = {'parentId':parentModelId, 'model':model};
+        factory.createWebhook = function () {
+            return factory.createClone(factory.webhookModel);
+        };
+
+        factory.addWebhookToTrigger = function (conditionId, webhook) {
+            var condition = factory.getCondition(conditionId);
+
+            if (condition != null) {
+                var trigger = condition.trigger;
+
+                if (trigger != null) {
+                    webhook.id = trigger.webhooks.length + 1;
+                    trigger.webhooks.push(webhook);
+
+                    return webhook;
+                }
+            }
+
+            return null;
+        };
+
+        factory.getWebhook = function (conditionId, webhookId) {
+            var condition = factory.getCondition(conditionId);
+
+            if (condition != null) {
+                var trigger = condition.trigger;
+
+                for (var x = 0; x < trigger.webhooks.length; x++) {
+                    if (trigger.webhooks[x].id == webhookId)
+                        return trigger.webhooks[x];
+                }
+            }
+
+            return null;
+        };
+
+        factory.deleteWebhook = function (parentConditionId, webhookId) {
+            var condition = factory.getCondition(parentConditionId);
+
+            if (condition != null) {
+                for (var x = 0; x < condition.trigger.webhooks.length; x++) {
+                    if (condition.trigger.webhooks[x].id == webhookId) {
+                        condition.trigger.webhooks.splice(x, 1);
+                        break;
+                    }
+                }
+            }
+        };
+
+        /*
+         Model-element index (the model field simply stores a reference to the original model,
+         so there is no memory overhead)
+         */
+
+        factory.addElementToModelIndex = function (elementId, model) {
+            factory.modelElementIndex[elementId] = model;
         };
 
         factory.init = function () {

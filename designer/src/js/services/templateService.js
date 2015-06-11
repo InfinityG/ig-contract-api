@@ -8,63 +8,72 @@
     var templateServiceFactory = function ($rootScope, $compile, modelService) {
         var factory = {};
 
-        factory.handleDrop = function (itemParent, item, target) {
-            console.debug('ItemParent: ' + itemParent.id + ', Item: ' + item.id + ', Target: ' + target.id);
+        factory.handleDrop = function (itemParent, item, directiveId, target) {
+            //console.debug('ItemParent: ' + itemParent.id + ', Item: ' + item.id + ', Target: ' + target.id);
 
             //dont create new element if parent and target are the same
             if (itemParent.id == target.id)
                 return;
 
             //ensure that only conditions (not triggers) are allowed in the main template
-            if ((item.id.toLowerCase().indexOf('trigger') > -1) && (target.id.toLowerCase().indexOf('contract') > -1))
+            if ((item.id.indexOf('Trig:') > -1) && (target.id.toLowerCase().indexOf('Contract') > -1))
                 return;
 
             //don't allow conditions inside conditions
-            if ((item.id.toLowerCase().indexOf('condition') > -1) && (factory.searchParentTree(target, 'condition') != null))
+            if ((item.id.indexOf('Cond:') > -1) && (factory.searchParentTree(target, 'Cond:') != null))
                 return;
 
-            factory.insertItem(itemParent, item, target);
+            factory.insertItem(item, directiveId, target);
         };
 
         // TODO: finish this!
-        factory.moveItem = function (itemParent, item, target) {
+        factory.moveItem = function (item, directiveId, target) {
             angular.element(target).append(item);
         };
 
         //http://stackoverflow.com/questions/16656735/insert-directive-programatically-angular
-        factory.insertItem = function (itemParent, item, target) {
+        factory.insertItem = function (item, directiveId, target) {
 
-            var directiveName = factory.getDirectiveName(item.id);
-            var conditionModelId;
+            var model;
             var elementId;
 
-            // are we dropping a condition?
-            if (item.id.toLowerCase().indexOf('conditionpanel') > -1) {
-                conditionModelId = factory.createConditionModel();
-                elementId = item.id + '_' + conditionModelId;
+            if (item.id.indexOf('Cond:') > -1) {    // condition elements id format: eg 'SigCond:1'
+                model = factory.createConditionModel();
+                elementId = item.id + model.id;
             }
 
-            // are we dropping a trigger into a condition?
-            if (item.id.toLowerCase().indexOf('triggerpanel') > -1) {
-                var conditionId = factory.searchParentTree(target, 'conditionpanel').id;
-                conditionModelId = conditionId.split('_')[1];
-                elementId = conditionId + '_' + item.id;
+            if (item.id.indexOf('Trig:') > -1) {    // id format: eg 'SigCond:1_HookTrig:1'
 
+                var conditionId = factory.searchParentTree(target, 'Cond:').id;
+                var conditionModelId = conditionId.split(':')[1];
+
+                //this will create a trigger if there isn't one; there is only 1 per condition
                 factory.createTriggerModel(conditionModelId);
 
-                //what type of trigger is this?
-                if(item.id.toLowerCase().indexOf('transaction') > -1){
-                    //create the model
-                    var transaction = factory.createTransactionModel(conditionModelId);
-                    //add to the index for easy access from controllers
-                    modelService.addElementToModelIndex(elementId, conditionModelId, transaction);
+                var trigType = item.id.split('Trig')[0];
+
+                switch (trigType) {
+                    case 'Trans':
+                        model = factory.createTransactionModel(conditionModelId);
+                        break;
+                    case 'Hook':
+                        model = factory.createWebhookModel(conditionModelId);
+                        break;
+                    default:
+                        break;
                 }
+
+                elementId = conditionId + '_' + item.id + model.id;
             }
 
-            factory.createElement(target, directiveName, elementId);
+            //add to the index for easy access from controllers
+            modelService.addElementToModelIndex(elementId, model);
+
+            factory.createElement(target, directiveId, elementId);
         };
 
         factory.createElement = function (target, directiveName, elementId) {
+
             var newElement = angular.element(document.createElement(directiveName));
 
             newElement.attr('drop-active', 'true');
@@ -72,45 +81,29 @@
 
             $compile(newElement)($rootScope);
 
-            //append the new element to the target element
             angular.element(target).append(newElement);
 
             console.debug('UPDATED MODEL: ' + JSON.stringify(modelService.templateModel));
         };
 
-        factory.getDirectiveName = function (itemName) {
-            switch (itemName) {
-                case 'signatureConditionPanel':
-                    return 'signature-condition';
-                case 'smsConditionPanel':
-                    return 'sms-condition';
-                case 'smsTriggerPanel':
-                    return 'sms-trigger';
-                case 'emailTriggerPanel':
-                    return 'email-trigger';
-                case 'transactionTriggerPanel':
-                    return 'transaction-trigger';
-                case 'webhookTriggerPanel':
-                    return 'webhook-trigger';
-                case 'mediaPanel':
-                    return "media";
-                default:
-                    return null;
-            }
+        factory.getParentConditionModelId = function (element) {
+            var conditionId = factory.searchParentTree(target, 'Cond:').id;
+            return conditionId.split(':')[1];
         };
 
         factory.searchParentTree = function (el, idString) {
             while (el.parentNode) {
                 el = el.parentNode;
-                if ((el.id != null) && (el.id.toLowerCase().indexOf(idString) > -1))
+                if ((el.id != null) && (el.id.indexOf(idString) > -1))
                     return el;
             }
             return null;
         };
 
         factory.createConditionModel = function () {
-            var model = modelService.createCondition();
-            return modelService.addCondition(model);
+            var condition = modelService.createCondition();
+            modelService.addCondition(condition);
+            return condition;
         };
 
         // one trigger per condition
@@ -125,9 +118,14 @@
             return trigger;
         };
 
-        factory.createTransactionModel = function(conditionModelId){
+        factory.createTransactionModel = function (conditionModelId) {
             var transaction = modelService.createTransaction();
             return modelService.addTransactionToTrigger(conditionModelId, transaction);
+        };
+
+        factory.createWebhookModel = function (conditionModelId) {
+            var webhook = modelService.createWebhook();
+            return modelService.addWebhookToTrigger(conditionModelId, webhook);
         };
 
         return factory;

@@ -8,6 +8,7 @@
             $scope.sigFields = null;
 
             $scope.condition = null;
+
             $scope.signature = null;
             $scope.sigDescription = null;
 
@@ -15,20 +16,8 @@
                 //view model
                 $scope.sigFields = modelService.viewModel.conditions.signature.fields;
 
-                //the data model should have already been created in the templateService
-
-                //if($scope.dropActive == true) {
-                //    //condition
-                //    $scope.condition = modelService.createClone(modelService.conditionModel);
-                //
-                //    //add the signature model to the condition
-                //    $scope.signature = modelService.createClone(modelService.signatureModel);
-                //    $scope.condition.signatures.push($scope.signature);
-                //
-                //    //add the condition to the master model
-                //    modelService.addCondition($scope.condition);
-                //    console.debug('Model updated');
-                //}
+                //get the model from the index
+                $scope.condition = modelService.modelElementIndex[$scope.templateId];
             }
 
             $scope.typeSelected = function (key, value) {
@@ -45,6 +34,7 @@
             $scope.remove = function(){
                 modelService.removeCondition($scope.condition.id);
                 $element.remove();
+
                 console.debug(JSON.stringify(modelService.templateModel));
             };
 

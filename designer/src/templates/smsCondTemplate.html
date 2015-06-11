@@ -1,15 +1,12 @@
-<div ng-controller="SmsCondDirectiveController" class="panel panel-default grabbable" draggable>
-    <div class="panel-heading">
-        <!--<remove ng-show="showRemoveButton"></remove>-->
-        <a class='btn btn-default pull-right' ng-show="dropActive == true" ng-click="remove()">Remove</a>
+<div ng-controller="SmsCondDirectiveController" class="condition panel panel-default grabbable" draggable>
+    <div class="condition panel-heading">
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'" ng-click="collapsed = !collapsed"></i>
+        <i class="fa fa-remove pull-right" ng-show="dropActive == true" ng-click="remove()"></i>
 
         <h3 class="panel-title">
             <abbr title="SMS confirmations use shared secret keys for signing">SMS</abbr> Confirmation <span
                 ng-show="condition.name.length > 0">{{'(' + condition.name + ')'}}</span>
         </h3>
-        <a ng-click="collapsed = !collapsed">
-            (details)
-        </a>
     </div>
     <div collapse="collapsed">
 

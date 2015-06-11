@@ -1,17 +1,14 @@
-<div ng-controller="TransTrigDirectiveController" class="panel panel-default grabbable" draggable>
-    <div class="panel-heading">
-        <!--<remove ng-show="showRemoveButton"></remove>-->
-        <a class='btn btn-default pull-right' ng-show="dropActive == true" ng-click="remove()">Remove</a>
+<div ng-controller="TransTrigDirectiveController" class="trigger panel panel-default grabbable" draggable>
+    <div class="trigger panel-heading">
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'" ng-click="collapsed = !collapsed"></i>
+        <i class="fa fa-remove pull-right" ng-show="dropActive == true" ng-click="remove()"></i>
 
         <h3 class="panel-title">
             Transaction Trigger
         </h3>
-        <a ng-click="collapsed = !collapsed">
-            (details)
-        </a>
     </div>
     <div collapse="collapsed">
-        <div class="panel-body" id="webhookTriggerDetailsPanel">
+        <div class="panel-body">
             <div class="panel-body">
 
                 <div class="input-group">
