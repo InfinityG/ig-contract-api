@@ -1,6 +1,7 @@
 <div ng-controller="SigCondDirectiveController" class="condition panel panel-default grabbable" draggable>
     <div class="condition panel-heading">
-        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'" ng-click="collapsed = !collapsed"></i>
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'"
+           ng-click="collapsed = !collapsed"></i>
         <i class="fa fa-remove pull-right" ng-show="dropActive == true" ng-click="remove()"></i>
 
         <h3 class="panel-title">
@@ -13,7 +14,8 @@
             <input id="name" type="text" class="form-control" placeholder="Name" ng-model="condition.name">
             <br/>
 
-            <input id="description" type="text" class="form-control" placeholder="Description" ng-model="condition.description">
+            <input id="description" type="text" class="form-control" placeholder="Description"
+                   ng-model="condition.description">
             <br/>
 
             <div class="input-group">
@@ -29,10 +31,14 @@
                 </div>
                 <input type="text" class="form-control" aria-label="..." ng-model="sigDescription">
             </div>
+
+            <br/>
+
+            <div class="condition-inner" id="signatureConditionTriggerPanel" droppable>
+                <!--<div class="condition-inner-background">Drag triggers here</div>-->
+            </div>
         </div>
 
-        <div class="panel-body" id="signatureConditionTriggerPanel" droppable>
-            [Drag your trigger here]
-        </div>
+
     </div>
 </div>

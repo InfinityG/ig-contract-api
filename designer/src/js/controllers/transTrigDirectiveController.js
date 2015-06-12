@@ -31,7 +31,7 @@
 
             $scope.remove = function(){
                 //delete the model
-                var parentConditionId = $scope.templateId.split('_')[1].split(':')[1];
+                var parentConditionId = $scope.templateId.split('_')[0].split(':')[1];
                 modelService.deleteTransaction(parentConditionId, $scope.transaction.id);
 
                 //delete the element

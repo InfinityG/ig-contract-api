@@ -1,5 +1,14 @@
 .nav, .pagination, .carousel, .panel-title, .panel-heading a { cursor: pointer; }
 
+.app{
+    margin-top:50px;
+}
+
+.navbar{
+    /*padding-bottom: 10px;*/
+    margin-bottom: 0;
+}
+
 .grabbable{
     cursor:move;
 }
@@ -11,24 +20,20 @@
 .contract:after {
     content: "\f1b3";
     font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
     position: absolute;
     font-size: 300px;
-    color: lightblue;
-    /*top: 50%;*/
-    top: 50px;
+    color: #efefef;
+    top: 60px;
     left: 50%;
-margin-left: -200px;
-    /*margin: -300px 0 0 -200px;*/
+    margin-left: -200px;
     z-index: 1;
 }
 
 .contract-inner{
     position:relative;
     border-style: dashed;
-    padding:10px;
+    padding:20px;
+    margin-top:30px;
     min-height: 500px;
     background-color: transparent;
     z-index: 2;
@@ -51,6 +56,30 @@ margin-left: -200px;
 
 .condition h3{
     color: #ffffff;
+}
+
+.condition-inner{
+    position: relative;
+    min-height:30px;
+    border-style: dashed;
+    border-width:1px;
+    border-color: #ddd;
+    padding:10px 10px 0 10px;
+    background-color: transparent;
+}
+
+/*.condition-inner-background {*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    /*right: 0;*/
+    /*overflow: hidden;*/
+    /*background-color: #efefef;*/
+/*}*/
+
+.trigger{
+    /*z-index:100;*/
 }
 
 .trigger.panel-default {

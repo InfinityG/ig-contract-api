@@ -26,6 +26,11 @@
                 controller: 'DefaultController',
                 templateUrl: 'default.html',
                 reloadOnSearch: false
+            })
+            .when('/templateDesigner', {
+                controller: 'TemplateDesignerController',
+                templateUrl: 'templateDesigner.html',
+                reloadOnSearch: false
             });
     });
 

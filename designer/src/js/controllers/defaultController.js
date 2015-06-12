@@ -4,7 +4,6 @@
 
         var DefaultController = function ($scope, $location, $compile) {
 
-            $scope.conditionData = [];
 
             //init();
         };

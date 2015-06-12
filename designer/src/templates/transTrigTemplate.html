@@ -1,6 +1,7 @@
 <div ng-controller="TransTrigDirectiveController" class="trigger panel panel-default grabbable" draggable>
     <div class="trigger panel-heading">
-        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'" ng-click="collapsed = !collapsed"></i>
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'"
+           ng-click="collapsed = !collapsed"></i>
         <i class="fa fa-remove pull-right" ng-show="dropActive == true" ng-click="remove()"></i>
 
         <h3 class="panel-title">
@@ -9,41 +10,43 @@
     </div>
     <div collapse="collapsed">
         <div class="panel-body">
-            <div class="panel-body">
+            <!--<div class="panel-body">-->
 
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-expanded="false"
-                                ng-click="">From: <span class="caret"></span></button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="(key,value) in transFields">
-                                <a ng-if="key.indexOf('from_') > -1" ng-click="fromSelected(key, value)">{{value}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <input type="text" class="form-control" aria-label="..."
-                           ng-model="transFields[transaction.from_place_holder]">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false"
+                            ng-click="">From: <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="(key,value) in transFields">
+                            <a ng-if="key.indexOf('from_') > -1" ng-click="fromSelected(key, value)">{{value}}</a>
+                        </li>
+                    </ul>
                 </div>
-
-                <br/>
-
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                                aria-expanded="false"
-                                ng-click="">To: <span class="caret"></span></button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="(key,value) in transFields">
-                                <a ng-if="key.indexOf('to_') > -1" ng-click="toSelected(key, value)">{{value}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <input type="text" class="form-control" aria-label="..."
-                           ng-model="transFields[transaction.to_place_holder]">
-                </div>
-
+                <input type="text" class="form-control" aria-label="..."
+                       ng-model="transFields[transaction.from_place_holder]">
             </div>
+
+            <br/>
+
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                            aria-expanded="false"
+                            ng-click="">To: <span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="(key,value) in transFields">
+                            <a ng-if="key.indexOf('to_') > -1" ng-click="toSelected(key, value)">{{value}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <input type="text" class="form-control" aria-label="..."
+                       ng-model="transFields[transaction.to_place_holder]">
+            </div>
+
+            <!--</div>-->
+
+            <br/>
 
             <input id="amount" type="text" class="form-control" placeholder="Amount" ng-model="transaction.amount">
 
