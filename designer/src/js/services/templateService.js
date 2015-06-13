@@ -9,18 +9,20 @@
         var factory = {};
 
         factory.handleDrop = function (itemParent, item, directiveId, target) {
-            //console.debug('ItemParent: ' + itemParent.id + ', Item: ' + item.id + ', Target: ' + target.id);
+            var itemId = item.id;
+            var parentId = itemParent.id;
+            var targetId = target.id;
 
             //dont create new element if parent and target are the same
-            if (itemParent.id == target.id)
+            if (parentId == targetId)
                 return;
 
             //ensure that only conditions (not triggers) are allowed in the main template
-            if ((item.id.indexOf('Trig:') > -1) && (target.id.toLowerCase().indexOf('Contract') > -1))
+            if ((itemId.indexOf('Trig:') > -1) && (targetId.indexOf('Contract') > -1))
                 return;
 
             //don't allow conditions inside conditions
-            if ((item.id.indexOf('Cond:') > -1) && (factory.searchParentTree(target, 'Cond:') != null))
+            if ((itemId.indexOf('Cond:') > -1) && (factory.searchParentTree(target, 'Cond:') != null))
                 return;
 
             factory.insertItem(item, directiveId, target);
@@ -74,21 +76,15 @@
 
         factory.createElement = function (target, directiveName, elementId) {
 
-            var newElement = angular.element(document.createElement(directiveName));
-
-            newElement.attr('drop-active', 'true');
-            newElement.attr('template_id', elementId);
+            var newElement = angular.element(document.createElement(directiveName))
+                                .attr('drop-active', 'true')
+                                .attr('template_id', elementId);
 
             $compile(newElement)($rootScope);
 
             angular.element(target).append(newElement);
 
             console.debug('UPDATED MODEL: ' + JSON.stringify(modelService.templateModel));
-        };
-
-        factory.getParentConditionModelId = function (element) {
-            var conditionId = factory.searchParentTree(target, 'Cond:').id;
-            return conditionId.split(':')[1];
         };
 
         factory.searchParentTree = function (el, idString) {
