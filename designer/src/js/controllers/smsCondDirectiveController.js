@@ -7,36 +7,19 @@
             $scope.smsFields = null;
 
             $scope.condition = null;
-            $scope.signature = null;
-            $scope.smsDescription = null;
 
             function init(){
                 //view model
-                //$scope.smsFields = modelService.viewModel.conditions.sms.fields;
-                //
-                //if($scope.dropActive == true) {
-                //    //condition
-                //    $scope.condition = modelService.createClone(modelService.conditionModel);
-                //
-                //    //add the signature model to the condition
-                //    $scope.signature = modelService.createClone(modelService.signatureModel);
-                //    $scope.condition.signatures.push($scope.signature);
-                //
-                //    //add the condition to the master model
-                //    modelService.addCondition($scope.condition);
-                //    console.debug('Model updated');
-                //}
+                $scope.smsFields = modelService.viewModel.conditions.sms.fields;
+
+                //get the model from the index - this will have been created when the item was dropped
+                $scope.condition = modelService.modelElementIndex[$scope.templateId];
             }
 
-            $scope.typeSelected = function (key, value) {
+            $scope.fromSelected = function (key, value) {
+                $scope.condition.place_holder = key;
 
-                if($scope.dropActive == true) {
-
-                    $scope.signature.place_holder = key;
-                    $scope.smsDescription = value;
-
-                    console.debug(JSON.stringify(modelService.templateModel));
-                }
+                console.debug(JSON.stringify(modelService.templateModel));
             };
 
             $scope.remove = function(){

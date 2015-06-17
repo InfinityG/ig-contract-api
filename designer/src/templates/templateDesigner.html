@@ -1,4 +1,3 @@
-
 <div class="container">
 
     <div class="row">
@@ -7,16 +6,16 @@
 
             <accordion close-others="true">
                 <accordion-group heading="Inputs" is-open="true" is-disabled="false">
-                    <div class="panel-body" id="Condition">
+                    <div id="Condition">
                         <sms-condition template-id="SmsCond:"></sms-condition>
-                        <br/>
+                        <!--<br/>-->
                         <signature-condition template-id="SigCond:"></signature-condition>
                     </div>
                 </accordion-group>
                 <accordion-group is-open="false" heading="Triggers" is-disabled="false">
-                    <div class="panel-body" id="Trigger">
+                    <div id="Trigger">
                         <webhook-trigger template-id="HookTrig:"></webhook-trigger>
-                        <br/>
+                        <!--<br/>-->
                         <transaction-trigger template-id="TransTrig:"></transaction-trigger>
                     </div>
                 </accordion-group>
@@ -28,22 +27,38 @@
             </accordion>
         </div>
         <div class="col-md-8 contract">
+            <!--<div class="panel-body">-->
+            <h3>Create your template</h3>
+
+            <input id="name" type="text" class="form-control" placeholder="Template name" ng-blur="updateText()"
+                   ng-model="template.name">
+            <br/>
+            <input id="description" type="text" class="form-control" placeholder="Template description"
+                   ng-blur="updateText()" ng-model="template.description">
+            <br/>
+
+            <p>Inputs (drag from library panel):</p>
+
             <div class="contract-inner" droppable>
-                <!--[Drag your inputs here]-->
-                <!--<div class="panel-heading">-->
-                <!--<h3 class="panel-title">-->
-                <!--Contract template-->
-                <!--</h3>-->
-                <!--</div>-->
-                <!--<div class="panel-body" id="contractPanel" droppable drop="handleDrop">-->
-                <!--<div class="panel-body" id="Contract" droppable>-->
-                <!--[Drag your conditions here]-->
-                <!--</div>-->
-                <!--<div class="panel-footer">-->
-                <!--</div>-->
             </div>
+
+            <br/>
+            <button type="button" class="btn btn-default" ng-click="showJson = !showJson">Show JSON</button>
+            <button type="button" class="btn btn-success btn-lg pull-right" ng-click="">Save</button>
+
+        </div>
+
+        <hr/>
+        <!--</div>-->
+
+    </div>
+
+    <div class="row modelOutput" ng-show="showJson">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <pre class="stringifiedModel">{{stringifiedModel.json}}</pre>
         </div>
     </div>
 
-    <!--<div class="panel-footer">Accord.ly | Infinity-G 2015</div>-->
 </div>
+

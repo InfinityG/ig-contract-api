@@ -1,10 +1,10 @@
 (function () {
     var app = angular.module('accord.ly', ['ngRoute', 'ui.bootstrap']);
 
-    app.config(function ($routeProvider) {
+    app.config(function ($routeProvider, $httpProvider) {
 
         //authentication interceptor (http://beletsky.net/2013/11/simple-authentication-in-angular-dot-js-app.html)
-        //$httpProvider.interceptors.push('httpInterceptor');
+        $httpProvider.interceptors.push('httpInterceptor');
 
         $routeProvider
             //.when('/wallet', {
@@ -25,12 +25,17 @@
             .when('/', {
                 controller: 'DefaultController',
                 templateUrl: 'default.html',
-                reloadOnSearch: false
+                reloadOnSearch: true
             })
             .when('/templateDesigner', {
                 controller: 'TemplateDesignerController',
                 templateUrl: 'templateDesigner.html',
-                reloadOnSearch: false
+                reloadOnSearch: true
+            })
+            .when('/login/:exit?', {
+                controller: 'LoginController',
+                templateUrl: 'login.html',
+                reloadOnSearch: true
             });
     });
 

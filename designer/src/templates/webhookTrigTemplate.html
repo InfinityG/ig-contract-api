@@ -1,5 +1,5 @@
-<div ng-controller="WebhookTrigDirectiveController" class="panel panel-default grabbable" draggable>
-    <div class="panel-heading">
+<div ng-controller="WebhookTrigDirectiveController" class="trigger panel panel-default grabbable" draggable>
+    <div class="trigger panel-heading">
         <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'" ng-click="collapsed = !collapsed"></i>
         <i class="fa fa-remove pull-right" ng-show="dropActive == true" ng-click="remove()"></i>
 
@@ -8,7 +8,7 @@
         </h3>
     </div>
     <div collapse="collapsed">
-        <div class="panel-body">
+        <div class="trigger panel-body">
 
             <input id="url" type="text" class="form-control" placeholder="Url">
             <br/>

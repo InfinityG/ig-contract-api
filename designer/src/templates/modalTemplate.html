@@ -1,0 +1,17 @@
+<div ng-show="show">
+    <div class="modal-dialog modal-sm">
+        <!--<div class="modal modal-sm" ng-show="show">-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{type}}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{message}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancelModal()">Close</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade in"></div>
+</div>

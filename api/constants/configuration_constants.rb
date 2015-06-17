@@ -6,7 +6,7 @@ module ConfigurationConstants
         :host => 'localhost',
         :port => 9000,
         :api_auth_token => '7b2ebe64dc9149ac8a9e923bf2a6b233',
-        :shared_aes_key => 'ky4xgi0+KvLYmVp1J5akqkJkv8z5rJsHTo9FcBc0hgo=',
+        :shared_aes_key => 'Pomro4n7AEng/jdeOCucRcOnXok/HKgY/hzLQyuL1xM=',
         :id_provider_public_ecdsa_key => 'A1blXQkf5AH7pfNNx2MIwNXytCyV/wxmQOt7ZGgccvVQ',
         :mongo_host => 'localhost',
         :mongo_port => 27017,
@@ -15,7 +15,7 @@ module ConfigurationConstants
         :logger_age => 10,
         :logger_size => 1024000,
         :default_request_timeout => 60,
-        :allowed_origin => 'http://localhost:8000'
+        :allowed_origin => 'http://localhost:63342'
         # :static => true,
         # :public_folder => 'docs'
     }

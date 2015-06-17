@@ -9,9 +9,6 @@
 
             $scope.condition = null;
 
-            $scope.signature = null;
-            $scope.sigDescription = null;
-
             function init(){
                 //view model
                 $scope.sigFields = modelService.viewModel.conditions.signature.fields;
@@ -20,15 +17,10 @@
                 $scope.condition = modelService.modelElementIndex[$scope.templateId];
             }
 
-            $scope.typeSelected = function (key, value) {
+            $scope.fromSelected = function (key, value) {
+                $scope.condition.place_holder = key;
 
-                if($scope.dropActive == true) {
-
-                    $scope.signature.place_holder = key;
-                    $scope.sigDescription = value;
-
-                    console.debug(JSON.stringify(modelService.templateModel));
-                }
+                console.debug(JSON.stringify(modelService.templateModel));
             };
 
             $scope.remove = function(){

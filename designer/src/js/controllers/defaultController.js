@@ -1,11 +1,17 @@
 (function () {
 
-        var injectParams = ['$scope', '$location', '$compile'];
+        var injectParams = ['$scope', '$location', '$compile', 'userService'];
 
-        var DefaultController = function ($scope, $location, $compile) {
+        var DefaultController = function ($scope, $location, userService) {
 
+            function init() {
+                var context = userService.getContext();
 
-            //init();
+                if (context == null || context == '')
+                    $location.path('/login');
+            }
+
+            init();
         };
 
         DefaultController.$inject = injectParams;

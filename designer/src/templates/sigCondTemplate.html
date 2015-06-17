@@ -22,23 +22,21 @@
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                             aria-expanded="false"
-                            ng-click="">From: <span class="caret"></span></button>
+                            ng-click="">Signed by: <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-repeat="(key,value) in sigFields">
-                            <a ng-click="typeSelected(key, value)">{{value}}</a>
+                            <a ng-click="fromSelected(key, value)">{{value}}</a>
                         </li>
                     </ul>
                 </div>
-                <input type="text" class="form-control" aria-label="..." ng-model="sigDescription">
+                <input type="text" class="form-control" aria-label="..." ng-model="sigFields[condition.place_holder]">
             </div>
 
-            <br/>
+            <p>Triggers (drag from library panel):</p>
 
             <div class="condition-inner" id="signatureConditionTriggerPanel" droppable>
-                <!--<div class="condition-inner-background">Drag triggers here</div>-->
             </div>
         </div>
-
 
     </div>
 </div>

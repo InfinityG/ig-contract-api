@@ -10,7 +10,9 @@
 
         factory.modelElementIndex = {};
 
-        factory.templateModel = {'conditions': [], 'signatures': [], 'media': []};
+        factory.templateModel = {'name': null, 'description': null, 'conditions': [], 'signatures': [], 'media': []};
+
+        factory.stringifiedModel = {'json':null};
 
         factory.signatureModel = {
             'id': '',
@@ -110,6 +112,9 @@
         factory.addCondition = function (condition) {
             condition.id = factory.templateModel.conditions.length + 1;
             factory.templateModel.conditions.push(condition);
+
+            factory.stringifyModel();
+
             return condition.id;
         };
 
@@ -129,6 +134,8 @@
                     break;
                 }
             }
+
+            factory.stringifyModel();
         };
 
         /*
@@ -144,6 +151,8 @@
 
             if (condition != null)
                 condition.trigger = trigger;
+
+            factory.stringifyModel();
         };
 
         factory.getTrigger = function (conditionId) {
@@ -160,6 +169,8 @@
 
             if (condition != null)
                 condition.trigger = null;
+
+            factory.stringifyModel();
         };
 
         /*
@@ -179,6 +190,8 @@
                 if (trigger != null) {
                     transaction.id = trigger.transactions.length + 1;
                     trigger.transactions.push(transaction);
+
+                    factory.stringifyModel();
 
                     return transaction;
                 }
@@ -215,6 +228,8 @@
                     }
                 }
             }
+
+            factory.stringifyModel();
         };
 
         /*
@@ -234,6 +249,8 @@
                 if (trigger != null) {
                     webhook.id = trigger.webhooks.length + 1;
                     trigger.webhooks.push(webhook);
+
+                    factory.stringifyModel();
 
                     return webhook;
                 }
@@ -268,6 +285,8 @@
                     }
                 }
             }
+
+            factory.stringifyModel();
         };
 
         /*
@@ -279,9 +298,16 @@
             factory.modelElementIndex[elementId] = model;
         };
 
-        factory.init = function () {
-
+        factory.stringifyModel = function(){
+            factory.stringifiedModel.json = JSON.stringify(factory.templateModel, null, 2);
+            console.debug(factory.stringifiedModel.josn);
         };
+
+        factory.init = function () {
+            factory.stringifyModel();
+        };
+
+        factory.init();
 
         return factory;
     };

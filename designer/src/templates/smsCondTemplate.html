@@ -1,6 +1,7 @@
 <div ng-controller="SmsCondDirectiveController" class="condition panel panel-default grabbable" draggable>
     <div class="condition panel-heading">
-        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'" ng-click="collapsed = !collapsed"></i>
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'"
+           ng-click="collapsed = !collapsed"></i>
         <i class="fa fa-remove pull-right" ng-show="dropActive == true" ng-click="remove()"></i>
 
         <h3 class="panel-title">
@@ -22,19 +23,21 @@
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                             aria-expanded="false"
-                            ng-click="">From: <span class="caret"></span></button>
+                            ng-click="">Sms received from: <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu">
                         <li ng-repeat="(key,value) in smsFields">
-                            <a ng-click="typeSelected(key, value)">{{value}}</a>
+                            <a ng-click="fromSelected(key, value)">{{value}}</a>
                         </li>
                     </ul>
                 </div>
-                <input type="text" class="form-control" aria-label="..." ng-model="smsDescription">
+                <input type="text" class="form-control" aria-label="..." ng-model="smsFields[condition.place_holder]">
             </div>
-        </div>
 
-        <div class="panel-body" id="signatureConditionTriggerPanel" droppable>
-            [Drag your trigger here]
+            <p>Triggers (drag from library panel):</p>
+
+            <div class="condition-inner" id="signatureConditionTriggerPanel" droppable>
+            </div>
+
         </div>
 
     </div>
