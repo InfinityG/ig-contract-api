@@ -1,21 +1,39 @@
 /**
  * Created by grant on 19/01/2015.
+
+ * This service is used for the creation and assembly of models.
+ * It is NOT used for storing model instances - this is handled by the localStorageService
  */
+
 (function () {
 
-    var injectParams = ['$http', '$rootScope', '$location'];
+    var injectParams = ['$http', '$rootScope'];
 
-    var modelFactory = function ($http, $rootScope, $location) {
+    var modelFactory = function ($http, $rootScope) {
+
         var factory = {};
 
+        // used to maintain an index of (key:value) elementId:model for easier access by controllers
         factory.modelElementIndex = {};
 
-        factory.templateModel = {'name': null, 'description': null, 'conditions': [], 'signatures': [], 'media': []};
+        // the current template instance
+        factory.currentTemplate = null;
 
-        factory.stringifiedModel = {'json':null};
+        /*
+         Base models to clone
+         */
+
+        factory.baseTemplateModel = {
+            'external_id': null,
+            'name': null,
+            'description': null,
+            'conditions': [],
+            'signatures': [],
+            'media': []
+        };
 
         factory.signatureModel = {
-            'id': '',
+            'external_idd': '',
             'place_holder': ''
             //'participant_external_id': '',
             //'delegated_by_external_id': '',
@@ -24,33 +42,35 @@
         };
 
         factory.transactionModel = {
-            'id': '',
+            'external_id': '',
             'from_place_holder': '',
             'to_place_holder': '',
             'amount': ''
         };
 
         factory.webhookModel = {
-            'id': '',
+            'external_id': '',
             'uri': ''
         };
 
         factory.triggerModel = {
-            'id': '',
+            'external_id': '',
             'transactions': [],
             'webhooks': []
         };
 
         factory.conditionModel = {
-            'id': '',
-            'name': '',
-            'description': '',
-            'sequence_number': '',
+            'external_id': null,
+            'name': null,
+            'description': null,
+            'type':null,
             'signatures': [],
-            'status': '',
-            'trigger': null,
-            'expires': ''
+            'trigger': null
         };
+
+        /*
+         Models used for UI field values
+         */
 
         factory.viewModel =
         {
@@ -102,6 +122,18 @@
         };
 
         /*
+         Main template
+         */
+
+        factory.createTemplate = function () {
+            return factory.createClone(factory.baseTemplateModel);
+        };
+
+        factory.setCurrentTemplate = function(template){
+          factory.currentTemplate = template;
+        };
+
+        /*
          Conditions
          */
 
@@ -110,32 +142,32 @@
         };
 
         factory.addCondition = function (condition) {
-            condition.id = factory.templateModel.conditions.length + 1;
-            factory.templateModel.conditions.push(condition);
+            condition.external_id = factory.currentTemplate.conditions.length + 1;
+            factory.currentTemplate.conditions.push(condition);
 
-            factory.stringifyModel();
+            raiseModelChanged();
 
-            return condition.id;
+            return condition.external_id;
         };
 
         factory.getCondition = function (conditionId) {
-            for (var x = 0; x < factory.templateModel.conditions.length; x++) {
-                if (factory.templateModel.conditions[x].id == conditionId)
-                    return factory.templateModel.conditions[x];
+            for (var x = 0; x < factory.currentTemplate.conditions.length; x++) {
+                if (factory.currentTemplate.conditions[x].external_id == conditionId)
+                    return factory.currentTemplate.conditions[x];
             }
 
             return null;
         };
 
         factory.removeCondition = function (conditionId) {
-            for (var x = 0; x < factory.templateModel.conditions.length; x++) {
-                if (factory.templateModel.conditions[x].id == conditionId) {
-                    factory.templateModel.conditions.splice(x, 1);
+            for (var x = 0; x < factory.currentTemplate.conditions.length; x++) {
+                if (factory.currentTemplate.conditions[x].external_id == conditionId) {
+                    factory.currentTemplate.conditions.splice(x, 1);
                     break;
                 }
             }
 
-            factory.stringifyModel();
+            raiseModelChanged();
         };
 
         /*
@@ -152,7 +184,7 @@
             if (condition != null)
                 condition.trigger = trigger;
 
-            factory.stringifyModel();
+            raiseModelChanged();
         };
 
         factory.getTrigger = function (conditionId) {
@@ -170,7 +202,7 @@
             if (condition != null)
                 condition.trigger = null;
 
-            factory.stringifyModel();
+            raiseModelChanged();
         };
 
         /*
@@ -188,10 +220,10 @@
                 var trigger = condition.trigger;
 
                 if (trigger != null) {
-                    transaction.id = trigger.transactions.length + 1;
+                    transaction.external_id = trigger.transactions.length + 1;
                     trigger.transactions.push(transaction);
 
-                    factory.stringifyModel();
+                    raiseModelChanged();
 
                     return transaction;
                 }
@@ -207,7 +239,7 @@
                 var trigger = condition.trigger;
 
                 for (var x = 0; x < trigger.transactions.length; x++) {
-                    if (trigger.transactions[x].id == transactionId)
+                    if (trigger.transactions[x].external_id == transactionId)
                         return trigger.transactions[x];
                 }
             }
@@ -222,14 +254,14 @@
                 console.debug('Condition id: ' + parentConditionId + ', Transaction id: ' + transactionId);
 
                 for (var x = 0; x < condition.trigger.transactions.length; x++) {
-                    if (condition.trigger.transactions[x].id == transactionId) {
+                    if (condition.trigger.transactions[x].external_id == transactionId) {
                         condition.trigger.transactions.splice(x, 1);
                         break;
                     }
                 }
             }
 
-            factory.stringifyModel();
+            raiseModelChanged();
         };
 
         /*
@@ -247,10 +279,10 @@
                 var trigger = condition.trigger;
 
                 if (trigger != null) {
-                    webhook.id = trigger.webhooks.length + 1;
+                    webhook.external_id = trigger.webhooks.length + 1;
                     trigger.webhooks.push(webhook);
 
-                    factory.stringifyModel();
+                    raiseModelChanged();
 
                     return webhook;
                 }
@@ -266,7 +298,7 @@
                 var trigger = condition.trigger;
 
                 for (var x = 0; x < trigger.webhooks.length; x++) {
-                    if (trigger.webhooks[x].id == webhookId)
+                    if (trigger.webhooks[x].external_id == webhookId)
                         return trigger.webhooks[x];
                 }
             }
@@ -279,14 +311,14 @@
 
             if (condition != null) {
                 for (var x = 0; x < condition.trigger.webhooks.length; x++) {
-                    if (condition.trigger.webhooks[x].id == webhookId) {
+                    if (condition.trigger.webhooks[x].external_id == webhookId) {
                         condition.trigger.webhooks.splice(x, 1);
                         break;
                     }
                 }
             }
 
-            factory.stringifyModel();
+            raiseModelChanged();
         };
 
         /*
@@ -298,16 +330,19 @@
             factory.modelElementIndex[elementId] = model;
         };
 
-        factory.stringifyModel = function(){
-            factory.stringifiedModel.json = JSON.stringify(factory.templateModel, null, 2);
-            console.debug(factory.stringifiedModel.josn);
+        factory.stringifyModel = function (model) {
+            return JSON.stringify(model, null, 2);
         };
 
-        factory.init = function () {
-            factory.stringifyModel();
-        };
+        /*
+         Events
+         */
 
-        factory.init();
+        function raiseModelChanged() {
+            $rootScope.$broadcast('templateModelEvent', null);
+        }
+
+        //factory.init();
 
         return factory;
     };

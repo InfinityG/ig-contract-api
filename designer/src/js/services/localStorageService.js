@@ -7,6 +7,68 @@
         var factory = {};
 
         /*
+         TEMPLATES
+         */
+
+        factory.getTemplates = function (userId) {
+            var blob = factory.getBlob(userId);
+            var result = blob.templates;
+
+            result.sort(function (a, b) {
+                return a.external_id - b.external_id;
+            });
+
+            return result;
+        };
+
+        factory.saveTemplate = function (userId, template) {
+            var blob = factory.getBlob(userId);
+
+            var templates = blob.templates;
+
+            if(template.external_id != null && template.external_id > 0) {
+                for (var i = 0; i < templates.length; i++) {
+                    if (templates[i].external_id == templates.external_id) {
+                        templates.splice(i, 1);
+                        templates.push(template);
+                    }
+                }
+            }else{
+                //this is a new template - set the external_id
+                if (templates.length > 0)
+                    template.external_id = templates[templates.length - 1].external_id + 1;
+                else
+                    template.external_id = 1;
+
+                templates.push(template);
+            }
+
+            factory.saveBlob(userId, blob);
+        };
+
+        factory.getTemplate = function (userId, templateExternalId) {
+            var templates = factory.getTemplates(userId);
+
+            for (var i = 0; i < templates.length; i++) {
+                if (templates[i].external_id == templateExternalId)
+                    return templates[i];
+            }
+        };
+
+        factory.deleteTemplate = function (userId, templateExternalId) {
+            var blob = factory.getBlob(userId);
+            var templates = blob.templates;
+
+            for (var i = 0; i < templates.length; i++) {
+                if (templates[i].external_id == templateExternalId) {
+                    templates.splice(i, 1);
+                }
+            }
+
+            factory.saveBlob(userId, blob);
+        };
+
+        /*
          CONTRACTS
          */
 

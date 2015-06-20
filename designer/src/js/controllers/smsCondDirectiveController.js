@@ -19,13 +19,13 @@
             $scope.fromSelected = function (key, value) {
                 $scope.condition.place_holder = key;
 
-                console.debug(JSON.stringify(modelService.templateModel));
+                console.debug(JSON.stringify(modelService.baseTemplateModel));
             };
 
             $scope.remove = function(){
                 modelService.removeCondition($scope.condition.id);
                 $element.remove();
-                console.debug(JSON.stringify(modelService.templateModel));
+                console.debug(JSON.stringify(modelService.baseTemplateModel));
             };
 
             init();

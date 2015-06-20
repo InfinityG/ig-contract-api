@@ -26,7 +26,7 @@
                 </accordion-group>
             </accordion>
         </div>
-        <div class="col-md-8 contract">
+        <div class="col-md-8 template">
             <!--<div class="panel-body">-->
             <h3>Create your template</h3>
 
@@ -39,12 +39,19 @@
 
             <p>Inputs (drag from library panel):</p>
 
-            <div class="contract-inner" droppable>
+            <div id="TemplateTarget" class="template-inner" droppable>
             </div>
 
             <br/>
             <button type="button" class="btn btn-default" ng-click="showJson = !showJson">Show JSON</button>
-            <button type="button" class="btn btn-success btn-lg pull-right" ng-click="">Save</button>
+            <button type="button"
+                    ng-show="template.name != null &&
+                        template.name != '' &&
+                        template.description != null &&
+                        template.description != '' &&
+                        template.conditions.length > 0 &&
+                        template.conditions[0].trigger != null"
+                    class="btn btn-success btn-lg pull-right" ng-click="saveTemplate()">Save</button>
 
         </div>
 

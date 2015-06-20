@@ -40,8 +40,20 @@
             var elementId;
 
             if (item.id.indexOf('Cond:') > -1) {    // condition elements id format: eg 'SigCond:1'
-                model = factory.createConditionModel();
-                elementId = item.id + model.id;
+                var condType = item.id.split('Cond')[0];
+
+                switch(condType){
+                    case 'Sms':
+                        model = factory.createConditionModel('sms');
+                        break;
+                    case 'Sig':
+                        model = factory.createConditionModel('signature');
+                        break;
+                    default:
+                        break;
+                }
+
+                elementId = item.id + model.external_id;
             }
 
             if (item.id.indexOf('Trig:') > -1) {    // id format: eg 'SigCond:1_HookTrig:1'
@@ -65,26 +77,101 @@
                         break;
                 }
 
-                elementId = conditionId + '_' + item.id + model.id;
+                elementId = conditionId + '_' + item.id + model.external_id;
             }
 
-            //add to the index for easy access from controllers
+            //add to the index to enable dictionary access from controllers
             modelService.addElementToModelIndex(elementId, model);
-
-            factory.createElement(target, directiveId, elementId);
+            var element = factory.createDirectiveElement(directiveId, elementId);
+            factory.insertElement(target, element);
         };
 
-        factory.createElement = function (target, directiveName, elementId) {
+        factory.rebuildTemplateFromModel = function(){
+            // get the current model
+            var templateModel = modelService.currentTemplate;
 
-            var newElement = angular.element(document.createElement(directiveName))
-                                .attr('drop-active', 'true')
-                                .attr('template_id', elementId);
+            var rootElement = document.getElementById('TemplateTarget');
 
-            $compile(newElement)($rootScope);
+            //iterate through the conditions
+            for(var x=0; x<templateModel.conditions.length; x++){
+                var condition = templateModel.conditions[x];
+                var conditionElement;
 
-            angular.element(target).append(newElement);
+                switch(condition.type){
+                    case 'sms':
+                        conditionElement = factory.createSmsConditionElement(condition.external_id);
+                        break;
+                    case 'signature':
+                        conditionElement = factory.createSignatureConditionElement(condition.external_id);
+                        break;
+                    default:
+                        break;
+                }
 
-            console.debug('UPDATED MODEL: ' + JSON.stringify(modelService.templateModel));
+                modelService.addElementToModelIndex(condition.external_id, condition);
+                factory.insertElement(rootElement, conditionElement);
+            }
+        };
+
+        factory.rebuildNestedElementsFromModel = function(parentElementId, parentElement, model){
+            var triggerRootElement = parentElement.find('#TriggerPanel')[0];
+
+            if(model.trigger != null) {
+
+                for (var i = 0; i < model.trigger.transactions.length; i++) {
+                    var transaction = model.trigger.transactions[i];
+                    var elementId = parentElementId + '_TransTrig:' + transaction.external_id;
+                    var element = factory.createDirectiveElement('transaction-trigger', elementId);
+
+                    modelService.addElementToModelIndex(elementId, transaction);
+                    factory.insertElement(triggerRootElement, element);
+                }
+
+                for (var x = 0; x < model.trigger.webhooks.length; x++) {
+                    var webhook = model.trigger.webhooks[x];
+                    var elementId = parentElementId + '_HookTrig:' + webhook.external_id;
+                    var element = factory.createDirectiveElement('webhook-trigger', elementId);
+
+                    modelService.addElementToModelIndex(elementId, webhook);
+                    factory.insertElement(triggerRootElement, element);
+                }
+            }
+        };
+
+        factory.insertElement = function (target, element) {
+            var compiledElement = $compile(element)($rootScope);
+            angular.element(target).append(element);
+            return compiledElement;
+        };
+
+        /*
+         Helpers
+         */
+
+        factory.createSignatureConditionElement = function(modelId){
+            var elementId = 'SigCond:' + modelId;
+            return factory.createDirectiveElement('signature-condition', elementId);
+        };
+
+        factory.createSmsConditionElement = function(modelId){
+            var elementId = 'SmsCond:' + modelId;
+            return factory.createDirectiveElement('sms-condition', elementId);
+        };
+
+        factory.createTransactionTriggerElement = function(conditionElementId, modelId){
+            var elementId = conditionElementId + '_TransTrig:' + modelId;
+            return factory.createDirectiveElement('transaction-trigger', elementId);
+        };
+
+        factory.createWebhookTriggerElement = function(conditionElementId, modelId){
+            var elementId = conditionElementId + '_HookTrig:' + modelId;
+            return factory.createDirectiveElement('webhook-trigger', elementId);
+        };
+
+        factory.createDirectiveElement = function(directiveName, elementId){
+            return angular.element(document.createElement(directiveName))
+                .attr('drop-active', 'true')
+                .attr('template_id', elementId);
         };
 
         factory.searchParentTree = function (el, idString) {
@@ -96,8 +183,13 @@
             return null;
         };
 
-        factory.createConditionModel = function () {
+        /*
+         CREATION OF MODEL INSTANCES
+         */
+
+        factory.createConditionModel = function (type) {
             var condition = modelService.createCondition();
+            condition.type = type;
             modelService.addCondition(condition);
             return condition;
         };

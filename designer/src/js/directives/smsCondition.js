@@ -2,7 +2,9 @@
 
 (function () {
 
-    var smsCondition = function () {
+    var injectParams = ['modelService', 'templateService'];
+
+    var smsCondition = function (modelService, templateService) {
 
         return {
             templateUrl: 'smsCondTemplate.html',
@@ -14,9 +16,19 @@
             },
             link: function postLink(scope, element, attrs) {
                 element[0].childNodes[0].id = scope.templateId;
+
+                //check if the model has any child triggers (used for rebuilding a saved condition)
+                var condition = modelService.modelElementIndex[scope.templateId];
+
+                if ((condition != null && condition.trigger != null) &&
+                    ((condition.trigger.transactions.length > 0) || (condition.trigger.webhooks.length > 0))) {
+                    templateService.rebuildNestedElementsFromModel(scope.templateId, element, condition);
+                }
             }
         };
     };
+
+    smsCondition.$inject = injectParams;
 
     angular.module('accord.ly').directive('smsCondition', smsCondition);
 })();

@@ -1,0 +1,36 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>My Templates</h2>
+
+        </div>
+        <div class="col-md-8 template-list">
+            <!--<div class="panel-body">-->
+            <h3>Saved</h3>
+            <div class="list-group">
+                <div ng-repeat="template in templates" class="list-group-item">
+                    <span><strong>{{template.external_id + ': ' + template.name}}</strong></span>
+                    <span class="pull-right">
+                        <a href="#/templateDesigner/{{template.external_id}}">Edit</a>
+                        &nbsp; | &nbsp; <a href="" ng-click="deleteTemplate(template.external_id)">Delete</a>
+                        &nbsp; | &nbsp; <a href="#">Create a contract</a>
+                    </span>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="row modelOutput" ng-show="showJson">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <pre class="stringifiedModel">{{stringifiedModel.json}}</pre>
+        </div>
+    </div>
+
+</div>
+

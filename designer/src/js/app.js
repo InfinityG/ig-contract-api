@@ -27,9 +27,19 @@
                 templateUrl: 'default.html',
                 reloadOnSearch: true
             })
-            .when('/templateDesigner', {
+            //.when('/templateDesigner', {
+            //    controller: 'TemplateDesignerController',
+            //    templateUrl: 'templateDesigner.html',
+            //    reloadOnSearch: true
+            //})
+            .when('/templateDesigner/:id?', {
                 controller: 'TemplateDesignerController',
                 templateUrl: 'templateDesigner.html',
+                reloadOnSearch: true
+            })
+            .when('/templateList', {
+                controller: 'TemplateListController',
+                templateUrl: 'templateList.html',
                 reloadOnSearch: true
             })
             .when('/login/:exit?', {

@@ -26,7 +26,7 @@
             $scope.toSelected = function (key, value) {
                 $scope.transaction.to_place_holder = key;
 
-                console.debug(JSON.stringify(modelService.templateModel));
+                console.debug(JSON.stringify(modelService.baseTemplateModel));
             };
 
             $scope.remove = function(){
@@ -37,7 +37,7 @@
                 //delete the element
                 $element.remove();
 
-                console.debug(JSON.stringify(modelService.templateModel));
+                console.debug(JSON.stringify(modelService.baseTemplateModel));
             };
 
             init();
