@@ -18,8 +18,6 @@
 
             $scope.fromSelected = function (key, value) {
                 $scope.condition.place_holder = key;
-
-                console.debug(JSON.stringify(modelService.baseTemplateModel));
             };
 
             $scope.remove = function(){

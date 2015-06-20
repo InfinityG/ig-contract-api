@@ -22,6 +22,7 @@
 
                 if ((condition != null && condition.trigger != null) &&
                     ((condition.trigger.transactions.length > 0) || (condition.trigger.webhooks.length > 0))) {
+                    console.debug('Children detected in sms condition!');
                     templateService.rebuildNestedElementsFromModel(scope.templateId, element, condition);
                 }
             }

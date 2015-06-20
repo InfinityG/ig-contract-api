@@ -16,7 +16,6 @@
                 if ($scope.context == null || $scope.context == '')
                     $location.path('/login');
                 else {
-                    console.debug($routeParams.id);
                     $routeParams.id != null ? loadData($routeParams.id) : loadData();
                 }
             }
@@ -28,6 +27,7 @@
                 } else {
                     $scope.template = localStorageService.getTemplate($scope.context.userId, templateId);
                     modelService.setCurrentTemplate($scope.template);
+                    modelService.rebuildIndex();
 
                     //now rebuild the view
                     templateService.rebuildTemplateFromModel();

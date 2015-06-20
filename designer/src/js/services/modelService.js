@@ -13,7 +13,7 @@
 
         var factory = {};
 
-        // used to maintain an index of (key:value) elementId:model for easier access by controllers
+        // index should only contain the key:value pairs related to the currently loaded template
         factory.modelElementIndex = {};
 
         // the current template instance
@@ -131,6 +131,47 @@
 
         factory.setCurrentTemplate = function(template){
           factory.currentTemplate = template;
+        };
+
+        // index should only contain the key:value pairs related to the currently loaded template
+        factory.rebuildIndex = function(){
+            factory.modelElementIndex = {};
+
+            if(factory.currentTemplate != null && factory.currentTemplate.conditions.length > 0) {
+                for (var x = 0; x < factory.currentTemplate.conditions.length; x++) {
+                    var currentCondition = factory.currentTemplate.conditions[x];
+                    var conditionKey;
+
+                    switch (currentCondition.type){
+                        case 'sms':
+                            conditionKey = 'SmsCond:' + currentCondition.external_id;
+                            break;
+                        case 'signature':
+                            conditionKey = 'SigCond:' + currentCondition.external_id;
+                            break;
+                    }
+
+                    factory.addElementToModelIndex(conditionKey, currentCondition);
+
+                    if(currentCondition.trigger != null) {
+                        if(currentCondition.trigger.transactions != null) {
+                            for (var i = 0; i < currentCondition.trigger.transactions.length; i++) {
+                                var currentTransaction = currentCondition.trigger.transactions[i];
+                                var triggerKey = conditionKey + '_TransTrig:' + currentTransaction.external_id;
+                                factory.addElementToModelIndex(triggerKey, currentTransaction);
+                            }
+                        }
+
+                        if(currentCondition.trigger.webhooks != null) {
+                            for (var i = 0; i < currentCondition.trigger.webhooks.length; i++) {
+                                var currentWebhook = currentCondition.trigger.webhooks[i];
+                                var webhookKey = conditionKey + '_HookTrig:' + currentWebhook.external_id;
+                                factory.addElementToModelIndex(webhookKey, currentWebhook);
+                            }
+                        }
+                    }
+                }
+            }
         };
 
         /*
