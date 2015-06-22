@@ -23,12 +23,12 @@
 
         factory.saveTemplate = function (userId, template) {
             var blob = factory.getBlob(userId);
-
             var templates = blob.templates;
 
             if(template.external_id != null && template.external_id > 0) {
+
                 for (var i = 0; i < templates.length; i++) {
-                    if (templates[i].external_id == templates.external_id) {
+                    if (templates[i].external_id == template.external_id) {
                         templates.splice(i, 1);
                         templates.push(template);
                     }

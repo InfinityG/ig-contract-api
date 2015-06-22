@@ -18,13 +18,13 @@
                             aria-expanded="false"
                             ng-click="">From: <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-repeat="(key,value) in transFields">
-                            <a ng-if="key.indexOf('from_') > -1" ng-click="fromSelected(key, value)">{{value}}</a>
+                        <li ng-repeat="(key,value) in transFields.from">
+                            <a ng-click="fromSelected(key, value)">{{value}}</a>
                         </li>
                     </ul>
                 </div>
                 <input type="text" class="form-control" aria-label="..."
-                       ng-model="transFields[transaction.meta.from]">
+                       ng-model="transFields.from[transaction.meta.from]">
             </div>
 
             <br/>
@@ -35,13 +35,13 @@
                             aria-expanded="false"
                             ng-click="">To: <span class="caret"></span></button>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-repeat="(key,value) in transFields">
-                            <a ng-if="key.indexOf('to_') > -1" ng-click="toSelected(key, value)">{{value}}</a>
+                        <li ng-repeat="(key,value) in transFields.to">
+                            <a ng-click="toSelected(key, value)">{{value}}</a>
                         </li>
                     </ul>
                 </div>
                 <input type="text" class="form-control" aria-label="..."
-                       ng-model="transFields[transaction.meta.to]">
+                       ng-model="transFields.to[transaction.meta.to]">
             </div>
 
             <!--</div>-->

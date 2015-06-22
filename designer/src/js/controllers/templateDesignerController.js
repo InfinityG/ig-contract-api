@@ -42,7 +42,6 @@
 
             $scope.saveTemplate = function(){
                 localStorageService.saveTemplate($scope.context.userId, $scope.template);
-                //loadData();
                 $route.reload();
             };
 

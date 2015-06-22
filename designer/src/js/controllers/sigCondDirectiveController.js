@@ -23,10 +23,8 @@
             };
 
             $scope.remove = function(){
-                modelService.removeCondition($scope.condition.id);
+                modelService.removeCondition($scope.condition.external_id);
                 $element.remove();
-
-                console.debug(JSON.stringify(modelService.baseTemplateModel));
             };
 
             init();

@@ -96,43 +96,40 @@
             for(var x=0; x<templateModel.conditions.length; x++){
                 var condition = templateModel.conditions[x];
                 var conditionElement;
+                var elementId;
 
                 switch(condition.meta.type){
                     case 'sms':
+                        elementId = 'SmsCond:' + condition.external_id;
                         conditionElement = factory.createSmsConditionElement(condition.external_id);
                         break;
                     case 'signature':
+                        elementId = 'SigCond:' + condition.external_id;
                         conditionElement = factory.createSignatureConditionElement(condition.external_id);
                         break;
                     default:
                         break;
                 }
 
-                modelService.addElementToModelIndex(condition.external_id, condition);
                 factory.insertElement(rootElement, conditionElement);
             }
         };
 
         factory.rebuildNestedElementsFromModel = function(parentElementId, parentElement, model){
             var triggerRootElement = parentElement.find('#TriggerPanel')[0];
+            var element;
 
             if(model.trigger != null) {
 
                 for (var i = 0; i < model.trigger.transactions.length; i++) {
                     var transaction = model.trigger.transactions[i];
-                    var elementId = parentElementId + '_TransTrig:' + transaction.external_id;
-                    var element = factory.createDirectiveElement('transaction-trigger', elementId);
-
-                    modelService.addElementToModelIndex(elementId, transaction);
+                    element = factory.createTransactionTriggerElement(parentElementId, transaction.external_id);
                     factory.insertElement(triggerRootElement, element);
                 }
 
                 for (var x = 0; x < model.trigger.webhooks.length; x++) {
                     var webhook = model.trigger.webhooks[x];
-                    var elementId = parentElementId + '_HookTrig:' + webhook.external_id;
-                    var element = factory.createDirectiveElement('webhook-trigger', elementId);
-
-                    modelService.addElementToModelIndex(elementId, webhook);
+                    element = factory.createWebhookTriggerElement(parentElementId, webhook.external_id);
                     factory.insertElement(triggerRootElement, element);
                 }
             }

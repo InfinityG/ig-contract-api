@@ -34,9 +34,9 @@
 
         factory.signatureModel = {
             'external_id': '',
-            'meta':{
-                'type':null,
-                'sub_type':null
+            'meta': {
+                'type': null,
+                'sub_type': null
             }
             //'participant_external_id': '',
             //'delegated_by_external_id': '',
@@ -47,9 +47,9 @@
         factory.transactionModel = {
             'external_id': '',
             'amount': '',
-            'meta':{
-                'from':null,
-                'to':null
+            'meta': {
+                'from': null,
+                'to': null
             }
         };
 
@@ -62,8 +62,8 @@
             'external_id': '',
             'transactions': [],
             'webhooks': [],
-            'meta':{
-                'type':null,
+            'meta': {
+                'type': null,
                 'sub_type': null
             }
         };
@@ -74,9 +74,9 @@
             'description': null,
             'signatures': [],
             'trigger': null,
-            'meta':{
-                'type':null,
-                'sub_type':null
+            'meta': {
+                'type': null,
+                'sub_type': null
             }
         };
 
@@ -109,10 +109,15 @@
             'triggers': {
                 'transaction': {
                     'fields': {
-                        'from_creator': 'Creator wallet',
-                        'from_specific': 'Specific participant wallet',
-                        'to_specific': 'Specific participant wallet',
-                        'to_all': 'All participant wallets',
+                        'from': {
+                            'creator': 'Creator wallet',
+                            'specific': 'Specific participant wallet'
+                        },
+                        'to': {
+                            'specific':
+                                'Specific participant wallet',
+                            'all': 'All participant wallets'
+                        },
                         'amount': 'Amount'
                     }
                 }
@@ -141,20 +146,20 @@
             return factory.createClone(factory.baseTemplateModel);
         };
 
-        factory.setCurrentTemplate = function(template){
-          factory.currentTemplate = template;
+        factory.setCurrentTemplate = function (template) {
+            factory.currentTemplate = template;
         };
 
         // index should only contain the key:value pairs related to the currently loaded template
-        factory.rebuildIndex = function(){
+        factory.rebuildIndex = function () {
             factory.modelElementIndex = {};
 
-            if(factory.currentTemplate != null && factory.currentTemplate.conditions.length > 0) {
+            if (factory.currentTemplate != null && factory.currentTemplate.conditions.length > 0) {
                 for (var x = 0; x < factory.currentTemplate.conditions.length; x++) {
                     var currentCondition = factory.currentTemplate.conditions[x];
                     var conditionKey;
 
-                    switch (currentCondition.meta.type){
+                    switch (currentCondition.meta.type) {
                         case 'sms':
                             conditionKey = 'SmsCond:' + currentCondition.external_id;
                             break;
@@ -165,20 +170,22 @@
 
                     factory.addElementToModelIndex(conditionKey, currentCondition);
 
-                    if(currentCondition.trigger != null) {
-                        if(currentCondition.trigger.transactions != null) {
+                    if (currentCondition.trigger != null) {
+                        if (currentCondition.trigger.transactions != null) {
                             for (var i = 0; i < currentCondition.trigger.transactions.length; i++) {
                                 var currentTransaction = currentCondition.trigger.transactions[i];
                                 var triggerKey = conditionKey + '_TransTrig:' + currentTransaction.external_id;
                                 factory.addElementToModelIndex(triggerKey, currentTransaction);
+                                console.debug('Transaction index updated!');
                             }
                         }
 
-                        if(currentCondition.trigger.webhooks != null) {
+                        if (currentCondition.trigger.webhooks != null) {
                             for (var i = 0; i < currentCondition.trigger.webhooks.length; i++) {
                                 var currentWebhook = currentCondition.trigger.webhooks[i];
                                 var webhookKey = conditionKey + '_HookTrig:' + currentWebhook.external_id;
                                 factory.addElementToModelIndex(webhookKey, currentWebhook);
+                                console.debug('Webhook index updated!');
                             }
                         }
                     }
@@ -216,6 +223,7 @@
             for (var x = 0; x < factory.currentTemplate.conditions.length; x++) {
                 if (factory.currentTemplate.conditions[x].external_id == conditionId) {
                     factory.currentTemplate.conditions.splice(x, 1);
+                    console.debug('Removing condition!');
                     break;
                 }
             }
