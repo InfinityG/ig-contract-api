@@ -20,11 +20,11 @@
             }
 
             $scope.fromSelected = function (key, value) {
-                $scope.transaction.from_place_holder = key;
+                $scope.transaction.meta.from = key;
             };
 
             $scope.toSelected = function (key, value) {
-                $scope.transaction.to_place_holder = key;
+                $scope.transaction.meta.to = key;
 
                 console.debug(JSON.stringify(modelService.baseTemplateModel));
             };

@@ -33,8 +33,11 @@
         };
 
         factory.signatureModel = {
-            'external_idd': '',
-            'place_holder': ''
+            'external_id': '',
+            'meta':{
+                'type':null,
+                'sub_type':null
+            }
             //'participant_external_id': '',
             //'delegated_by_external_id': '',
             //'value': '',
@@ -43,9 +46,11 @@
 
         factory.transactionModel = {
             'external_id': '',
-            'from_place_holder': '',
-            'to_place_holder': '',
-            'amount': ''
+            'amount': '',
+            'meta':{
+                'from':null,
+                'to':null
+            }
         };
 
         factory.webhookModel = {
@@ -56,16 +61,23 @@
         factory.triggerModel = {
             'external_id': '',
             'transactions': [],
-            'webhooks': []
+            'webhooks': [],
+            'meta':{
+                'type':null,
+                'sub_type': null
+            }
         };
 
         factory.conditionModel = {
             'external_id': null,
             'name': null,
             'description': null,
-            'type':null,
             'signatures': [],
-            'trigger': null
+            'trigger': null,
+            'meta':{
+                'type':null,
+                'sub_type':null
+            }
         };
 
         /*
@@ -77,19 +89,19 @@
             'conditions': {
                 'signature': {
                     'fields': {
-                        'sig_single': 'Single participant',
-                        'sig_specific': 'Specific participants',
-                        'sig_all_group': 'All participants in a group',
-                        'sig_all': 'All participants',
-                        'sig_external': 'External system'
+                        'single': 'Single participant',
+                        'specific': 'Specific participants',
+                        'all_group': 'All participants in a group',
+                        'all': 'All participants',
+                        'external': 'External system'
                     }
                 },
                 'sms': {
                     'fields': {
-                        'sms_single': 'Single participant',
-                        'sms_specific': 'Specific participants',
-                        'sms_all_group': 'All participants in a group',
-                        'sms_all': 'All participants'
+                        'single': 'Single participant',
+                        'specific': 'Specific participants',
+                        'all_group': 'All participants in a group',
+                        'all': 'All participants'
                     }
                 }
             }
@@ -142,7 +154,7 @@
                     var currentCondition = factory.currentTemplate.conditions[x];
                     var conditionKey;
 
-                    switch (currentCondition.type){
+                    switch (currentCondition.meta.type){
                         case 'sms':
                             conditionKey = 'SmsCond:' + currentCondition.external_id;
                             break;

@@ -18,7 +18,8 @@
             }
 
             $scope.fromSelected = function (key, value) {
-                $scope.condition.place_holder = key;
+                $scope.condition.meta.sub_type = key;
+
             };
 
             $scope.remove = function(){

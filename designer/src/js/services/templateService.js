@@ -97,7 +97,7 @@
                 var condition = templateModel.conditions[x];
                 var conditionElement;
 
-                switch(condition.type){
+                switch(condition.meta.type){
                     case 'sms':
                         conditionElement = factory.createSmsConditionElement(condition.external_id);
                         break;
@@ -189,7 +189,7 @@
 
         factory.createConditionModel = function (type) {
             var condition = modelService.createCondition();
-            condition.type = type;
+            condition.meta.type = type;
             modelService.addCondition(condition);
             return condition;
         };
