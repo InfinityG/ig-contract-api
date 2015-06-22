@@ -10,7 +10,6 @@
             var context = userService.getContext();
 
             if(context != null) {
-                console.debug(context.username);
                 $scope.userName = context.username;
             }
         }

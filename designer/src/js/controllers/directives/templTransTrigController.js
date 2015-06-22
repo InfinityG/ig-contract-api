@@ -3,19 +3,19 @@
  */
 (function () {
 
-        var injectParams = ['$scope', '$element', 'modelService'];
+        var injectParams = ['$scope', '$element', 'templateModelService'];
 
-        var TransTrigDirectiveController = function ($scope, $element, modelService) {
+        var TemplTransTrigController = function ($scope, $element, templateModelService) {
             $scope.collapsed = true;
             $scope.transFields = null;
             $scope.transaction = null;
 
             function init(){
                 //get the fields for the UI
-                $scope.transFields = modelService.viewModel.triggers.transaction.fields;
+                $scope.transFields = templateModelService.viewModel.triggers.transaction.fields;
 
                 //get the model from the index
-                $scope.transaction = modelService.modelElementIndex[$scope.templateId];
+                $scope.transaction = templateModelService.modelElementIndex[$scope.templateId];
 
             }
 
@@ -25,27 +25,23 @@
 
             $scope.toSelected = function (key, value) {
                 $scope.transaction.meta.to = key;
-
-                console.debug(JSON.stringify(modelService.baseTemplateModel));
             };
 
             $scope.remove = function(){
                 //delete the model
                 var parentConditionId = $scope.templateId.split('_')[0].split(':')[1];
-                modelService.deleteTransaction(parentConditionId, $scope.transaction.id);
+                templateModelService.deleteTransaction(parentConditionId, $scope.transaction.id);
 
                 //delete the element
                 $element.remove();
-
-                console.debug(JSON.stringify(modelService.baseTemplateModel));
             };
 
             init();
         };
 
-        TransTrigDirectiveController.$inject = injectParams;
+        TemplTransTrigController.$inject = injectParams;
 
-        angular.module('accord.ly').controller('TransTrigDirectiveController', TransTrigDirectiveController);
+        angular.module('accord.ly').controller('TemplTransTrigController', TemplTransTrigController);
 
     }()
 );

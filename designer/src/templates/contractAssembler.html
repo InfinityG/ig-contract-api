@@ -1,0 +1,63 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Contract Assembler</h2>
+
+            <accordion close-others="true">
+                <accordion-group heading="My Contacts" is-open="true" is-disabled="false">
+                    <div id="Contacts">
+                        <!--<sms-condition template-id="SmsCond:"></sms-condition>-->
+                        <!--<br/>-->
+                        <span>Contacts here</span>
+                    </div>
+                </accordion-group>
+                <accordion-group is-open="false" heading="..." is-disabled="false">
+                </accordion-group>
+            </accordion>
+        </div>
+
+        <div class="col-md-8 template">
+            <!--<div class="panel-body">-->
+            <h3>Create your contract</h3>
+
+            <p>Selected template: <b>{{template.name}}</b></p>
+            <br/>
+
+            <input id="name" type="text" class="form-control" placeholder="Contract name" ng-blur="updateText()"
+                   ng-model="contract.name">
+            <br/>
+            <input id="description" type="text" class="form-control" placeholder="Contract description"
+                   ng-blur="updateText()" ng-model="contract.description">
+            <br/>
+
+            <div id="TemplateTarget" class="template-inner" droppable>
+            </div>
+
+            <br/>
+            <button type="button" class="btn btn-default" ng-click="showJson = !showJson">Show JSON</button>
+            <button type="button"
+                    ng-show="template.name != null &&
+                        template.name != '' &&
+                        template.description != null &&
+                        template.description != '' &&
+                        template.conditions.length > 0 &&
+                        template.conditions[0].trigger != null"
+                    class="btn btn-success btn-lg pull-right" ng-click="saveTemplate()">Save</button>
+
+        </div>
+
+        <hr/>
+        <!--</div>-->
+
+    </div>
+
+    <div class="row modelOutput" ng-show="showJson">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <pre class="stringifiedModel">{{stringifiedModel.json}}</pre>
+        </div>
+    </div>
+
+</div>
+

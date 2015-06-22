@@ -9,7 +9,7 @@
 
     var injectParams = ['$http', '$rootScope'];
 
-    var modelFactory = function ($http, $rootScope) {
+    var templateModelFactory = function ($http, $rootScope) {
 
         var factory = {};
 
@@ -114,8 +114,7 @@
                             'specific': 'Specific participant wallet'
                         },
                         'to': {
-                            'specific':
-                                'Specific participant wallet',
+                            'specific': 'Specific participant wallet',
                             'all': 'All participant wallets'
                         },
                         'amount': 'Amount'
@@ -176,7 +175,6 @@
                                 var currentTransaction = currentCondition.trigger.transactions[i];
                                 var triggerKey = conditionKey + '_TransTrig:' + currentTransaction.external_id;
                                 factory.addElementToModelIndex(triggerKey, currentTransaction);
-                                console.debug('Transaction index updated!');
                             }
                         }
 
@@ -185,7 +183,6 @@
                                 var currentWebhook = currentCondition.trigger.webhooks[i];
                                 var webhookKey = conditionKey + '_HookTrig:' + currentWebhook.external_id;
                                 factory.addElementToModelIndex(webhookKey, currentWebhook);
-                                console.debug('Webhook index updated!');
                             }
                         }
                     }
@@ -223,7 +220,6 @@
             for (var x = 0; x < factory.currentTemplate.conditions.length; x++) {
                 if (factory.currentTemplate.conditions[x].external_id == conditionId) {
                     factory.currentTemplate.conditions.splice(x, 1);
-                    console.debug('Removing condition!');
                     break;
                 }
             }
@@ -312,7 +308,6 @@
             var condition = factory.getCondition(parentConditionId);
 
             if (condition != null) {
-                console.debug('Condition id: ' + parentConditionId + ', Transaction id: ' + transactionId);
 
                 for (var x = 0; x < condition.trigger.transactions.length; x++) {
                     if (condition.trigger.transactions[x].external_id == transactionId) {
@@ -408,8 +403,8 @@
         return factory;
     };
 
-    modelFactory.$inject = injectParams;
+    templateModelFactory.$inject = injectParams;
 
-    angular.module('accord.ly').factory('modelService', modelFactory);
+    angular.module('accord.ly').factory('templateModelService', templateModelFactory);
 
 }());

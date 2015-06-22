@@ -12,9 +12,9 @@
                 <div ng-repeat="template in templates" class="list-group-item">
                     <span><strong>{{template.external_id + ': ' + template.name}}</strong></span>
                     <span class="pull-right">
-                        <a href="#/templateDesigner/{{template.external_id}}">Edit</a>
+                        <a href="#/templates/design/{{template.external_id}}">Edit</a>
                         &nbsp; | &nbsp; <a href="" ng-click="deleteTemplate(template.external_id)">Delete</a>
-                        &nbsp; | &nbsp; <a href="#">Create a contract</a>
+                        &nbsp; | &nbsp; <a href="#/contracts/assemble/{{template.external_id}}">Create a contract</a>
                     </span>
 
                 </div>

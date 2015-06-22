@@ -25,27 +25,27 @@
             .when('/', {
                 controller: 'DefaultController',
                 templateUrl: 'default.html',
-                reloadOnSearch: true
+                reloadOnSearch: false
             })
-            //.when('/templateDesigner', {
-            //    controller: 'TemplateDesignerController',
-            //    templateUrl: 'templateDesigner.html',
-            //    reloadOnSearch: true
-            //})
-            .when('/templateDesigner/:id?', {
+            .when('/templates/design/:id?', {
                 controller: 'TemplateDesignerController',
                 templateUrl: 'templateDesigner.html',
-                reloadOnSearch: true
+                reloadOnSearch: false
             })
-            .when('/templateList', {
+            .when('/templates/list', {
                 controller: 'TemplateListController',
                 templateUrl: 'templateList.html',
-                reloadOnSearch: true
+                reloadOnSearch: false
+            })
+            .when('/contracts/assemble/:templateId?', {
+                controller: 'ContractAssemblerController',
+                templateUrl: 'contractAssembler.html',
+                reloadOnSearch: false
             })
             .when('/login/:exit?', {
                 controller: 'LoginController',
                 templateUrl: 'login.html',
-                reloadOnSearch: true
+                reloadOnSearch: false
             });
     });
 

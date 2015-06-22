@@ -5,7 +5,7 @@
             restrict: 'E',
             replace: true,
             scope:{redirect:'='},
-            controller: 'ModalDirectiveController',
+            controller: 'ModalController',
             templateUrl: 'modalTemplate.html'
         };
     };

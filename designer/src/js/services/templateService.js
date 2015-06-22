@@ -3,9 +3,9 @@
  */
 (function () {
 
-    var injectParams = ['$rootScope', '$compile', 'modelService'];
+    var injectParams = ['$rootScope', '$compile', 'templateModelService'];
 
-    var templateServiceFactory = function ($rootScope, $compile, modelService) {
+    var templateServiceFactory = function ($rootScope, $compile, templateModelService) {
         var factory = {};
 
         factory.handleDrop = function (itemParent, item, directiveId, target) {
@@ -81,14 +81,14 @@
             }
 
             //add to the index to enable dictionary access from controllers
-            modelService.addElementToModelIndex(elementId, model);
+            templateModelService.addElementToModelIndex(elementId, model);
             var element = factory.createDirectiveElement(directiveId, elementId);
             factory.insertElement(target, element);
         };
 
         factory.rebuildTemplateFromModel = function(){
             // get the current model
-            var templateModel = modelService.currentTemplate;
+            var templateModel = templateModelService.currentTemplate;
 
             var rootElement = document.getElementById('TemplateTarget');
 
@@ -185,32 +185,32 @@
          */
 
         factory.createConditionModel = function (type) {
-            var condition = modelService.createCondition();
+            var condition = templateModelService.createCondition();
             condition.meta.type = type;
-            modelService.addCondition(condition);
+            templateModelService.addCondition(condition);
             return condition;
         };
 
         // one trigger per condition
         factory.createTriggerModel = function (conditionModelId) {
-            var trigger = modelService.getTrigger(conditionModelId);
+            var trigger = templateModelService.getTrigger(conditionModelId);
 
             if (trigger == null) {
-                trigger = modelService.createTrigger();
-                modelService.addTrigger(conditionModelId, trigger);
+                trigger = templateModelService.createTrigger();
+                templateModelService.addTrigger(conditionModelId, trigger);
             }
 
             return trigger;
         };
 
         factory.createTransactionModel = function (conditionModelId) {
-            var transaction = modelService.createTransaction();
-            return modelService.addTransactionToTrigger(conditionModelId, transaction);
+            var transaction = templateModelService.createTransaction();
+            return templateModelService.addTransactionToTrigger(conditionModelId, transaction);
         };
 
         factory.createWebhookModel = function (conditionModelId) {
-            var webhook = modelService.createWebhook();
-            return modelService.addWebhookToTrigger(conditionModelId, webhook);
+            var webhook = templateModelService.createWebhook();
+            return templateModelService.addWebhookToTrigger(conditionModelId, webhook);
         };
 
         return factory;

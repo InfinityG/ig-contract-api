@@ -2,7 +2,7 @@
 
         var injectParams = ['$scope'];
 
-        var MediaDirectiveController = function ($scope) {
+        var MediaController = function ($scope) {
             $scope.collapsed = true;
 
             $scope.remove = function(){
@@ -11,9 +11,9 @@
             };
         };
 
-        MediaDirectiveController.$inject = injectParams;
+        MediaController.$inject = injectParams;
 
-        angular.module('accord.ly').controller('MediaDirectiveController', MediaDirectiveController);
+        angular.module('accord.ly').controller('MediaController', MediaController);
 
     }()
 );

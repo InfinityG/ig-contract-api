@@ -3,9 +3,9 @@
  */
 (function () {
 
-        var injectParams = ['$scope', '$element', 'modelService'];
+        var injectParams = ['$scope', '$element', 'templateModelService'];
 
-        var WebhookTrigDirectiveController = function ($scope, $element, modelService) {
+        var TemplHookTrigController = function ($scope, $element, templateModelService) {
 
             $scope.collapsed = true;
             $scope.transFields = null;
@@ -13,10 +13,10 @@
 
             function init(){
                 //get the fields for the UI
-                $scope.transFields = modelService.viewModel.triggers.webhook.fields;
+                $scope.transFields = templateModelService.viewModel.triggers.webhook.fields;
 
                 //get the model from the index
-                $scope.webhook = modelService.modelElementIndex[$scope.templateId];
+                $scope.webhook = templateModelService.modelElementIndex[$scope.templateId];
             }
 
             $scope.fromSelected = function (key, value) {
@@ -26,26 +26,26 @@
             $scope.toSelected = function (key, value) {
                 $scope.transaction.to_place_holder = key;
 
-                console.debug(JSON.stringify(modelService.baseTemplateModel));
+                console.debug(JSON.stringify(templateModelService.baseTemplateModel));
             };
 
             $scope.remove = function(){
                 //delete the model
                 var parentConditionId = $scope.templateId.split('_')[0].split(':')[1];
-                modelService.deleteWebhook(parentConditionId, $scope.webhook.id);
+                templateModelService.deleteWebhook(parentConditionId, $scope.webhook.id);
 
                 //delete the element
                 $element.remove();
 
-                console.debug(JSON.stringify(modelService.baseTemplateModel));
+                console.debug(JSON.stringify(templateModelService.baseTemplateModel));
             };
 
             init();
         };
 
-        WebhookTrigDirectiveController.$inject = injectParams;
+        TemplHookTrigController.$inject = injectParams;
 
-        angular.module('accord.ly').controller('WebhookTrigDirectiveController', WebhookTrigDirectiveController);
+        angular.module('accord.ly').controller('TemplHookTrigController', TemplHookTrigController);
 
     }()
 );

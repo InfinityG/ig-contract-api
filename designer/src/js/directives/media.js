@@ -8,7 +8,7 @@
             templateUrl: 'mediaTemplate.html',
             restrict: 'E',
             scope:{showRemoveButton:'='},
-            controller:'MediaDirectiveController',
+            controller:'MediaController',
             link: function postLink(scope, element, attrs) {
                 //element.text(template);
             }

@@ -2,9 +2,9 @@
 
 (function () {
 
-    var injectParams = ['modelService', 'templateService'];
+    var injectParams = ['templateModelService', 'templateService'];
 
-    var smsCondition = function (modelService, templateService) {
+    var smsCondition = function (templateModelService, templateService) {
 
         return {
             templateUrl: 'smsCondTemplate.html',
@@ -18,11 +18,10 @@
                 element[0].childNodes[0].id = scope.templateId;
 
                 //check if the model has any child triggers (used for rebuilding a saved condition)
-                var condition = modelService.modelElementIndex[scope.templateId];
+                var condition = templateModelService.modelElementIndex[scope.templateId];
 
                 if ((condition != null && condition.trigger != null) &&
                     ((condition.trigger.transactions.length > 0) || (condition.trigger.webhooks.length > 0))) {
-                    console.debug('Children detected in sms condition!');
                     templateService.rebuildNestedElementsFromModel(scope.templateId, element, condition);
                 }
             }

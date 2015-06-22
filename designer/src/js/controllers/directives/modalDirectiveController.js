@@ -2,7 +2,7 @@
 
     var injectParams = ['$scope', '$rootScope', '$location'];
 
-    var ModalDirectiveController = function ($scope, $rootScope, $location) {
+    var ModalController = function ($scope, $rootScope, $location) {
         $scope.show = false;
         $scope.message = null;
         $scope.type = null;
@@ -42,8 +42,8 @@
         }
     };
 
-    ModalDirectiveController.$inject = injectParams;
+    ModalController.$inject = injectParams;
 
-    angular.module('accord.ly').controller('ModalDirectiveController', ModalDirectiveController);
+    angular.module('accord.ly').controller('ModalController', ModalController);
 
 }());

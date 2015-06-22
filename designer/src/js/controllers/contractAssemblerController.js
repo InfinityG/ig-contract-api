@@ -1,13 +1,14 @@
 (function () {
 
         var injectParams = ['$scope', '$rootScope', '$location', '$route', '$routeParams',
-                                'userService', 'templateModelService', 'templateService', 'localStorageService'];
+            'userService', 'templateModelService', 'templateService', 'localStorageService'];
 
-        var TemplateDesignerController = function ($scope, $rootScope, $location, $route, $routeParams,
-                                                    userService, templateModelService, templateService, localStorageService) {
+        var ContractAssemblerController = function ($scope, $rootScope, $location, $route, $routeParams,
+                                                   userService, templateModelService, templateService, localStorageService) {
 
             $scope.context = null;
             $scope.template = null;
+            $scope.contract = null;
             $scope.stringifiedModel = {'json':null};
 
             function init(){
@@ -16,28 +17,26 @@
                 if ($scope.context == null || $scope.context == '')
                     $location.path('/login');
                 else {
-                    $routeParams.id != null ? loadData($routeParams.id) : loadData();
+                    $routeParams.templateId != null ? loadData($routeParams.templateId) : loadData();
                 }
             }
 
             function loadData(templateId){
                 if (templateId == null) {
-                    $scope.template = templateModelService.createTemplate();
-                    templateModelService.setCurrentTemplate($scope.template);
+                    //$scope.template = modelService.createTemplate();
+                    //modelService.setCurrentTemplate($scope.template);
                 } else {
                     $scope.template = localStorageService.getTemplate($scope.context.userId, templateId);
-                    templateModelService.setCurrentTemplate($scope.template);
-                    templateModelService.rebuildIndex();
 
-                    //now rebuild the view
-                    templateService.rebuildTemplateFromModel();
+                    //clone the template to be modified as a contract
+                    $scope.contract = templateModelService.createClone($scope.template);
                 }
 
                 $scope.updateText();
             }
 
             $scope.updateText = function(){
-                $scope.stringifiedModel.json = templateModelService.stringifyModel($scope.template);
+                $scope.stringifiedModel.json = templateModelService.stringifyModel($scope.contract);
             };
 
             $scope.saveTemplate = function(){
@@ -45,7 +44,7 @@
                 $route.reload();
             };
 
-            var modelEventListener = $rootScope.$on('templateModelEvent', function (event, args) {
+            var modelEventListener = $rootScope.$on('contractModelEvent', function (event, args) {
                 $scope.updateText();
             });
 
@@ -57,9 +56,9 @@
             init();
         };
 
-        TemplateDesignerController.$inject = injectParams;
+        ContractAssemblerController.$inject = injectParams;
 
-        angular.module('accord.ly').controller('TemplateDesignerController', TemplateDesignerController);
+        angular.module('accord.ly').controller('ContractAssemblerController', ContractAssemblerController);
 
     }()
 );
