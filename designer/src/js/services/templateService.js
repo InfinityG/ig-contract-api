@@ -3,9 +3,9 @@
  */
 (function () {
 
-    var injectParams = ['$rootScope', '$compile', 'templateModelService'];
+    var injectParams = ['$rootScope', '$compile', 'templateModelService', 'modelIndexService'];
 
-    var templateServiceFactory = function ($rootScope, $compile, templateModelService) {
+    var templateServiceFactory = function ($rootScope, $compile, templateModelService, modelIndexService) {
         var factory = {};
 
         factory.handleDrop = function (itemParent, item, directiveId, target) {
@@ -81,7 +81,7 @@
             }
 
             //add to the index to enable dictionary access from controllers
-            templateModelService.addElementToModelIndex(elementId, model);
+            modelIndexService.addElementToModelIndex(elementId, model);
             var element = factory.createDirectiveElement(directiveId, elementId);
             factory.insertElement(target, element);
         };
@@ -147,22 +147,22 @@
 
         factory.createSignatureConditionElement = function(modelId){
             var elementId = 'SigCond:' + modelId;
-            return factory.createDirectiveElement('signature-condition', elementId);
+            return factory.createDirectiveElement('templ-sig-cond', elementId);
         };
 
         factory.createSmsConditionElement = function(modelId){
             var elementId = 'SmsCond:' + modelId;
-            return factory.createDirectiveElement('sms-condition', elementId);
+            return factory.createDirectiveElement('templ-sms-cond', elementId);
         };
 
         factory.createTransactionTriggerElement = function(conditionElementId, modelId){
             var elementId = conditionElementId + '_TransTrig:' + modelId;
-            return factory.createDirectiveElement('transaction-trigger', elementId);
+            return factory.createDirectiveElement('templ-trans-trig', elementId);
         };
 
         factory.createWebhookTriggerElement = function(conditionElementId, modelId){
             var elementId = conditionElementId + '_HookTrig:' + modelId;
-            return factory.createDirectiveElement('webhook-trigger', elementId);
+            return factory.createDirectiveElement('templ-hook-trig', elementId);
         };
 
         factory.createDirectiveElement = function(directiveName, elementId){

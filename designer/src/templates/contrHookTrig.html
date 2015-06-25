@@ -1,0 +1,21 @@
+<div ng-controller="ContrHookTrigController" class="trigger panel panel-default">
+    <div class="trigger panel-heading">
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'" ng-click="collapsed = !collapsed"></i>
+
+        <h3 class="panel-title">
+            Webhook Trigger
+        </h3>
+    </div>
+    <div collapse="collapsed">
+        <div class="trigger panel-body">
+
+            <input id="url" type="text" class="form-control" placeholder="Url">
+            <br/>
+            <input id="header" type="text" class="form-control" placeholder="Auth header">
+            <br/>
+            <input id="action" type="text" class="form-control" placeholder="Action">
+            <br/>
+            <input id="payload" type="text" class="form-control" placeholder="Payload">
+        </div>
+    </div>
+</div>

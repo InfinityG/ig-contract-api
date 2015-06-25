@@ -6,7 +6,7 @@
             replace: true,
             scope:{redirect:'='},
             controller: 'ModalController',
-            templateUrl: 'modalTemplate.html'
+            templateUrl: 'modal.html'
         };
     };
 

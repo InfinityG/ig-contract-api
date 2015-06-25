@@ -7,12 +7,10 @@
             <accordion close-others="true">
                 <accordion-group heading="My Contacts" is-open="true" is-disabled="false">
                     <div id="Contacts">
-                        <!--<sms-condition template-id="SmsCond:"></sms-condition>-->
-                        <!--<br/>-->
-                        <span>Contacts here</span>
+                        <div ng-repeat="contact in contacts">
+                            <contr-contact contact-id="Cont:{{contact.id}}"></contr-contact>
+                        </div>
                     </div>
-                </accordion-group>
-                <accordion-group is-open="false" heading="..." is-disabled="false">
                 </accordion-group>
             </accordion>
         </div>
@@ -21,7 +19,7 @@
             <!--<div class="panel-body">-->
             <h3>Create your contract</h3>
 
-            <p>Selected template: <b>{{template.name}}</b></p>
+            <h4>Selected template: <a href="#/templates/design/{{template.external_id}}">{{template.name}}</a></h4>
             <br/>
 
             <input id="name" type="text" class="form-control" placeholder="Contract name" ng-blur="updateText()"
@@ -31,7 +29,8 @@
                    ng-blur="updateText()" ng-model="contract.description">
             <br/>
 
-            <div id="TemplateTarget" class="template-inner" droppable>
+            <!-- the contract components (conditions and nested triggers) are loaded into this -->
+            <div id="ContractTarget" class="template-inner">
             </div>
 
             <br/>
@@ -43,7 +42,11 @@
                         template.description != '' &&
                         template.conditions.length > 0 &&
                         template.conditions[0].trigger != null"
-                    class="btn btn-success btn-lg pull-right" ng-click="saveTemplate()">Save</button>
+                    class="btn btn-success btn-lg pull-right" ng-click="saveContract()">Save</button>
+
+            <div class="row modelOutput" ng-show="showJson">
+                <pre class="stringifiedModel">{{stringifiedModel.json}}</pre>
+            </div>
 
         </div>
 
@@ -52,12 +55,12 @@
 
     </div>
 
-    <div class="row modelOutput" ng-show="showJson">
-        <div class="col-md-4"></div>
-        <div class="col-md-8">
-            <pre class="stringifiedModel">{{stringifiedModel.json}}</pre>
-        </div>
-    </div>
+    <!--<div class="row modelOutput" ng-show="showJson">-->
+        <!--<div class="col-md-4"></div>-->
+        <!--<div class="col-md-8">-->
+            <!--<pre class="stringifiedModel">{{stringifiedModel.json}}</pre>-->
+        <!--</div>-->
+    <!--</div>-->
 
 </div>
 

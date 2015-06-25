@@ -1,8 +1,9 @@
 (function () {
 
-        var injectParams = ['$scope', '$element', 'templateModelService'];
+        var injectParams = ['$scope', '$element', 'templateModelService', 'viewModelService', 'modelIndexService'];
 
-        var TemplSmsCondController = function ($scope, $element, templateModelService) {
+        var TemplSmsCondController = function ($scope, $element, templateModelService, viewModelService,
+                                               modelIndexService) {
             $scope.collapsed = true;
             $scope.smsFields = null;
 
@@ -10,10 +11,10 @@
 
             function init(){
                 //view model
-                $scope.smsFields = templateModelService.viewModel.conditions.sms.fields;
+                $scope.smsFields = viewModelService.viewModel.conditions.sms.fields;
 
                 //get the model from the index - this will have been created when the item was dropped
-                $scope.condition = templateModelService.modelElementIndex[$scope.templateId];
+                $scope.condition = modelIndexService.modelElementIndex[$scope.templateId];
             }
 
             $scope.fromSelected = function (key, value) {

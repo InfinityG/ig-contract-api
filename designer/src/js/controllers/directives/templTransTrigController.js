@@ -3,19 +3,20 @@
  */
 (function () {
 
-        var injectParams = ['$scope', '$element', 'templateModelService'];
+        var injectParams = ['$scope', '$element', 'templateModelService', 'viewModelService', 'modelIndexService'];
 
-        var TemplTransTrigController = function ($scope, $element, templateModelService) {
+        var TemplTransTrigController = function ($scope, $element, templateModelService, viewModelService,
+                                                 modelIndexService) {
             $scope.collapsed = true;
             $scope.transFields = null;
             $scope.transaction = null;
 
             function init(){
                 //get the fields for the UI
-                $scope.transFields = templateModelService.viewModel.triggers.transaction.fields;
+                $scope.transFields = viewModelService.viewModel.triggers.transaction.fields;
 
                 //get the model from the index
-                $scope.transaction = templateModelService.modelElementIndex[$scope.templateId];
+                $scope.transaction = modelIndexService.modelElementIndex[$scope.templateId];
 
             }
 

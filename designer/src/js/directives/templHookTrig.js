@@ -1,11 +1,10 @@
-//http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html
 
 (function () {
 
-    var webhookTrigger = function () {
+    var templHookTrig = function () {
 
         return {
-            templateUrl: 'webhookTrigTemplate.html',
+            templateUrl: 'templHookTrig.html',
             restrict: 'E',
             scope:{
                 showRemoveButton:'=',
@@ -18,5 +17,5 @@
         };
     };
 
-    angular.module('accord.ly').directive('webhookTrigger', webhookTrigger);
+    angular.module('accord.ly').directive('templHookTrig', templHookTrig);
 })();

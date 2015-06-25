@@ -2,7 +2,7 @@
 
         var injectParams = ['$scope', '$location', 'userService', 'localStorageService'];
 
-        var TemplateListController = function ($scope, $location, userService, localStorageService) {
+        var TemplListController = function ($scope, $location, userService, localStorageService) {
 
             $scope.context = null;
             $scope.templates = null;
@@ -29,9 +29,9 @@
             init();
         };
 
-        TemplateListController.$inject = injectParams;
+        TemplListController.$inject = injectParams;
 
-        angular.module('accord.ly').controller('TemplateListController', TemplateListController);
+        angular.module('accord.ly').controller('TemplListController', TemplListController);
 
     }()
 );

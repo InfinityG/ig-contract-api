@@ -69,6 +69,8 @@
  border:none;
 }
 
+/* Conditions */
+
 .condition{
     background-color: rgba(0, 0, 0, 0.1);
 }
@@ -116,6 +118,8 @@
 /*.condition-inner p{*/
     /*padding-bottom: 10px;*/
 /*}*/
+
+/* Triggers */
 
 .trigger{
     background-color: rgba(256, 256, 256, 0.5);
@@ -168,3 +172,38 @@
     width:100%;
     text-align:left;
 }
+
+/* Contacts */
+
+.contact{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.contact.panel{
+    margin-bottom: 15px;
+}
+
+.contact.panel-default {
+    border-color: #245580;
+}
+
+.contact.panel-heading {
+    background-image: linear-gradient(to bottom, #6BA099 0%, #0D5047 100%);
+    border-bottom: none;
+    /*padding:5px;*/
+}
+
+.contact.panel-heading .fa {
+    color: white;
+    cursor:pointer;
+}
+
+/*.contact.panel-body{*/
+    /*margin-bottom: 15px;*/
+    /*padding: 0 0 0 0;*/
+/*}*/
+
+.contact h3{
+    color: #ffffff;
+}
+

@@ -13,9 +13,6 @@
 
         var factory = {};
 
-        // index should only contain the key:value pairs related to the currently loaded template
-        factory.modelElementIndex = {};
-
         // the current template instance
         factory.currentTemplate = null;
 
@@ -27,6 +24,7 @@
             'external_id': null,
             'name': null,
             'description': null,
+            'participants': [],
             'conditions': [],
             'signatures': [],
             'media': []
@@ -80,59 +78,6 @@
             }
         };
 
-        /*
-         Models used for UI field values
-         */
-
-        factory.viewModel =
-        {
-            'conditions': {
-                'signature': {
-                    'fields': {
-                        'single': 'Single participant',
-                        'specific': 'Specific participants',
-                        'all_group': 'All participants in a group',
-                        'all': 'All participants',
-                        'external': 'External system'
-                    }
-                },
-                'sms': {
-                    'fields': {
-                        'single': 'Single participant',
-                        'specific': 'Specific participants',
-                        'all_group': 'All participants in a group',
-                        'all': 'All participants'
-                    }
-                }
-            }
-            ,
-            'triggers': {
-                'transaction': {
-                    'fields': {
-                        'from': {
-                            'creator': 'Creator wallet',
-                            'specific': 'Specific participant wallet'
-                        },
-                        'to': {
-                            'specific': 'Specific participant wallet',
-                            'all': 'All participant wallets'
-                        },
-                        'amount': 'Amount'
-                    }
-                }
-                ,
-                'webhook': {
-                    'fields': {
-                        'url': 'Url',
-                        'auth_header': 'Auth Header',
-                        'action': 'Action',
-                        'payload': 'Payload'
-                    }
-                }
-            }
-
-        };
-
         factory.createClone = function (type) {
             return JSON.parse(JSON.stringify(type));
         };
@@ -147,47 +92,6 @@
 
         factory.setCurrentTemplate = function (template) {
             factory.currentTemplate = template;
-        };
-
-        // index should only contain the key:value pairs related to the currently loaded template
-        factory.rebuildIndex = function () {
-            factory.modelElementIndex = {};
-
-            if (factory.currentTemplate != null && factory.currentTemplate.conditions.length > 0) {
-                for (var x = 0; x < factory.currentTemplate.conditions.length; x++) {
-                    var currentCondition = factory.currentTemplate.conditions[x];
-                    var conditionKey;
-
-                    switch (currentCondition.meta.type) {
-                        case 'sms':
-                            conditionKey = 'SmsCond:' + currentCondition.external_id;
-                            break;
-                        case 'signature':
-                            conditionKey = 'SigCond:' + currentCondition.external_id;
-                            break;
-                    }
-
-                    factory.addElementToModelIndex(conditionKey, currentCondition);
-
-                    if (currentCondition.trigger != null) {
-                        if (currentCondition.trigger.transactions != null) {
-                            for (var i = 0; i < currentCondition.trigger.transactions.length; i++) {
-                                var currentTransaction = currentCondition.trigger.transactions[i];
-                                var triggerKey = conditionKey + '_TransTrig:' + currentTransaction.external_id;
-                                factory.addElementToModelIndex(triggerKey, currentTransaction);
-                            }
-                        }
-
-                        if (currentCondition.trigger.webhooks != null) {
-                            for (var i = 0; i < currentCondition.trigger.webhooks.length; i++) {
-                                var currentWebhook = currentCondition.trigger.webhooks[i];
-                                var webhookKey = conditionKey + '_HookTrig:' + currentWebhook.external_id;
-                                factory.addElementToModelIndex(webhookKey, currentWebhook);
-                            }
-                        }
-                    }
-                }
-            }
         };
 
         /*
@@ -377,14 +281,6 @@
             raiseModelChanged();
         };
 
-        /*
-         Model-element index (the model field simply stores a reference to the original model,
-         so there is no memory overhead)
-         */
-
-        factory.addElementToModelIndex = function (elementId, model) {
-            factory.modelElementIndex[elementId] = model;
-        };
 
         factory.stringifyModel = function (model) {
             return JSON.stringify(model, null, 2);

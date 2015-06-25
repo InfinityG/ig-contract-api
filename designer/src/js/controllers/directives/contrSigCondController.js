@@ -1,21 +1,35 @@
 (function () {
 
-        var injectParams = ['$scope', '$element', 'templateModelService'];
+        var injectParams = ['$scope', '$element', 'viewModelService', 'contactService',
+                                'contractModelService', 'modelIndexService'];
 
-        var ContrSigCondController = function ($scope, $element, templateModelService) {
+        var ContrSigCondController = function ($scope, $element, viewModelService, contactService,
+                                               contractModelService, modelIndexService) {
 
             $scope.collapsed = true;
             $scope.sigFields = null;
 
             $scope.condition = null;
+            $scope.contacts = null;
 
             function init(){
                 //view model
-                $scope.sigFields = templateModelService.viewModel.conditions.signature.fields;
+                $scope.sigFields = viewModelService.viewModel.conditions.signature.fields;
 
                 //get the model from the index
-                $scope.condition = templateModelService.modelElementIndex[$scope.templateId];
+                $scope.condition = modelIndexService.modelElementIndex[$scope.contractId];
+
+                if($scope.condition.meta.sub_type == 'all')
+                    $scope.assignAllSignatures();
             }
+
+            $scope.assignAllSignatures = function(){
+                $scope.contacts = contactService.getContacts();
+
+                contractModelService.addContactsToParticipants($scope.contacts);
+                contractModelService.addSignaturesToCondition($scope.condition, $scope.contacts);
+                contractModelService.raiseModelChanged();
+            };
 
             init();
 

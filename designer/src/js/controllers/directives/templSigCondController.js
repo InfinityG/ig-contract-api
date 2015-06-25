@@ -1,8 +1,9 @@
 (function () {
 
-        var injectParams = ['$scope', '$element', 'templateModelService'];
+        var injectParams = ['$scope', '$element', 'templateModelService', 'viewModelService', 'modelIndexService'];
 
-        var TemplSigCondController = function ($scope, $element, templateModelService) {
+        var TemplSigCondController = function ($scope, $element, templateModelService, viewModelService,
+                                               modelIndexService) {
 
             $scope.collapsed = true;
             $scope.sigFields = null;
@@ -11,10 +12,10 @@
 
             function init(){
                 //view model
-                $scope.sigFields = templateModelService.viewModel.conditions.signature.fields;
+                $scope.sigFields = viewModelService.viewModel.conditions.signature.fields;
 
                 //get the model from the index
-                $scope.condition = templateModelService.modelElementIndex[$scope.templateId];
+                $scope.condition = modelIndexService.modelElementIndex[$scope.templateId];
             }
 
             $scope.fromSelected = function (key, value) {

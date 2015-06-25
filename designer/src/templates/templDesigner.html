@@ -7,16 +7,16 @@
             <accordion close-others="true">
                 <accordion-group heading="Inputs" is-open="true" is-disabled="false">
                     <div id="Condition">
-                        <sms-condition template-id="SmsCond:"></sms-condition>
+                        <templ-sms-cond template-id="SmsCond:"></templ-sms-cond>
                         <!--<br/>-->
-                        <signature-condition template-id="SigCond:"></signature-condition>
+                        <templ-sig-cond template-id="SigCond:"></templ-sig-cond>
                     </div>
                 </accordion-group>
                 <accordion-group is-open="false" heading="Triggers" is-disabled="false">
                     <div id="Trigger">
-                        <webhook-trigger template-id="HookTrig:"></webhook-trigger>
+                        <templ-hook-trig template-id="HookTrig:"></templ-hook-trig>
                         <!--<br/>-->
-                        <transaction-trigger template-id="TransTrig:"></transaction-trigger>
+                        <templ-trans-trig template-id="TransTrig:"></templ-trans-trig>
                     </div>
                 </accordion-group>
                 <accordion-group is-open="false" heading="Media" is-disabled="false">
@@ -43,7 +43,9 @@
             </div>
 
             <br/>
-            <button type="button" class="btn btn-default" ng-click="showJson = !showJson">Show JSON</button>
+            <button type="button" class="btn btn-default" ng-click="showJson = !showJson">
+                {{showJson ? 'Hide JSON' : 'Show JSON'}}
+            </button>
             <button type="button"
                     ng-show="template.name != null &&
                         template.name != '' &&
@@ -53,6 +55,10 @@
                         template.conditions[0].trigger != null"
                     class="btn btn-success btn-lg pull-right" ng-click="saveTemplate()">Save</button>
 
+            <div class="row modelOutput" ng-show="showJson">
+                <pre class="stringifiedModel">{{stringifiedModel.json}}</pre>
+            </div>
+
         </div>
 
         <hr/>
@@ -60,12 +66,12 @@
 
     </div>
 
-    <div class="row modelOutput" ng-show="showJson">
-        <div class="col-md-4"></div>
-        <div class="col-md-8">
-            <pre class="stringifiedModel">{{stringifiedModel.json}}</pre>
-        </div>
-    </div>
+    <!--<div class="row modelOutput" ng-show="showJson">-->
+        <!--<div class="col-md-4"></div>-->
+        <!--<div class="col-md-8">-->
+            <!--<pre class="stringifiedModel">{{stringifiedModel.json}}</pre>-->
+        <!--</div>-->
+    <!--</div>-->
 
 </div>
 

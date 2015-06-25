@@ -2,12 +2,12 @@
 
 (function () {
 
-    var injectParams = ['templateModelService', 'templateService'];
+    var injectParams = ['templateService', 'modelIndexService'];
 
-    var smsCondition = function (templateModelService, templateService) {
+    var templSmsCond = function (templateService, modelIndexService) {
 
         return {
-            templateUrl: 'smsCondTemplate.html',
+            templateUrl: 'templSmsCond.html',
             restrict: 'E',
             scope:{
                 showRemoveButton:'=',
@@ -18,7 +18,7 @@
                 element[0].childNodes[0].id = scope.templateId;
 
                 //check if the model has any child triggers (used for rebuilding a saved condition)
-                var condition = templateModelService.modelElementIndex[scope.templateId];
+                var condition = modelIndexService.modelElementIndex[scope.templateId];
 
                 if ((condition != null && condition.trigger != null) &&
                     ((condition.trigger.transactions.length > 0) || (condition.trigger.webhooks.length > 0))) {
@@ -28,7 +28,7 @@
         };
     };
 
-    smsCondition.$inject = injectParams;
+    templSmsCond.$inject = injectParams;
 
-    angular.module('accord.ly').directive('smsCondition', smsCondition);
+    angular.module('accord.ly').directive('templSmsCond', templSmsCond);
 })();

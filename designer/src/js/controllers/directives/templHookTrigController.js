@@ -3,9 +3,10 @@
  */
 (function () {
 
-        var injectParams = ['$scope', '$element', 'templateModelService'];
+        var injectParams = ['$scope', '$element', 'templateModelService', 'viewModelService', 'modelIndexService'];
 
-        var TemplHookTrigController = function ($scope, $element, templateModelService) {
+        var TemplHookTrigController = function ($scope, $element, templateModelService, viewModelService,
+                                                modelIndexService) {
 
             $scope.collapsed = true;
             $scope.transFields = null;
@@ -13,10 +14,10 @@
 
             function init(){
                 //get the fields for the UI
-                $scope.transFields = templateModelService.viewModel.triggers.webhook.fields;
+                $scope.transFields = viewModelService.viewModel.triggers.webhook.fields;
 
                 //get the model from the index
-                $scope.webhook = templateModelService.modelElementIndex[$scope.templateId];
+                $scope.webhook = modelIndexService.modelElementIndex[$scope.templateId];
             }
 
             $scope.fromSelected = function (key, value) {
@@ -25,8 +26,6 @@
 
             $scope.toSelected = function (key, value) {
                 $scope.transaction.to_place_holder = key;
-
-                console.debug(JSON.stringify(templateModelService.baseTemplateModel));
             };
 
             $scope.remove = function(){
@@ -36,8 +35,6 @@
 
                 //delete the element
                 $element.remove();
-
-                console.debug(JSON.stringify(templateModelService.baseTemplateModel));
             };
 
             init();

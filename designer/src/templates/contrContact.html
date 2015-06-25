@@ -1,0 +1,27 @@
+<div ng-controller="ContrContactController" class="contact panel panel-default" draggable>
+    <div class="contact panel-heading">
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'"
+           ng-click="collapsed = !collapsed"></i>
+
+        <h3 class="panel-title">
+            {{contact.first_name + ' ' + contact.last_name}}</span>
+        </h3>
+
+    </div>
+    <div collapse="collapsed">
+        <div class="panel-body">
+
+            <p><b>Name: </b>{{contact.first_name}}</p>
+
+            <p><b>Surname: </b>{{contact.last_name}}</p>
+
+            <p><b>Username: </b>{{contact.username}}</p>
+
+            <p><b>Public key: </b>
+
+                <input type="text" class="form-control" ng-model="contact.public_key" disabled />
+            </p>
+
+        </div>
+    </div>
+</div>

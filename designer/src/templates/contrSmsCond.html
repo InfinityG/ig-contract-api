@@ -1,0 +1,37 @@
+<div ng-controller="ContrSmsCondController" class="condition panel panel-default">
+    <div class="condition panel-heading">
+        <i class="fa pull-right" ng-class="collapsed ? 'fa-chevron-down' : 'fa-chevron-up'"
+           ng-click="collapsed = !collapsed"></i>
+
+        <h3 class="panel-title">
+            <abbr title="SMS confirmations use shared secret keys for signing">SMS</abbr> Confirmation <span
+                ng-show="condition.name.length > 0">{{'(' + condition.name + ')'}}</span>
+        </h3>
+    </div>
+    <div collapse="collapsed">
+
+        <div class="panel-body">
+            <input id="name" type="text" class="form-control" placeholder="Name" ng-model="condition.name">
+            <br/>
+
+            <input id="description" type="text" class="form-control" placeholder="Description"
+                   ng-model="condition.description">
+            <br/>
+
+            <div class="input-group">
+                <input type="text" class="form-control" aria-label="..." ng-model="smsFields[condition.meta.sub_type]">
+
+                <!-- drop contacts here depending on the sub_type -->
+                <div class="condition-inner" id="ContactPanel" droppable></div>
+            </div>
+
+            <p>Triggers:</p>
+
+            <!-- triggers are loaded here -->
+            <div class="condition-inner" id="TriggerPanel">
+            </div>
+
+        </div>
+
+    </div>
+</div>

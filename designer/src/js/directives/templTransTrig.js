@@ -1,11 +1,10 @@
-//http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html
 
 (function () {
 
-    var transactionTrigger = function () {
+    var templTransTrig = function () {
 
         return {
-            templateUrl: 'transTrigTemplate.html',
+            templateUrl: 'templTransTrig.html',
             restrict: 'E',
             scope:{
                 showRemoveButton:'=',
@@ -18,5 +17,5 @@
         };
     };
 
-    angular.module('accord.ly').directive('transactionTrigger', transactionTrigger);
+    angular.module('accord.ly').directive('templTransTrig', templTransTrig);
 })();

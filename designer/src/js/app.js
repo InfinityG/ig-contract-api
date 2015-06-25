@@ -28,18 +28,18 @@
                 reloadOnSearch: false
             })
             .when('/templates/design/:id?', {
-                controller: 'TemplateDesignerController',
-                templateUrl: 'templateDesigner.html',
+                controller: 'TemplDesignerController',
+                templateUrl: 'templDesigner.html',
                 reloadOnSearch: false
             })
             .when('/templates/list', {
-                controller: 'TemplateListController',
-                templateUrl: 'templateList.html',
+                controller: 'TemplListController',
+                templateUrl: 'templList.html',
                 reloadOnSearch: false
             })
             .when('/contracts/assemble/:templateId?', {
-                controller: 'ContractAssemblerController',
-                templateUrl: 'contractAssembler.html',
+                controller: 'ContrAssemblerController',
+                templateUrl: 'contrAssembler.html',
                 reloadOnSearch: false
             })
             .when('/login/:exit?', {
