@@ -3,7 +3,7 @@ require 'openssl'
 module ConfigurationConstants
   module Environments
     DEVELOPMENT = {
-        :host => 'localhost',
+        :host => '0.0.0.0',
         :port => 9000,
         :api_auth_token => '7b2ebe64dc9149ac8a9e923bf2a6b233',
         :shared_aes_key => 'Pomro4n7AEng/jdeOCucRcOnXok/HKgY/hzLQyuL1xM=',
@@ -23,10 +23,10 @@ module ConfigurationConstants
     TEST = {
         :host => '0.0.0.0',
         :port => 9000,
-        :ssl_cert_path => '/etc/ssl/certs/server.crt',
-        :ssl_private_key_path => '/etc/ssl/private/server.key',
-        :api_auth_token => '60f3cc3379574239a4389ce293674ab4',
-        :shared_aes_key => 'ky4xgi0+KvLYmVp1J5akqkJkv8z5rJsHTo9FcBc0hgo=',
+        # :ssl_cert_path => '/etc/ssl/certs/server.crt',
+        # :ssl_private_key_path => '/etc/ssl/private/server.key',
+        :api_auth_token => '7b2ebe64dc9149ac8a9e923bf2a6b233',
+        :shared_aes_key => 'Pomro4n7AEng/jdeOCucRcOnXok/HKgY/hzLQyuL1xM=',
         :id_provider_public_ecdsa_key => 'A1blXQkf5AH7pfNNx2MIwNXytCyV/wxmQOt7ZGgccvVQ',
         :mongo_host => 'localhost',
         :mongo_port => 27017,

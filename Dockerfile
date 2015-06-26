@@ -39,6 +39,27 @@ RUN mkdir -p /data/db
 
 ####
 
+### Set up static designer ###
+
+RUN  cd /home/ig-contract-api/designer
+
+### Install NodeJS, npm, Bower, Gulp ###
+
+RUN apt-get update
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:chris-lea/node.js
+RUN apt-get update && apt-get install -y curl wget git nodejs
+RUN npm install bower -g
+RUN npm install gulp -g
+
+### Build the static site ###
+
+RUN npm install
+RUN bower install --allow-root
+RUN gulp build
+
+### Set up working directory
+
 WORKDIR /home/ig-contract-api
 
 EXPOSE 9000

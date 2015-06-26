@@ -9,7 +9,7 @@
         //apiHost: 'http://54.154.155.144:9000',
         //identityHost: 'http://54.154.155.144:9002',
 
-        apiHost: 'http://localhost:9000',
+        apiHost: 'https://accord.ly.infinity-g.com',
         identityHost: 'https://id-io.infinity-g.com',
         confirmMobile: false,
         nacl: '9612700b954743e0b38f2faff35d264c'

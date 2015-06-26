@@ -17,20 +17,21 @@ module Sinatra
 
           is_static = lambda { |path|
             return true if path == '/'
+            return true if path == '/favicon.ico'
             return true if path.include? '/fonts/'
-            return true if path.include? '/stylesheets/'
-            return true if path.include? '/javascripts/'
+            return true if path.include? '/css/'
+            return true if path.include? '/js/'
             return true if path.include? '/images/'
             false
           }
 
           # the default route will default to the docs - these need admin user/password access via basic auth
-          if request.request_method == 'GET' && is_static.call(request.path_info)
-            if auth_header == nil || auth_header != "Basic #{TokenService.new.get_admin_key}"
-              headers['WWW-Authenticate'] = 'Basic realm="Restricted"'
-              halt 401, 'Unauthorized!'
-            end
-          else
+          unless is_static.call(request.path_info)
+            #   if auth_header == nil || auth_header != "Basic #{TokenService.new.get_admin_key}"
+            #     headers['WWW-Authenticate'] = 'Basic realm="Restricted"'
+            #     halt 401, 'Unauthorized!'
+            #   end
+            # else
             # all other routes are the API - these require the api token
             if auth_header == nil
               halt 401, 'Unauthorized!'
