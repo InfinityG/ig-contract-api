@@ -18,6 +18,7 @@ module Sinatra
           is_static = lambda { |path|
             return true if path == '/'
             return true if path == '/favicon.ico'
+            return true if path.include? '/docs'
             return true if path.include? '/fonts/'
             return true if path.include? '/css/'
             return true if path.include? '/js/'

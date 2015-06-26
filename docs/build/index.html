@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>API Reference</title>
 
-    <link href="stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
-    <link href="stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
+    <link href="/docs/stylesheets/screen.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="/docs/stylesheets/print.css" rel="stylesheet" type="text/css" media="print" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-      <script src="javascripts/all.js" type="text/javascript"></script>
+      <script src="/docs/javascripts/all.js" type="text/javascript"></script>
 
       <script>
         $(function() {
@@ -22,11 +22,11 @@
     <a href="#" id="nav-button">
       <span>
         NAV
-        <img src="images/navbar.png" />
+        <img src="/docs/images/navbar.png" />
       </span>
     </a>
     <div class="tocify-wrapper">
-      <img src="images/logo.png" />
+      <img src="/docs/images/logo.png" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="ruby">ruby</a>
@@ -38,16 +38,12 @@
         <ul class="search-results"></ul>
       <div id="toc">
       </div>
-        <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a></li>
-        </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Smart Contract API, a RESTful API used to manage the creation and maintenance of digital contracts. It attempts to be as generic as possible to cater for very different use-cases.</p>
+<p>Welcome to the accord.ly API, a RESTful API used to manage the creation and maintenance of digital contracts. It attempts to be as generic as possible to cater for very different use-cases.</p>
 
 <p><strong><em>Contract definition: &ldquo;&hellip;an agreement with specific terms between two or more persons or entities in which there is a promise to do something in return for a valuable benefit &hellip;&rdquo;</em></strong></p>
 
@@ -89,14 +85,14 @@ Request payloads to webhooks are POST by default, and may contain user-specified
 <p>A contract is a JSON document, which can be broken down into related entities as listed below.</p>
 <h2 id='contract-object'>Contract object</h2>
 <p>The &ldquo;top level&rdquo; object which contains all other objects.</p>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="s2">"participants"</span><span class="p">:[],</span><span class="w">
-    </span><span class="s2">"signatures"</span><span class="p">:[]</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"participants"</span><span class="p">:[],</span><span class="w">
+    </span><span class="nt">"signatures"</span><span class="p">:[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -145,14 +141,14 @@ Request payloads to webhooks are POST by default, and may contain user-specified
 </tbody></table>
 <h2 id='condition-object'>Condition object</h2>
 <p>An object that defines a requirement that must be fulfilled.</p>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"trigger"</span><span class="p">:{}</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"trigger"</span><span class="p">:{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -199,12 +195,12 @@ Request payloads to webhooks are POST by default, and may contain user-specified
 <td>A hash representing a <a href="#trigger-object">trigger</a> object</td>
 </tr>
 </tbody></table>
-<h2 id='participant-object'>Participant object</h2><pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+<h2 id='participant-object'>Participant object</h2><pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -248,15 +244,15 @@ Request payloads to webhooks are POST by default, and may contain user-specified
 <li><strong>Contract:</strong> signatures indicate approval of the contract as a whole</li>
 <li><strong>Condition:</strong> signatures indicate that a condition has been met</li>
 </ul>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"delegated_by_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"type"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"value"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"digest"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"delegated_by_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"value"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"digest"</span><span class="p">:</span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -325,10 +321,10 @@ Request payloads to webhooks are POST by default, and may contain user-specified
 
 <p>A trigger is processed <strong>asynchronously</strong>, ie: once a condition has been met, the trigger is placed on a queue which is handled on a separate
 thread.</p>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -358,11 +354,11 @@ thread.</p>
 <h2 id='wallet-object'>Wallet object</h2>
 <p>A wallet is a container for a participant&rsquo;s cryptocurrency wallet details. Currently this only supports <strong>Ripple</strong> wallets, but in future will
 support a number of different cryptocurrencies including <strong>Bitcoin</strong>.</p>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"destination_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"destination_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -405,10 +401,10 @@ which is the original secret key.</p>
 condition signing process, when the specific signature type is <strong><em>ss_key</em></strong>. This means that a condition can be set to receive
 a number of separate <strong><em>ss_key</em></strong> signatures, each of which adds an ss_key fragment to the <em>fragments</em> array of the secret. Once
 the threshold has been reached then the original secret can be re-created for use in a transaction.</p>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -440,16 +436,16 @@ the threshold has been reached then the original secret can be re-created for us
 represents the <strong><em>sender</em></strong> and the <em>to_participant</em> represents the <strong><em>receiver</em></strong>.</p>
 
 <p>Transactions are only initiated once a trigger has been processed.</p>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"from_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"from_participant"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"to_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"to_participant"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"amount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"currency"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"ledger_transaction_hash"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"from_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"from_participant"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"to_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"to_participant"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"amount"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"currency"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"ledger_transaction_hash"</span><span class="p">:</span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -509,11 +505,11 @@ represents the <strong><em>sender</em></strong> and the <em>to_participant</em> 
 <h2 id='webhook-object'>Webhook object</h2>
 <p>A webhook simply represents an HTTP endpoint. When a webhook is processed, the API will execute a <strong>POST</strong> request via <strong>HTTPS</strong>
 to the specified uri. The payload of the request will be details of the condition in which the webhook resides.</p>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"headers"</span><span class="p">:[],</span><span class="w">
-    </span><span class="s2">"body"</span><span class="p">:</span><span class="s2">""</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"headers"</span><span class="p">:[],</span><span class="w">
+    </span><span class="nt">"body"</span><span class="p">:</span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 
@@ -545,72 +541,72 @@ to the specified uri. The payload of the request will be details of the conditio
 <td>The payload to be sent to the webhook uri</td>
 </tr>
 </tbody></table>
-<h2 id='putting-it-all-together'>Putting it all together</h2><pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<h2 id='putting-it-all-together'>Putting it all together</h2><pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"delegated_by_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"digest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"delegated_by_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"digest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                     </span><span class="p">{</span><span class="w">
-                        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"from_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"to_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"ledger_transaction_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"from_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"to_participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"ledger_transaction_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
                     </span><span class="p">}</span><span class="w">
                 </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="nt">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                     </span><span class="p">{</span><span class="w">
-                        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
                     </span><span class="p">}</span><span class="w">
                 </span><span class="p">]</span><span class="w">
             </span><span class="p">},</span><span class="w">
-            </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="nt">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"destination_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-                    </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"destination_tag"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                    </span><span class="nt">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="nt">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"digest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"participant_external_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"digest"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -621,7 +617,7 @@ to the specified uri. The payload of the request will be details of the conditio
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
-<pre><code class="highlight shell"><span class="c"># With shell, you can just pass the correct header with each request</span>
+<pre class="highlight shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
 curl <span class="s2">"api_endpoint_here"</span>
   -H <span class="s2">"Authorization:[key]"</span>
 </code></pre>
@@ -642,7 +638,7 @@ You must replace <code class="prettyprint">[key]</code> with your personal API k
 <h2 id='create-contract'>Create Contract</h2>
 <p>This endpoint creates a new contract.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">POST https://api.infinity-g.com/v1/contracts</code></p>
+<p><code class="prettyprint">POST https://accordly.infinity-g.com/v1/contracts</code></p>
 <h3 id='json-payload'>JSON Payload</h3>
 <table><thead>
 <tr>
@@ -691,9 +687,9 @@ This means that a consuming system must be clear in what it is trying to achieve
 <p><aside class="success">
 Remember the Authorization header!
 </aside></p>
-<pre><code class="highlight ruby"></code></pre>
-<pre><code class="highlight python"></code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"https://api.infinity-g.com/v1/contracts"</span>
+<pre class="highlight ruby"><code></code></pre>
+<pre class="highlight python"><code></code></pre>
+<pre class="highlight shell"><code>curl <span class="s2">"https://accordly.infinity-g.com/v1/contracts"</span>
   -H <span class="s2">"Authorization:[key]"</span>
   -H <span class="s2">"Accept: application/json"</span>
   -X POST
@@ -780,94 +776,94 @@ Remember the Authorization header!
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
+                    </span><span class="nt">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                     </span><span class="p">{</span><span class="w">
-                        </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
+                        </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
                     </span><span class="p">}</span><span class="w">
                 </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="nt">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1 description"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419897600</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000042"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1 description"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419897600</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000042"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BKID9EgNllR9zNcwXDxdMbU76s0WwpMeD31vrTaxyDg3k53W/NFIo0G6ggO1\nzonI2zsgRbeQutIFfFqpHHPEY3Q=\n"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BKID9EgNllR9zNcwXDxdMbU76s0WwpMeD31vrTaxyDg3k53W/NFIo0G6ggO1\nzonI2zsgRbeQutIFfFqpHHPEY3Q=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="s2">"initiator"</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"sender"</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147d348-6a31-484c-b974-f4452f006e81"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000038"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147d348-6a31-484c-b974-f4452f006e81"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000038"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                         </span><span class="s2">"TaWs+hB2uowc5ZOzZZ0er9S/rZ+yNgjOAMmhM0Mpkgg=\n"</span><span class="w">
                     </span><span class="p">],</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000037"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000037"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BI+vVlovs0j+wSxrUoZZf3GRjvy0bi9cXb8ksd4mR0WYPUAAwIbIAcPP++Qy\n++RoDJ0sgyaIjZPV10E9s2byd1s=\n"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BI+vVlovs0j+wSxrUoZZf3GRjvy0bi9cXb8ksd4mR0WYPUAAwIbIAcPP++Qy\n++RoDJ0sgyaIjZPV10E9s2byd1s=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="s2">"oracle"</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="nt">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BOnjAl6WzsGR6cfjR0DvB321hnveTErmXt/UpQUbeTrUdrJir13Agv/pRq2F\nt4kvtm7wh9kRZb3pNHe1dOQKmoE=\n"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BOnjAl6WzsGR6cfjR0DvB321hnveTErmXt/UpQUbeTrUdrJir13Agv/pRq2F\nt4kvtm7wh9kRZb3pNHe1dOQKmoE=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="s2">"receiver"</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38c7cf68-dcb8-409d-b686-5ba212f0951e"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003b"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="nt">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38c7cf68-dcb8-409d-b686-5ba212f0951e"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003b"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"secret"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="nt">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000041"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000041"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id='sample'>Sample</h3>
@@ -922,107 +918,107 @@ Remember the Authorization header!
 </ul>
 <h2 id='get-contract'>Get Contract</h2>
 <p>This endpoint retrieves a specific contract.</p>
-<pre><code class="highlight ruby"></code></pre>
-<pre><code class="highlight python"></code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"https://api.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042"</span>
+<pre class="highlight ruby"><code></code></pre>
+<pre class="highlight python"><code></code></pre>
+<pre class="highlight shell"><code>curl <span class="s2">"https://accordly.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042"</span>
   -H <span class="s2">"Authorization: [key]"</span>
 </code></pre>
 
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"conditions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
+                    </span><span class="nt">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                     </span><span class="p">{</span><span class="w">
-                        </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-                        </span><span class="s2">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
+                        </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+                        </span><span class="nt">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
                     </span><span class="p">}</span><span class="w">
                 </span><span class="p">],</span><span class="w">
-                </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="nt">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1 description"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419897600</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000042"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1 description"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419897600</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000042"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test contract 1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BKID9EgNllR9zNcwXDxdMbU76s0WwpMeD31vrTaxyDg3k53W/NFIo0G6ggO1\nzonI2zsgRbeQutIFfFqpHHPEY3Q=\n"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BKID9EgNllR9zNcwXDxdMbU76s0WwpMeD31vrTaxyDg3k53W/NFIo0G6ggO1\nzonI2zsgRbeQutIFfFqpHHPEY3Q=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="s2">"initiator"</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"sender"</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147d348-6a31-484c-b974-f4452f006e81"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000038"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                    </span><span class="s2">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2147d348-6a31-484c-b974-f4452f006e81"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000038"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"secret"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nt">"fragments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                         </span><span class="s2">"TaWs+hB2uowc5ZOzZZ0er9S/rZ+yNgjOAMmhM0Mpkgg=\n"</span><span class="w">
                     </span><span class="p">],</span><span class="w">
-                    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000037"</span><span class="p">,</span><span class="w">
-                    </span><span class="s2">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000037"</span><span class="p">,</span><span class="w">
+                    </span><span class="nt">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BI+vVlovs0j+wSxrUoZZf3GRjvy0bi9cXb8ksd4mR0WYPUAAwIbIAcPP++Qy\n++RoDJ0sgyaIjZPV10E9s2byd1s=\n"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BI+vVlovs0j+wSxrUoZZf3GRjvy0bi9cXb8ksd4mR0WYPUAAwIbIAcPP++Qy\n++RoDJ0sgyaIjZPV10E9s2byd1s=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="s2">"oracle"</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="nt">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BOnjAl6WzsGR6cfjR0DvB321hnveTErmXt/UpQUbeTrUdrJir13Agv/pRq2F\nt4kvtm7wh9kRZb3pNHe1dOQKmoE=\n"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="nt">"external_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"public_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BOnjAl6WzsGR6cfjR0DvB321hnveTErmXt/UpQUbeTrUdrJir13Agv/pRq2F\nt4kvtm7wh9kRZb3pNHe1dOQKmoE=\n"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                 </span><span class="s2">"receiver"</span><span class="w">
             </span><span class="p">],</span><span class="w">
-            </span><span class="s2">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38c7cf68-dcb8-409d-b686-5ba212f0951e"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003b"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"secret"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="nt">"wallet"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"38c7cf68-dcb8-409d-b686-5ba212f0951e"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003b"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"secret"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="nt">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000041"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000041"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET https://api.infinity-g.com/v1/contracts/{contract_id}</code></p>
+<p><code class="prettyprint">GET https://accordly.infinity-g.com/v1/contracts/{contract_id}</code></p>
 <h3 id='uri-parameters'>Uri parameters</h3>
 <table><thead>
 <tr>
@@ -1041,9 +1037,9 @@ Remember the Authorization header!
 </aside></p>
 <h2 id='update-contract-signature'>Update Contract Signature</h2>
 <p>This endpoint updates a specific signature of a contract.</p>
-<pre><code class="highlight ruby"></code></pre>
-<pre><code class="highlight python"></code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"https://api.infinity-g.com/v1/contracts"</span>
+<pre class="highlight ruby"><code></code></pre>
+<pre class="highlight python"><code></code></pre>
+<pre class="highlight shell"><code>curl <span class="s2">"https://accordly.infinity-g.com/v1/contracts"</span>
   -H <span class="s2">"Authorization:[key]"</span>
   -H <span class="s2">"Accept: application/json"</span>
   -X POST
@@ -1054,7 +1050,7 @@ Remember the Authorization header!
 
 </code></pre>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">POST https://api.infinity-g.com/v1/contracts/{contract_id}/signatures/{signature_id}</code></p>
+<p><code class="prettyprint">POST https://accordly.infinity-g.com/v1/contracts/{contract_id}/signatures/{signature_id}</code></p>
 <h3 id='uri-parameters'>Uri parameters</h3>
 <table><thead>
 <tr>
@@ -1099,48 +1095,48 @@ Remember the Authorization header!
 </aside></p>
 <h2 id='get-condition'>Get Condition</h2>
 <p>This endpoint retrieves a specific condition.</p>
-<pre><code class="highlight ruby"></code></pre>
-<pre><code class="highlight python"></code></pre>
-<pre><code class="highlight shell">curl <span class="s2">"https://api.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042/conditions/54a040b6b85a5428ea000040"</span>
+<pre class="highlight ruby"><code></code></pre>
+<pre class="highlight python"><code></code></pre>
+<pre class="highlight shell"><code>curl <span class="s2">"https://accordly.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042/conditions/54a040b6b85a5428ea000040"</span>
   -H <span class="s2">"Authorization:[key]"</span>
 </code></pre>
 
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
-<pre><code class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1 description"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"expires"</span><span class="p">:</span><span class="w"> </span><span class="mi">1419984000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000040"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test condition 1"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"sequence_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"signatures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
+            </span><span class="nt">"delegated_by_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003d"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003a"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ecdsa"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003f"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
             </span><span class="p">{</span><span class="w">
-                </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
-                </span><span class="s2">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
+                </span><span class="nt">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PDC"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"from_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea000039"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003e"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"to_participant_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"54a040b6b85a5428ea00003c"</span><span class="w">
             </span><span class="p">}</span><span class="w">
         </span><span class="p">],</span><span class="w">
-        </span><span class="s2">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="nt">"webhooks"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">GET https://api.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}</code></p>
+<p><code class="prettyprint">GET https://accordly.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}</code></p>
 <h3 id='uri-parameters'>Uri parameters</h3>
 <table><thead>
 <tr>
@@ -1164,7 +1160,7 @@ Remember the Authorization header!
 <h2 id='update-condition-signature'>Update Condition Signature</h2>
 <p>This endpoint updates a specific signature for a condition.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code class="prettyprint">POST https://api.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}/signatures/{signature_id}</code></p>
+<p><code class="prettyprint">POST https://accordly.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}/signatures/{signature_id}</code></p>
 <h3 id='uri-parameters'>Uri parameters</h3>
 <table><thead>
 <tr>

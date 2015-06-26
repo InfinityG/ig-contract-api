@@ -17,7 +17,7 @@ search: true
 
 # Introduction
 
-Welcome to the Smart Contract API, a RESTful API used to manage the creation and maintenance of digital contracts. It attempts to be as generic as possible to cater for very different use-cases.
+Welcome to the accord.ly API, a RESTful API used to manage the creation and maintenance of digital contracts. It attempts to be as generic as possible to cater for very different use-cases.
 
 **_Contract definition: "...an agreement with specific terms between two or more persons or entities in which there is a promise to do something in return for a valuable benefit ..."_**
 
@@ -409,7 +409,7 @@ This endpoint creates a new contract.
 
 ### HTTP Request
 
-`POST https://api.infinity-g.com/v1/contracts`
+`POST https://accordly.infinity-g.com/v1/contracts`
 
 ### JSON Payload
 
@@ -438,7 +438,7 @@ Remember the Authorization header!
 ```
 
 ```shell
-curl "https://api.infinity-g.com/v1/contracts"
+curl "https://accordly.infinity-g.com/v1/contracts"
   -H "Authorization:[key]"
   -H "Accept: application/json"
   -X POST
@@ -655,7 +655,7 @@ This endpoint retrieves a specific contract.
 ```
 
 ```shell
-curl "https://api.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042"
+curl "https://accordly.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042"
   -H "Authorization: [key]"
 ```
 
@@ -755,7 +755,7 @@ curl "https://api.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042"
 
 ### HTTP Request
 
-`GET https://api.infinity-g.com/v1/contracts/{contract_id}`
+`GET https://accordly.infinity-g.com/v1/contracts/{contract_id}`
 
 ### Uri parameters
 
@@ -779,7 +779,7 @@ This endpoint updates a specific signature of a contract.
 ```
 
 ```shell
-curl "https://api.infinity-g.com/v1/contracts"
+curl "https://accordly.infinity-g.com/v1/contracts"
   -H "Authorization:[key]"
   -H "Accept: application/json"
   -X POST
@@ -792,7 +792,7 @@ curl "https://api.infinity-g.com/v1/contracts"
 
 ### HTTP Request
 
-`POST https://api.infinity-g.com/v1/contracts/{contract_id}/signatures/{signature_id}`
+`POST https://accordly.infinity-g.com/v1/contracts/{contract_id}/signatures/{signature_id}`
 
 ### Uri parameters
 
@@ -826,7 +826,7 @@ This endpoint retrieves a specific condition.
 ```
 
 ```shell
-curl "https://api.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042/conditions/54a040b6b85a5428ea000040"
+curl "https://accordly.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042/conditions/54a040b6b85a5428ea000040"
   -H "Authorization:[key]"
 ```
 
@@ -867,7 +867,7 @@ curl "https://api.infinity-g.com/v1/contracts/54a040b6b85a5428ea000042/condition
 
 ### HTTP Request
 
-`GET https://api.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}`
+`GET https://accordly.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}`
 
 ### Uri parameters
 
@@ -886,7 +886,7 @@ This endpoint updates a specific signature for a condition.
 
 ### HTTP Request
 
-`POST https://api.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}/signatures/{signature_id}`
+`POST https://accordly.infinity-g.com/v1/contracts/{contract_id}/conditions/{condition_id}/signatures/{signature_id}`
 
 ### Uri parameters
 
