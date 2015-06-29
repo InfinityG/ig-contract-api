@@ -13,8 +13,6 @@ module Sinatra
             (request.request_method == 'POST' && request.path_info == '/tokens')
           return
         else
-          auth_header = env['HTTP_AUTHORIZATION']
-
           is_static = lambda { |path|
             return true if path == '/'
             return true if path == '/favicon.ico'
@@ -26,26 +24,11 @@ module Sinatra
             false
           }
 
-          # the default route will default to the docs - these need admin user/password access via basic auth
           unless is_static.call(request.path_info)
-            #   if auth_header == nil || auth_header != "Basic #{TokenService.new.get_admin_key}"
-            #     headers['WWW-Authenticate'] = 'Basic realm="Restricted"'
-            #     halt 401, 'Unauthorized!'
-            #   end
-            # else
-            # all other routes are the API - these require the api token
-            if auth_header == nil
+            auth_header = env['HTTP_AUTHORIZATION']
+
+            if auth_header == nil || auth_header != TokenService.new.get_admin_key
               halt 401, 'Unauthorized!'
-            end
-
-            token = TokenService.new.get_token(auth_header)
-            if token == nil
-              (halt 401, 'Unauthorized!')
-            else
-              user = UserService.new.get_by_id token[:user_id]
-
-              @current_user_id = token[:user_id]
-              @current_user_role = user[:role]
             end
           end
         end
