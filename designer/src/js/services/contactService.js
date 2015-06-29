@@ -16,8 +16,13 @@
             return localStorageService.getContacts(userId);
         };
 
-        factory.refreshContacts = function (userId, username) {
-            return $http.get(identityBase + '/users/associations/' + username, {'withCredentials': false})
+        factory.refreshContacts = function (userId) {
+            var context = userService.getContext();
+
+            // this request is fired at ID-IO to retrieve the associated contacts for this user
+            return $http.get(identityBase + '/users/associations', {
+                headers: {'Authorization': context.idioToken}
+            })
                 .then(function (response) {
                     var data = response.data;
                     localStorageService.saveContacts(userId, data);

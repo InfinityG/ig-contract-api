@@ -13,9 +13,9 @@
             return JSON.parse(sessionStorage.getItem('accordly.token'));
         };
 
-        factory.saveAuthToken = function(username, userId, externalId, role, token){
+        factory.saveAuthToken = function(username, userId, externalId, role, token, idioToken){
             return sessionStorage.setItem('accordly.token', JSON.stringify({username: username, userId: userId,
-                externalId : externalId, role: role, token: token}));
+                externalId : externalId, role: role, token: token, idioToken: idioToken}));
         };
 
         factory.deleteAuthToken = function(){

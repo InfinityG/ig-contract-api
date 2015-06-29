@@ -7,7 +7,11 @@
 
     var userFactory = function ($http, $location, $rootScope, config, keyService, sessionStorageService) {
 
-        var serviceBase = config.apiHost, identityBase = config.identityHost, nacl = config.nacl, factory = {};
+        var serviceBase = config.apiHost,
+            identityBase = config.identityHost,
+            loginDomain = config.loginDomain,
+            nacl = config.nacl,
+            factory = {};
 
         factory.getContext = function () {
             return sessionStorageService.getAuthToken();
@@ -20,27 +24,18 @@
         };
 
         factory.login = function (username, password) {
-            var userData = {username: username, password: password, domain: 'accord.ly'};
+            var userData = {username: username, password: password, domain: loginDomain};
 
             return $http.post(identityBase + '/login', userData, {'withCredentials': false})
                 .then(function (response) {
                     var authData = response.data;
-                    //var auth = data.auth;
-                    //var iv = data.iv;
+                    var idioToken = authData.token;
 
-                    //var cryptoKey = keyService.generateAESKey(userData.password, nacl);
-                    //
-                    //$rootScope.$broadcast('loginEvent', {
-                    //    username: username, userId: null,
-                    //    role: null, key: cryptoKey
-                    //});
-
-                    //TODO: login to the ACCORD.LY API
                     $http.post(serviceBase + '/tokens', authData, {'withCredentials': false})
                         .then(function (response) {
                             var tokenData = response.data;
                             sessionStorageService.saveAuthToken(username, tokenData.external_id, tokenData.external_id,
-                                tokenData.role, tokenData.token);
+                                tokenData.role, tokenData.token, idioToken);
                             var cryptoKey = keyService.generateAESKey(userData.password, nacl);
 
                             $rootScope.$broadcast('loginEvent', {
