@@ -3,19 +3,20 @@
  */
 (function () {
 
-    var injectParams = ['$http', '$rootScope', '$location', 'userService', 'contactService', 'blobService'];
+    var injectParams = ['$http', '$rootScope', '$location', '$window', 'userService', 'contactService', 'blobService'];
 
     var configValue = {
-        //apiHost: 'http://54.154.155.144:9000',
-        //identityHost: 'http://54.154.155.144:9002',
-
-        apiHost: 'https://accordly.infinity-g.com',
-        identityHost: 'https://id-io.infinity-g.com',
+        //apiHost: 'https://accordly.infinity-g.com',
+        apiHost: 'http://localhost:8002',
+        //identityHost: 'https://id-io.infinity-g.com',
+        identityHost: 'http://localhost:9002',
+        loginDomain: 'accord.ly',
         confirmMobile: false,
-        nacl: '9612700b954743e0b38f2faff35d264c'
+        nacl: '9612700b954743e0b38f2faff35d264c',
+        fingerprint: null
     };
 
-    var initializationFactory = function ($http, $rootScope, $location, userService, contactService, blobService) {
+    var initializationFactory = function ($http, $rootScope, $location, $window, userService, contactService, blobService) {
         var factory = {};
 
         factory.init = function(){
@@ -31,7 +32,15 @@
             if(context != null){
                 factory.initializeAuthHeaders(context);
                 factory.initializeBlob(key);
+            }else {
+                factory.getFingerprint();
             }
+        };
+
+        factory.getFingerprint = function(){
+            new $window.Fingerprint2().get(function(result){
+                configValue.fingerprint = result;
+            });
         };
 
         factory.initializeAuthHeaders = function(context){

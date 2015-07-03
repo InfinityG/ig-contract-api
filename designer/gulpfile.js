@@ -5,7 +5,7 @@ var config = {
 var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     pngcrush = require('imagemin-pngcrush'),
-    sourcemaps = require('gulp-sourcemaps'),
+    //sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     cssmin = require('gulp-cssmin'),
@@ -35,16 +35,17 @@ gulp.task('js', function () {
             config.bowerDir + '/bootstrap/dist/js/bootstrap.js',
             config.bowerDir + '/angular-bootstrap/ui-bootstrap.js',
             config.bowerDir + '/angular-bootstrap/ui-bootstrap-tpls.js',
+            config.bowerDir + '/fingerprintjs2/dist/fingerprint2.js',
             config.bowerDir + '/html5shiv/dist/html5shiv.min.js']),
         gulp.src(config.srcDir + '/js/**/*.js').pipe(ngFilesort()),
         gulp.src([config.srcDir + '/templates/**/*.html']).pipe(templateCache({module: 'accord.ly'}))
     )
-        .pipe(sourcemaps.init())
+        //.pipe(sourcemaps.init())
         .pipe(concat('app.js'))
         .pipe(ngAnnotate())
         .pipe(uglify())
         .pipe(rename({suffix: '.min'}))
-        .pipe(sourcemaps.write('.'))
+        //.pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./www/js'));
 });
 

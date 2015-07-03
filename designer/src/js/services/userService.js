@@ -24,7 +24,9 @@
         };
 
         factory.login = function (username, password) {
-            var userData = {username: username, password: password, domain: loginDomain};
+            console.log('FINGERPRINT: ' + config.fingerprint);
+
+            var userData = {username: username, password: password, fingerprint: config.fingerprint, domain: loginDomain};
 
             return $http.post(identityBase + '/login', userData, {'withCredentials': false})
                 .then(function (response) {

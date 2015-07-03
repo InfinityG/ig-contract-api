@@ -7,6 +7,7 @@
     "bootstrap": "3.x",
     "html5shiv":"3.x",
     "angular-route": "1.x",
-    "angular-bootstrap":"0.13.x"
+    "angular-bootstrap":"0.13.x",
+    "fingerprintjs2":"0.1.x"
   }
 }
