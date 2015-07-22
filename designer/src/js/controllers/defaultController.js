@@ -5,10 +5,10 @@
         var DefaultController = function ($scope, $location, userService) {
 
             function init() {
-                var context = userService.getContext();
-
-                if (context == null || context == '')
-                    $location.path('/login');
+                //var context = userService.getContext();
+                //
+                //if (context == null || context == '')
+                //    $location.path('/login');
             }
 
             init();

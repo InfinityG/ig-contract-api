@@ -14,8 +14,6 @@
                 return response;
             },
             'responseError': function (rejection) {
-                console.debug('Response error intercepted!: ' + rejection.status);
-
                 switch (rejection.status) {
                     case 400:
                         $rootScope.$broadcast('contractEvent', {

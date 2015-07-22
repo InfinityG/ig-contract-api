@@ -17,9 +17,7 @@
             function init(){
                 $scope.context = userService.getContext();
 
-                if ($scope.context == null || $scope.context == '')
-                    $location.path('/login');
-                else {
+                if ($scope.context != null) {
                     $routeParams.templateId != null ? loadData($routeParams.templateId) : loadData();
                 }
             }

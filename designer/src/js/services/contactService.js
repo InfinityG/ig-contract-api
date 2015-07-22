@@ -3,11 +3,11 @@
  */
 (function () {
 
-    var injectParams = ['$http', '$rootScope', 'config', 'userService', 'localStorageService'];
+    var injectParams = ['$http', '$rootScope', 'constants', 'userService', 'localStorageService'];
 
-    var contactFactory = function ($http, $rootScope, config, userService, localStorageService) {
+    var contactFactory = function ($http, $rootScope, constants, userService, localStorageService) {
 
-        var identityBase = config.identityHost, factory = {};
+        var identityBase = constants.idioApiHost, factory = {};
 
         factory.getContacts = function () {
             var context = userService.getContext();
@@ -20,7 +20,7 @@
             var context = userService.getContext();
 
             // this request is fired at ID-IO to retrieve the associated contacts for this user
-            return $http.get(identityBase + '/users/associations', {
+            return $http.get(identityBase + '/connections', {
                 headers: {'Authorization': context.idioToken}
             })
                 .then(function (response) {

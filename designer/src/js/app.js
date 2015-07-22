@@ -46,6 +46,16 @@
                 controller: 'LoginController',
                 templateUrl: 'login.html',
                 reloadOnSearch: false
+            })
+            .when('/login/sso/:user?/:auth?', {
+                controller: 'LoginController',
+                templateUrl: 'login.html',
+                reloadOnSearch: false
+            })
+            .otherwise({
+                controller: 'DefaultController',
+                templateUrl: 'default.html',
+                reloadOnSearch: false
             });
     });
 

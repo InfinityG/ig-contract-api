@@ -1,39 +1,29 @@
 (function () {
 
-    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'userService', 'registrationService'];
+    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'constants', 'userService'];
 
-    var LoginController = function ($scope, $location, $routeParams, $window, userService, registrationService) {
+    var LoginController = function ($scope, $location, $routeParams, $window, constants, userService) {
 
-        $scope.firstName = null;
-        $scope.lastName = null;
         $scope.userName = null;
         $scope.password = null;
-        $scope.mobile = null;
-        $scope.role = null;
-        $scope.roles = ['coach', 'leader', 'facilitator', 'caregiver'];
-        $scope.context = null;
 
         function init(){
             if($routeParams.exit != null)
                 $scope.deleteToken();
-            else
-                $scope.context = userService.getContext();
+            else if($routeParams.user != null && $routeParams.auth != null)
+                $scope.ssoLogin($routeParams.user, $routeParams.auth);
         }
-
-        $scope.roleSelected = function(role){
-            $scope.role = role;
-        };
 
         $scope.login = function () {
             userService.login($scope.userName, $scope.password);
         };
 
-        $scope.deleteToken = function () {
-            userService.deleteToken();
+        $scope.ssoLogin = function (userName, encodedAuth) {
+            userService.ssoLogin(userName, encodedAuth);
         };
 
-        $scope.register = function (firstName, lastName, userName, password, mobile, role) {
-            registrationService.register(firstName, lastName, userName, password, mobile, role);
+        $scope.deleteToken = function () {
+            userService.deleteToken();
         };
 
         init();

@@ -8,25 +8,29 @@ module Sinatra
 
       #this filter applies to everything except options, registration of new users and documentation
       app.before do
-        if (request.request_method == 'OPTIONS') ||
-            (request.request_method == 'POST' && request.path_info == '/users') ||
-            (request.request_method == 'POST' && request.path_info == '/tokens')
+
+        method = request.request_method
+        path = request.path_info
+
+        if (method == 'OPTIONS') ||
+            (method == 'POST' && path == '/users') ||
+            (method == 'POST' && path == '/tokens')
           return
         else
           auth_header = env['HTTP_AUTHORIZATION']
 
-          is_static = lambda { |path|
-            return true if path == '/'
-            return true if path == '/favicon.ico'
-            return true if path.include? '/docs'
-            return true if path.include? '/fonts/'
-            return true if path.include? '/css/'
-            return true if path.include? '/js/'
-            return true if path.include? '/images/'
+          is_static = lambda { |path_info|
+            return true if (path_info == '/' && method == 'GET')
+            return true if (path_info == '/favicon.ico' && method == 'GET')
+            return true if path_info.include? '/docs'
+            return true if path_info.include? '/fonts/'
+            return true if path_info.include? '/css/'
+            return true if path_info.include? '/js/'
+            return true if path_info.include? '/images/'
             false
           }
 
-          unless is_static.call(request.path_info)
+          unless is_static.call(path)
 
             # all other routes are the API - these require an Authorization token
 

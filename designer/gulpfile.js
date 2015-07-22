@@ -35,6 +35,8 @@ gulp.task('js', function () {
             config.bowerDir + '/bootstrap/dist/js/bootstrap.js',
             config.bowerDir + '/angular-bootstrap/ui-bootstrap.js',
             config.bowerDir + '/angular-bootstrap/ui-bootstrap-tpls.js',
+            config.bowerDir + '/ig-js-utils/src/lib/cryptoBundle.js',
+            config.bowerDir + '/ig-js-utils/src/crypto/cryptoUtil.js',
             config.bowerDir + '/fingerprintjs2/dist/fingerprint2.js',
             config.bowerDir + '/html5shiv/dist/html5shiv.min.js']),
         gulp.src(config.srcDir + '/js/**/*.js').pipe(ngFilesort()),

@@ -3,11 +3,14 @@
  */
 (function () {
 
-    var injectParams = ['$http', '$rootScope', 'config', 'userService'];
+    var injectParams = ['$http', '$rootScope', 'constants', 'userService'];
 
-    var registrationFactory = function ($http, $rootScope, config, userService) {
+    var registrationFactory = function ($http, $rootScope, constants, userService) {
 
-        var identityBase = config.identityHost, nacl = config.nacl, confirmMobile = config.confirmMobile, factory = {};
+        var identityBase = constants.idioApiHost,
+            nacl = constants.nacl,
+            confirmMobile = constants.confirmMobile,
+            factory = {};
 
         factory.register = function (firstName, lastName, userName, password, mobile, role) {
 

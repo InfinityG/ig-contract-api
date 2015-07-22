@@ -9,7 +9,7 @@ gem 'unf_ext', '~> 0.0.7.1'
 gem 'mongo'
 gem 'mongo_mapper'
 gem 'ig-crypto-utils'
-gem 'ig-identity-rp-validator'
+gem 'ig-identity-rp-validator', '>=0.0.3'
 
 group :test, :development do
   gem 'minitest'

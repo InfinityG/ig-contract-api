@@ -17,6 +17,10 @@
     padding:15px 15px 0 15px;
 }
 
+.default h3{
+    margin: 0;
+}
+
 .grabbable{
     cursor:move;
 }
