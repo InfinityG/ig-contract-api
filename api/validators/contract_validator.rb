@@ -1,12 +1,32 @@
 require 'date'
 require 'json'
+require 'ig-validator-utils'
+
 require './api/errors/validation_error'
 require './api/constants/contract_constants'
 require './api/constants/error_constants'
 
 class ContractValidator
+  include ValidatorUtils
   include ErrorConstants::ValidationErrors
   include GeneralConstants::ContractConstants
+
+  def validate_user_details(data)
+    errors = []
+
+    if data == nil
+      errors.push NO_DATA_FOUND
+    else
+      #fields
+      errors.push INVALID_EXTERNAL_USER_ID unless GeneralValidator.validate_string data[:id]
+      errors.push INVALID_EMAIL unless GeneralValidator.validate_email data[:email]
+      errors.push INVALID_FIRST_NAME unless GeneralValidator.validate_string data[:first_name]
+      errors.push INVALID_LAST_NAME unless GeneralValidator.validate_string data[:last_name]
+      errors.push INVALID_USERNAME unless GeneralValidator.validate_string data[:username]
+
+      raise ValidationError, {:valid => false, :errors => errors}.to_json if errors.count > 0
+    end
+  end
 
   # new contracts don't require a signature
   def validate_new_contract(data)

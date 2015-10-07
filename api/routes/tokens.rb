@@ -1,50 +1,37 @@
 require 'sinatra/base'
-require './api/services/token_service'
 require 'json'
+
+require './api/validators/contract_validator'
+require './api/services/token_service'
 
 module Sinatra
   module TokenRoutes
     def self.registered(app)
 
       #create new token: login
-      # app.post '/tokens' do
-      #   data = JSON.parse(request.body.read)
-      #
-      #   username = data['username']
-      #   password = data['password']
-      #
-      #   if username.to_s != '' && password.to_s != ''
-      #     token = TokenService.new.create_token username, password
-      #
-      #     if token == nil
-      #       halt 401, 'Unauthorized!'
-      #     end
-      #
-      #     {:user_id => token.user_id, :token => token.uuid}.to_json
-      #
-      #   else
-      #     halt 401, 'Unauthorized!'
-      #   end
-      # end
-
-      #create new token: login
       app.post '/tokens' do
+
         data = JSON.parse(request.body.read, :symbolize_names => true)
+        token_service = TokenService.new
 
-        auth = data[:auth]
-        iv = data[:iv]
+        validated_auth = token_service.validate_auth(data[:auth], data[:iv])
+        halt 401, 'Unauthorized!' if validated_auth == nil
 
-        if auth.to_s != '' && iv.to_s != ''
-          token = TokenService.new.create_token auth, iv
+        # validate the fields of the auth token
+        begin
+          ContractValidator.new.validate_user_details validated_auth
+        rescue ValidationError => e
+          status 400 # bad request
+          return e.message
+        end
 
-          if token == nil
-            halt 401, 'Unauthorized!'
-          end
-
+        begin
+          token = token_service.create_token validated_auth
+          status 201
           token.to_json
-
-        else
-          halt 401, 'Unauthorized!'
+        rescue ContractError => e
+          status 500
+          e.message.to_json
         end
       end
 

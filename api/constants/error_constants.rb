@@ -10,6 +10,14 @@ module ErrorConstants
   end
 
   module ValidationErrors
+    NO_DATA_FOUND = 'No data found!'
+
+    INVALID_EXTERNAL_USER_ID = 'Invalid external user id'
+    INVALID_EMAIL = 'Invalid user email'
+    INVALID_FIRST_NAME = 'Invalid user first name'
+    INVALID_LAST_NAME = 'Invalid user last name'
+    INVALID_USERNAME = 'Invalid username'
+
     INVALID_CONTRACT_NAME = 'Invalid contract name'
     INVALID_CONTRACT_DESCRIPTION = 'Invalid contract description'
     INVALID_CONTRACT_EXPIRY = 'Invalid contract UNIX expiry date'
