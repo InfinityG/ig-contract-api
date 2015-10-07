@@ -4,22 +4,22 @@
            ng-click="collapsed = !collapsed"></i>
 
         <h3 class="panel-title">
-            {{contact.first_name + ' ' + contact.last_name}}</span>
+            {{contact.user.first_name + ' ' + contact.user.last_name}}</span>
         </h3>
 
     </div>
     <div collapse="collapsed">
         <div class="panel-body">
 
-            <p><b>Name: </b>{{contact.first_name}}</p>
+            <p><b>Name: </b>{{contact.user.first_name}}</p>
 
-            <p><b>Surname: </b>{{contact.last_name}}</p>
+            <p><b>Surname: </b>{{contact.user.last_name}}</p>
 
-            <p><b>Username: </b>{{contact.username}}</p>
+            <p><b>Username: </b>{{contact.user.username}}</p>
 
             <p><b>Public key: </b>
 
-                <input type="text" class="form-control" ng-model="contact.public_key" disabled />
+                <input type="text" class="form-control" ng-model="contact.user.public_key" disabled />
             </p>
 
         </div>

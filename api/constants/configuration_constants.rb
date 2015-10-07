@@ -5,32 +5,14 @@ module ConfigurationConstants
     DEVELOPMENT = {
         :host => '0.0.0.0',
         :port => 8002,
-        :api_auth_token => '7b2ebe64dc9149ac8a9e923bf2a6b233',
-        :shared_aes_key => 'Pomro4n7AEng/jdeOCucRcOnXok/HKgY/hzLQyuL1xM=',
-        :id_provider_public_ecdsa_key => 'A1blXQkf5AH7pfNNx2MIwNXytCyV/wxmQOt7ZGgccvVQ',
-        :mongo_host => 'localhost',
-        :mongo_port => 27017,
-        :mongo_db => 'ig-contracts',
-        :logger_file => 'app_log.log',
-        :logger_age => 10,
-        :logger_size => 1024000,
-        :default_request_timeout => 60,
-        :allowed_origin => 'http://localhost:63342'
-        # :static => true,
-        # :public_folder => 'docs'
-    }
-
-    TEST = {
-        :host => '0.0.0.0',
-        :port => 8002,
-        # :ssl_cert_path => '/etc/ssl/certs/server.crt',
-        # :ssl_private_key_path => '/etc/ssl/private/server.key',
-        :api_auth_token => '7b2ebe64dc9149ac8a9e923bf2a6b233',
-        :shared_aes_key => 'Pomro4n7AEng/jdeOCucRcOnXok/HKgY/hzLQyuL1xM=',
-        :id_provider_public_ecdsa_key => 'A1blXQkf5AH7pfNNx2MIwNXytCyV/wxmQOt7ZGgccvVQ',
-        :mongo_host => 'localhost',
-        :mongo_port => 27017,
-        :mongo_db => 'ig-contracts',
+        :api_auth_token => ENV['API_AUTH_TOKEN'],
+        :shared_aes_key => ENV['SHARED_AES_KEY'],
+        :id_provider_public_ecdsa_key => ENV['ID_IO_PUBLIC_KEY'],
+        :mongo_replicated => ENV['MONGO_REPLICATED'],
+        :mongo_host_1 => ENV['MONGO_HOST_1'],
+        :mongo_host_2 => nil,
+        :mongo_host_3 => nil,
+        :mongo_db => ENV['MONGO_DB'],
         :logger_file => 'app_log.log',
         :logger_age => 10,
         :logger_size => 1024000,
@@ -38,26 +20,40 @@ module ConfigurationConstants
         :allowed_origin => '*'
     }
 
-    # PRODUCTION = {
-    #     :host => '10.0.0.208',
-    #     :port => 8002,
-    #     :ssl_cert_path => '/etc/ssl/certs/server.crt',
-    #     :ssl_private_key_path => '/etc/ssl/private/server.key',
-    #     :api_auth_token => 'f20298dddd5142be9616b15baee5da9c',
-    #     :admin_username => 'admin',
-    #     :admin_password => '12billyBob!*/',
-    #     :mongo_host => '10.0.1.46',
-    #     :mongo_port => 27017,
-    #     :mongo_db => 'contracts',
-    #     :mongo_db_user => 'contractsUser',
-    #     :mongo_db_password => 'g4f1jh4g1234!',
-    #     :logger_file => 'app_log.log',
-    #     :logger_age => 10,
-    #     :logger_size => 1024000,
-    #     :default_request_timeout => 60,
-    #     :allowed_origin => 'localhost'
-    #     # :static => true,
-    #     # :public_folder => 'docs'
-    # }
+    TEST = {
+        :host => '0.0.0.0',
+        :port => 8002,
+        :api_auth_token => ENV['API_AUTH_TOKEN'],
+        :shared_aes_key => ENV['SHARED_AES_KEY'],
+        :id_provider_public_ecdsa_key => ENV['ID_IO_PUBLIC_KEY'],
+        :mongo_replicated => ENV['MONGO_REPLICATED'],
+        :mongo_host_1 => ENV['MONGO_HOST_1'],
+        :mongo_host_2 => ENV['MONGO_HOST_2'],
+        :mongo_host_3 => ENV['MONGO_HOST_3'],
+        :mongo_db => ENV['MONGO_DB'],
+        :logger_file => 'app_log.log',
+        :logger_age => 10,
+        :logger_size => 1024000,
+        :default_request_timeout => 60,
+        :allowed_origin => '*'
+    }
+
+    PRODUCTION = {
+        :host => '0.0.0.0',
+        :port => 8002,
+        :api_auth_token => ENV['API_AUTH_TOKEN'],
+        :shared_aes_key => ENV['SHARED_AES_KEY'],
+        :id_provider_public_ecdsa_key => ENV['ID_IO_PUBLIC_KEY'],
+        :mongo_replicated => ENV['MONGO_REPLICATED'],
+        :mongo_host_1 => ENV['MONGO_HOST_1'],
+        :mongo_host_2 => ENV['MONGO_HOST_2'],
+        :mongo_host_3 => ENV['MONGO_HOST_3'],
+        :mongo_db => ENV['MONGO_DB'],
+        :logger_file => 'app_log.log',
+        :logger_age => 10,
+        :logger_size => 1024000,
+        :default_request_timeout => 60,
+        :allowed_origin => '*'
+    }
   end
 end

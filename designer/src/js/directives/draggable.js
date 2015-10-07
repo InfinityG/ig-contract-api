@@ -17,6 +17,10 @@
                     e.dataTransfer.setData('DirectiveId', this.parentNode.nodeName);
                     e.dataTransfer.setData('ParentId', this.parentNode.parentNode.id);
 
+                    console.debug('ElementId: ' + this.id);
+                    console.debug('DirectiveId: ' + this.parentNode.nodeName);
+                    console.debug('ParentId: ' + this.parentNode.parentNode.id);
+
                     this.classList.add('drag');
                     return false;
                 },

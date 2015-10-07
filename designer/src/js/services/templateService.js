@@ -80,6 +80,19 @@
                 elementId = conditionId + '_' + item.id + model.external_id;
             }
 
+            if (item.id.indexOf('Cont:') > -1) {    // id format: eg 'SigCond:1_HookTrig:1'
+
+                // is this contact being dropped in a condition or a trigger?
+                var condition = factory.searchParentTree(target, 'Cond:');
+                var trigger = factory.searchParentTree(target, 'Trig:');
+
+                console.debug('Detected parent condition id: ' + (condition != null ? condition.id : ''));
+                console.debug('Detected parent trigger id: ' + (trigger != null ? trigger.id : ''));
+
+                var conditionModelId = conditionId.split(':')[1];
+
+            }
+
             //add to the index to enable dictionary access from controllers
             modelIndexService.addElementToModelIndex(elementId, model);
             var element = factory.createDirectiveElement(directiveId, elementId);

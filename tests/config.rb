@@ -1,1 +1,1 @@
-CONTRACT_API_URI = 'http://localhost:9000'
+CONTRACT_API_URI = 'http://localhost:8002'

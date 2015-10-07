@@ -18,12 +18,19 @@
 
             <br/>
 
-            <div class="input-group">
-                <div class="input-group-btn">
-                <input type="text" class="form-control" aria-label="..."
-                       ng-model="transFields.to[transaction.meta.to]">
-                 </div>
+            <!--<div class="input-group">-->
+                <!--<div class="input-group-btn">-->
+                <!--<input type="text" class="form-control" aria-label="..."-->
+                       <!--ng-model="transFields.to[transaction.meta.to]">-->
+                    <!--<div class="condition-inner" id="ContactPanel" droppable></div>-->
+                 <!--</div>-->
 
+            <!--</div>-->
+
+            <!-- drop contacts here depending on the sub_type -->
+            <div ng-show="trigger.meta.sub_type != 'all'">
+                <p>Contact signatures (drag from contacts panel):</p>
+                <div class="condition-inner" id="ContactPanel" droppable></div>
             </div>
 
             <br/>

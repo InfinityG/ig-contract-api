@@ -6,8 +6,8 @@
 
             <accordion close-others="true">
                 <accordion-group heading="My Contacts" is-open="true" is-disabled="false">
-                    <div id="Contacts">
-                        <div ng-repeat="contact in contacts">
+                    <div ng-repeat="contact in contacts" ng-if="contact.status == 'connected'">
+                        <div id="Contact">
                             <contr-contact contact-id="Cont:{{contact.id}}"></contr-contact>
                         </div>
                     </div>
@@ -42,7 +42,8 @@
                         template.description != '' &&
                         template.conditions.length > 0 &&
                         template.conditions[0].trigger != null"
-                    class="btn btn-success btn-lg pull-right" ng-click="saveContract()">Save</button>
+                    class="btn btn-success btn-lg pull-right" ng-click="saveContract()">Save
+            </button>
 
             <div class="row modelOutput" ng-show="showJson">
                 <pre class="stringifiedModel">{{stringifiedModel.json}}</pre>
@@ -56,10 +57,10 @@
     </div>
 
     <!--<div class="row modelOutput" ng-show="showJson">-->
-        <!--<div class="col-md-4"></div>-->
-        <!--<div class="col-md-8">-->
-            <!--<pre class="stringifiedModel">{{stringifiedModel.json}}</pre>-->
-        <!--</div>-->
+    <!--<div class="col-md-4"></div>-->
+    <!--<div class="col-md-8">-->
+    <!--<pre class="stringifiedModel">{{stringifiedModel.json}}</pre>-->
+    <!--</div>-->
     <!--</div>-->
 
 </div>
