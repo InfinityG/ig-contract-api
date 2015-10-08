@@ -1,9 +1,78 @@
+require_relative '../../../tests/helpers/random_strings'
 require_relative '../../../tests/config'
 require_relative '../../../api/utils/rest_util'
 require_relative '../../../tests/features/step_definitions/step_helper'
 
 require 'json'
 require 'minitest'
+
+Before do
+  register_user
+  set_trusted_domain
+end
+
+def register_user
+  @first_name = 'Johnny'
+  @last_name = RandomStrings.generate_alpha 15
+  @username = 'johnny_' + @last_name + '@test.com'
+  @password = 'passWOrd1!'
+  @encoded_public_key = 'Ag7PunGy2BmnAi+PGE4/Dm9nCg1URv8wLZwSOggyfmAn' # already base64 encoded
+  @encoded_secret_key = 'gCrHtl8VVWs6EuJLy7vPqVdBZWzRAR9ZCjIRRpoWvME=' # already base64 encoded
+  @email = @email = "#{@first_name}_#{@last_name}@test.com"
+  @mobile_number = '+21234567890'
+  @meta = 'iwut748324'
+
+  payload = {
+      :first_name => @first_name,
+      :last_name => @last_name,
+      :username => @username,
+      :password => @password,
+      :public_key => @encoded_public_key,
+      :email => @email,
+      :mobile_number => @mobile_number,
+      :meta => @meta
+  }.to_json
+
+  puts "Create user payload: #{payload}"
+
+  result = RestUtil.new.execute_post(IDENTITY_API_URI + '/users', nil, payload)
+  puts "Create user result: #{result.response_body}"
+
+  @user_id = JSON.parse(result.response_body, :symbolize_names => true)
+end
+
+def set_trusted_domain
+  @trusted_domain = 'accord.ly'
+  @encoded_domain_aes_key = 'ky4xgi0+KvLYmVp1J5akqkJkv8z5rJsHTo9FcBc0hgo='
+
+  payload = {
+      :domain => @trusted_domain,
+      :aes_key => @encoded_domain_aes_key,
+      :login_uri => "https://#{@trusted_domain}/login"
+  }.to_json
+
+  puts "Create trusted domain payload: #{payload}"
+
+  result = RestUtil.new.execute_post(IDENTITY_API_URI + '/trusts', IDENTITY_API_AUTH_KEY, payload)
+  puts "Create trusted domain result: #{result.response_body}"
+
+  assert result.response_code == 200
+end
+
+def authenticate_on_id_io
+  payload = {
+      :username => @username,
+      :password => @password,
+      :domain => @trusted_domain
+  }.to_json
+
+  puts "Login payload: #{payload}"
+
+  result = RestUtil.new.execute_post(IDENTITY_API_URI + '/login', nil, payload)
+  puts "Login result: #{result.response_body}"
+
+  @id_io_auth = result.response_body
+end
 
 Given(/^I have the following participants:$/) do |table|
   @step_helper = StepHelper.new
@@ -108,11 +177,13 @@ And(/^the contract expiry date is (\d+) days from now$/) do |arg|
 end
 
 And(/^I have a valid auth token on the API$/) do
-   auth = @step_helper.create_canned_auth_payload
+  authenticate_on_id_io
 
-   rest_client = RestUtil.new
-   result = rest_client.execute_post "#{CONTRACT_API_URI}/tokens", '', auth
-   parsed_result = JSON.parse(result.response_body, :symbolize_names => true)
+  # auth = @step_helper.create_canned_auth_payload
+
+  rest_client = RestUtil.new
+  result = rest_client.execute_post "#{CONTRACT_API_URI}/tokens", '', @id_io_auth
+  parsed_result = JSON.parse(result.response_body, :symbolize_names => true)
 
   @auth_token = parsed_result[:token]
 end
