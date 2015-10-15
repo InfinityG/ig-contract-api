@@ -169,7 +169,10 @@ class ContractRepository
 
     if condition[:trigger][:webhooks] != nil && condition[:trigger][:webhooks].count > 0
       condition[:trigger][:webhooks].each do |webhook|
-        webhook_arr << Webhook.new(:uri => webhook[:uri], :headers => webhook[:headers], :body => webhook[:body])
+        webhook_arr << Webhook.new(:uri => webhook[:uri],
+                                   :method => webhook[:method],
+                                   :headers => webhook[:headers],
+                                   :body => webhook[:body])
       end
     end
     webhook_arr

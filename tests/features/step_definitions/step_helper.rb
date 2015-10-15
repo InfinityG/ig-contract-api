@@ -71,8 +71,12 @@ class StepHelper
     SignatureBuilder.new.with_value(signature).with_digest(encoded_digest).build
   end
 
-  def create_webhook(uri)
-    WebhookBuilder.new.with_uri(uri).build
+  def create_webhook(uri, method='POST', headers=[], payload=nil)
+    WebhookBuilder.new.with_uri(uri)
+        .with_headers(headers)
+        .with_method(method)
+        .with_payload(payload)
+        .build
   end
 
   def create_transaction(from_participant, to_participant, currency, amount)

@@ -33,9 +33,9 @@ class ContractValidator
     errors = []
 
     #fields
-    errors.push INVALID_CONTRACT_NAME unless validate_string data[:name]
-    errors.push INVALID_CONTRACT_DESCRIPTION unless validate_string data[:description]
-    errors.push INVALID_CONTRACT_EXPIRY unless validate_unix_datetime data[:expires]
+    errors.push INVALID_CONTRACT_NAME unless GeneralValidator.validate_string data[:name]
+    errors.push INVALID_CONTRACT_DESCRIPTION unless GeneralValidator.validate_string data[:description]
+    errors.push INVALID_CONTRACT_EXPIRY unless GeneralValidator.validate_unix_datetime data[:expires]
 
     #arrays
     conditions_result = validate_new_conditions data[:conditions], data[:participants]
@@ -55,8 +55,8 @@ class ContractValidator
     errors = []
 
     # errors.push 'Invalid signature participant_id' unless validate_hex signature[:participant_id]
-    errors.push INVALID_SIGNATURE_VALUE unless validate_string signature[:value]
-    errors.push INVALID_DIGEST_VALUE unless validate_string signature[:digest]
+    errors.push INVALID_SIGNATURE_VALUE unless GeneralValidator.validate_string signature[:value]
+    errors.push INVALID_DIGEST_VALUE unless GeneralValidator.validate_string signature[:digest]
 
     raise ValidationError, {:valid => false, :errors => errors}.to_json if errors.count > 0
   end
@@ -66,10 +66,10 @@ class ContractValidator
     result = []
 
     conditions.each do |condition|
-      result << INVALID_CONDITION_NAME unless validate_string condition[:name]
-      result << INVALID_CONDITION_DESCRIPTION unless validate_string condition[:description]
-      result << INVALID_CONDITION_SEQUENCE unless validate_integer condition[:sequence_number]
-      result << INVALID_CONDITION_EXPIRY unless validate_unix_datetime condition[:expires]
+      result << INVALID_CONDITION_NAME unless GeneralValidator.validate_string condition[:name]
+      result << INVALID_CONDITION_DESCRIPTION unless GeneralValidator.validate_string condition[:description]
+      result << INVALID_CONDITION_SEQUENCE unless GeneralValidator.validate_integer condition[:sequence_number]
+      result << INVALID_CONDITION_EXPIRY unless GeneralValidator.validate_unix_datetime condition[:expires]
 
       signature_result = validate_new_condition_signatures condition[:signatures], participants
       trigger_result = validate_trigger condition[:trigger]
@@ -88,7 +88,7 @@ class ContractValidator
     result.concat validate_new_signatures signatures
 
     signatures.each do |signature|
-      result << INVALID_PARTICIPANT_CONTRACT_SIGNATURE unless validate_string signature[:participant_external_id].to_s
+      result << INVALID_PARTICIPANT_CONTRACT_SIGNATURE unless GeneralValidator.validate_string signature[:participant_external_id].to_s
     end if signatures != nil
 
     result
@@ -101,8 +101,8 @@ class ContractValidator
     result.concat validate_new_signatures signatures
 
     signatures.each do |signature|
-      result << INVALID_PARTICIPANT_CONDITION_SIGNATURE unless validate_string signature[:participant_external_id].to_s
-      result << INVALID_SIGNATURE_TYPE_CONDITION unless validate_string signature[:type].to_s
+      result << INVALID_PARTICIPANT_CONDITION_SIGNATURE unless GeneralValidator.validate_string signature[:participant_external_id].to_s
+      result << INVALID_SIGNATURE_TYPE_CONDITION unless GeneralValidator.validate_string signature[:type].to_s
 
       if signature[:type].to_s == SHARED_SECRET
         result.concat(validate_delegated_participant(signature[:delegated_by_external_id], participants))
@@ -148,13 +148,13 @@ class ContractValidator
     result << 'No participants found!' if participants == nil
 
     participants.each do |participant|
-      result << INVALID_PARTICIPANT_EXTERNAL_ID unless validate_string participant[:external_id].to_s
-      result << INVALID_PARTICIPANT_PUBLIC_KEY unless validate_string participant[:public_key]
+      result << INVALID_PARTICIPANT_EXTERNAL_ID unless GeneralValidator.validate_string participant[:external_id].to_s
+      result << INVALID_PARTICIPANT_PUBLIC_KEY unless GeneralValidator.validate_string participant[:public_key]
 
       (participant[:roles] == nil || participant[:roles].count == 0) ?
           result << INVALID_PARTICIPANT_ROLE :
           participant[:roles].each do |role|
-            result << INVALID_PARTICIPANT_ROLE unless validate_string role
+            result << INVALID_PARTICIPANT_ROLE unless GeneralValidator.validate_string role
             result << INVALID_PARTICIPANT_ROLE unless ROLES.detect do |item|
               role == item
             end
@@ -190,10 +190,10 @@ class ContractValidator
     result = []
 
     transactions.each do |transaction|
-      result << INVALID_TRANSACTION_FROM_PARTICIPANT unless validate_string transaction[:from_participant_external_id]
-      result << INVALID_TRANSACTION_TO_PARTICIPANT unless validate_string transaction[:to_participant_external_id]
-      result << INVALID_TRANSACTION_AMOUNT unless validate_integer transaction[:amount]
-      result << INVALID_TRANSACTION_CURRENCY unless validate_string transaction[:currency]
+      result << INVALID_TRANSACTION_FROM_PARTICIPANT unless GeneralValidator.validate_string transaction[:from_participant_external_id]
+      result << INVALID_TRANSACTION_TO_PARTICIPANT unless GeneralValidator.validate_string transaction[:to_participant_external_id]
+      result << INVALID_TRANSACTION_AMOUNT unless GeneralValidator.validate_integer transaction[:amount]
+      result << INVALID_TRANSACTION_CURRENCY unless GeneralValidator.validate_string transaction[:currency]
     end if transactions != nil
 
     result
@@ -204,40 +204,10 @@ class ContractValidator
     result = []
 
     webhooks.each do |webhook|
-      result << INVALID_WEBHOOK unless validate_string webhook[:uri]
+      result << INVALID_WEBHOOK unless GeneralValidator.validate_string webhook[:uri]
     end
 
     result
   end
 
-  private
-  def validate_string(value)
-    value.to_s != ''
-  end
-
-  private
-  def validate_integer(value)
-    Float(value) != nil rescue false
-  end
-
-  private
-  def validate_uuid(value)
-    value =~ /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-  end
-
-  private
-  def validate_hex(value)
-    value =~ /^[a-f\d]{24}$/i
-  end
-
-  private
-  def validate_unix_datetime(value)
-    begin
-      now = Date.today.to_time
-      time_to_validate = Time.at value
-      return time_to_validate > now
-    rescue
-      return false
-    end
-  end
 end
