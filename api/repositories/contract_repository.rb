@@ -24,6 +24,10 @@ class ContractRepository
     Contract.all
   end
 
+  def retrieve_contracts_lean
+    Contract.all :fields => ['id', 'name', 'conditions.id']
+  end
+
   def retrieve_contract(contract_id)
     Contract.find contract_id
   end
@@ -32,8 +36,12 @@ class ContractRepository
     Contract.all :status => status
   end
 
-  def retrieve_contracts_by_user(user_id)
-    Contract.all :user_id => user_id
+  def retrieve_contracts_by_user(user_id, lean = false)
+    if lean
+      Contract.all :user_id => user_id, :fields => ['id', 'name', 'conditions.id', 'conditions.name']
+    else
+      Contract.all :user_id => user_id
+    end
   end
 
   def retrieve_condition(condition_id)
@@ -91,6 +99,12 @@ class ContractRepository
   #   end
   # end
 
+  def update_signature(id, signature_value, digest)
+    Signature.set({:id => id},
+                  :value => signature_value,
+                  :digest => digest)
+  end
+
   # Helpers
 
   private
@@ -100,8 +114,7 @@ class ContractRepository
     signatures.each do |signature|
       participant_id = get_participant_id participants_arr, signature[:participant_external_id]
 
-      signature_arr << Signature.new(participant_id: participant_id,
-                                     value: signature[:value])
+      signature_arr << Signature.new(participant_id: participant_id, value: '', digest: '')
     end
 
     signature_arr
@@ -145,7 +158,9 @@ class ContractRepository
       delegated_by_participant_id = get_participant_id participants_arr, delegated_by_id
       signature_arr << Signature.new(:participant_id => participant_id.to_s,
                                      :delegated_by_id => delegated_by_participant_id.to_s,
-                                     :type => type)
+                                     :type => type,
+                                     :value => '',
+                                     :digest => '')
     end
 
     signature_arr

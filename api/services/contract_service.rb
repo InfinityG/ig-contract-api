@@ -34,10 +34,14 @@ class ContractService
 
   def get_contracts
     @contract_repository.retrieve_contracts
+    end
+
+  def get_contracts_lean
+    @contract_repository.retrieve_contracts_lean
   end
 
-  def get_contracts_by_user(user_id)
-    @contract_repository.retrieve_contracts_by_user(user_id)
+  def get_contracts_by_user(user_id, lean = false)
+    @contract_repository.retrieve_contracts_by_user(user_id, lean)
   end
 
   def sign_contract(contract_id, signature_id, signature_value, digest)
@@ -150,6 +154,9 @@ class ContractService
 
   private
   def update_ecdsa_signature(signature, signature_value, digest)
+    raise ContractError, SIGNATURE_ALREADY_RECORDED % signature.id.to_s if signature.value.to_s != ''
+    # @contract_repository.update_signature(signature.id.to_s, signature_value, digest)
+
     signature.value = signature_value
     signature.digest = digest
     signature.save
@@ -173,10 +180,11 @@ class ContractService
   private
   def confirm_all_condition_signatures(condition)
     condition.signatures.each do |signature|
-      if signature[:value].to_s == '' || signature[:digest].to_s == ''
-        return false
-      end
+      return false if signature[:value].to_s == '' || signature[:digest].to_s == ''
     end
+
+    condition.status = 'complete'
+    condition.save
     true
   end
 end

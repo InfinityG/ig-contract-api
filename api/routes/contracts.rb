@@ -41,8 +41,15 @@ module Sinatra
       end
 
       app.get '/contracts' do
-        # @current_user_id is set in the auth route - this ensures that a user can only see his own contracts
-        result = ContractService.new.get_contracts_by_user @current_user_id
+
+        full = params[:full]
+
+        # always default to a lean contract array (ids and names only) unless specifically asked for full
+        if full != nil
+          result = ContractService.new.get_contracts_by_user @current_user_id
+        else
+          result = ContractService.new.get_contracts_by_user @current_user_id, true
+        end
 
         if result != nil
           status 200

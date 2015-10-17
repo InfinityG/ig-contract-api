@@ -237,7 +237,7 @@ Given(/^I have an existing contract$/) do
       | participant_id |
       | 2           |
     And the contract expiry date is 2 days from now
-    And I have 1 conditions
+    And I have 2 conditions
     And condition 1 has the following signatures:
       | type  | participant_id | delegated_by |
       | ecdsa | 2              |              |
@@ -246,7 +246,15 @@ Given(/^I have an existing contract$/) do
       | uri                |
       | www.mywebhook1.com |
       | www.mywebhook2.com |
-    And I have a valid auth token on the API
+    And condition 2 has the following signatures:
+      | type  | participant_id | delegated_by |
+      | ecdsa | 2              |              |
+    And condition 2 has an expiry of 3 days from now
+    And condition 2 has the following webhooks:
+      | uri                |
+      | www.mywebhook1.com |
+      | www.mywebhook2.com |
+And I have a valid auth token on the API
     And I POST the contract to the API
   '
 end
@@ -256,7 +264,7 @@ When(/^I sign the contract$/) do
 end
 
 And(/^The contract state is "([^"]*)"/) do |arg|
-  if arg == 'active'
+  if arg.to_s == 'active'
     sign_contract
   end
 end
@@ -280,13 +288,18 @@ When(/^I sign a condition$/) do
   secret_key = @all_keys_hash[signer_id][:sk]
 
   # create the signature payload
-  signature = @step_helper.create_updated_condition_signature contract.to_json, secret_key
+  @signature = @step_helper.create_updated_condition_signature contract.to_json, secret_key
 
   # execute the request: /contracts/{id}/conditions/{id}/signatures/{id}
   rest_client = RestUtil.new
-  @result = rest_client.execute_post "#{CONTRACT_API_URI}/contracts/#{contract_id}/conditions/#{condition_id}/signatures/#{signature_id}",
-                                     @auth_token,
-                                     signature.to_json
+  @signature_uri = "#{CONTRACT_API_URI}/contracts/#{contract_id}/conditions/#{condition_id}/signatures/#{signature_id}"
+  @result = rest_client.execute_post @signature_uri, @auth_token, @signature.to_json
+
+end
+
+And(/^I attempt to re-sign a condition$/) do
+  rest_client = RestUtil.new
+  @result = rest_client.execute_post @signature_uri, @auth_token, @signature.to_json
 
 end
 
@@ -311,7 +324,7 @@ def sign_contract
 
   # execute the request: /contracts/{id}/signatures/{id}
   rest_client = RestUtil.new
-  rest_client.execute_post "#{CONTRACT_API_URI}/contracts/#{contract_id}/signatures/#{signature_id}", @auth_token, signature.to_json
+  result = rest_client.execute_post "#{CONTRACT_API_URI}/contracts/#{contract_id}/signatures/#{signature_id}", @auth_token, signature.to_json
 end
 
 private
@@ -320,4 +333,13 @@ def get_unix_date(value)
 end
 
 
+And(/^I retrieve a list of ([^"]*) contracts$/) do |arg|
+  rest_client = RestUtil.new
 
+  if arg.to_s == 'basic'
+    @result = rest_client.execute_get "#{CONTRACT_API_URI}/contracts", @auth_token
+  else
+    @result = rest_client.execute_get "#{CONTRACT_API_URI}/contracts?full=true", @auth_token
+  end
+
+end

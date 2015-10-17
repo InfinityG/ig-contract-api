@@ -7,6 +7,7 @@ module ErrorConstants
     NO_SIGNATURE_FOUND = 'No signature found with id %s'
     NO_PARTICIPANT_FOUND = 'No participant found to validate signature!'
     UNKNOWN_SIGNATURE_TYPE = 'Unknown signature type!'
+    SIGNATURE_ALREADY_RECORDED = 'Signature %s already recorded!'
   end
 
   module ValidationErrors
