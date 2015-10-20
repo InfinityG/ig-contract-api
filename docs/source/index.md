@@ -109,6 +109,10 @@ An object that defines a requirement that must be fulfilled.
     "expires": "",
     "sequence_number": 0,
     "status":"",
+    "sig_mode":"",
+    "sig_threshold":"",
+    "sig_weight":""
+    "signatures":[],
     "trigger":{}
 }
 ```
@@ -121,6 +125,9 @@ An object that defines a requirement that must be fulfilled.
 | expires         | integer | The expiry date of the condition in UNIX format                             |
 | sequence_number | integer | A number representing the order in which conditions are processed           |
 | status          | string  | A string (_pending_ or _complete_) representing the status of the condition |
+| sig_mode        | string  | A string (_fixed_ or _variable_), representing whether a condition will allow further signatures to be added |
+| sig_threshold   | integer | When _sig_mode=variable_, a number representing the number of signatures received before the trigger is initiated |
+| signatures      | array   | An array of [signature](#signature-object) objects |
 | trigger         | hash    | A hash representing a [trigger](#trigger-object) object
 
 ## Participant object

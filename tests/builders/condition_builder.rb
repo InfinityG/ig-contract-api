@@ -40,8 +40,14 @@ class ConditionBuilder
         :description => @description,
         :sequence_number => @sequence_number,
         :signatures => @signature_arr,
+        :sig_mode => @signature_mode,
         :trigger => @trigger,
         :expires => @expires
     }
+  end
+
+  def with_signature_mode(signature_mode)
+    @signature_mode = signature_mode
+    self
   end
 end

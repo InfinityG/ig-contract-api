@@ -95,13 +95,14 @@ class StepHelper
         .build
   end
 
-  def create_condition(trigger, name, description, sequence_number, signatures, expires)
+  def create_condition(trigger, name, description, sequence_number, signatures, signature_mode, expires)
     ConditionBuilder.new
         .with_trigger(trigger)
         .with_name(name)
         .with_description(description)
         .with_sequence_number(sequence_number)
         .with_signatures(signatures)
+        .with_signature_mode(signature_mode)
         .with_expires(expires).build
   end
 

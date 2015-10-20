@@ -7,7 +7,10 @@ module ErrorConstants
     NO_SIGNATURE_FOUND = 'No signature found with id %s'
     NO_PARTICIPANT_FOUND = 'No participant found to validate signature!'
     UNKNOWN_SIGNATURE_TYPE = 'Unknown signature type!'
+    INVALID_SIGNATURE = 'Invalid signature!'
     SIGNATURE_ALREADY_RECORDED = 'Signature %s already recorded!'
+    NO_ORACLE_ON_CONDITION = 'No oracle found on condition!'
+    INVALID_DIGEST = 'Digest does not have the expected value'
   end
 
   module ValidationErrors
@@ -37,9 +40,12 @@ module ErrorConstants
     INVALID_DELEGATED_PARTICIPANT = 'Invalid delegated participant_id for ss_key type signature'
     INVALID_SECRET_THRESHOLD = 'Secret threshold must be greater than 1 in delegated participant wallet'
     INVALID_SECRET_FRAGMENT_LENGTH = 'Secret fragment length must be greater than 1 in delegated participant wallet'
-    INVALID_SIGNATURE_TYPE_CONDITION = 'Invalid signature type for condition'
 
     SIGNATURE_REQUIRED = 'At least 1 signature is required!'
+    INVALID_CONDITION_SIGNATURE_TYPE = 'Invalid signature type for condition'
+    INVALID_CONDITION_SIGNATURE_MODE = "Invalid signature mode for condition. Must be 'fixed' or 'variable'"
+    INVALID_CONDITION_SIGNATURE_COUNT = "Invalid number of signatures in the condition. Check that 'sig_mode' is set to the correct value."
+    INVALID_CONDIITON_SIGNATURE_THRESHOLD = 'Invalid condition signature threshold'
 
     INVALID_PARTICIPANT_EXTERNAL_ID = 'Invalid participant external_id'
     INVALID_PARTICIPANT_PUBLIC_KEY = 'Invalid participant public key'
@@ -48,7 +54,6 @@ module ErrorConstants
     NO_TRIGGER_FOUND = 'No trigger found!'
 
     TRANSACTION_OR_WEBHOOK_IN_TRIGGER = 'At least one transaction or webhook must be present in the trigger!'
-
 
     INVALID_TRANSACTION_FROM_PARTICIPANT = 'Invalid transaction from_participant_external_id'
     INVALID_TRANSACTION_TO_PARTICIPANT = 'Invalid transaction to_participant_external_id'

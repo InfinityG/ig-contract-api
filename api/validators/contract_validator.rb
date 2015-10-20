@@ -70,8 +70,10 @@ class ContractValidator
       result << INVALID_CONDITION_DESCRIPTION unless GeneralValidator.validate_string condition[:description]
       result << INVALID_CONDITION_SEQUENCE unless GeneralValidator.validate_integer condition[:sequence_number]
       result << INVALID_CONDITION_EXPIRY unless GeneralValidator.validate_unix_datetime condition[:expires]
+      result << INVALID_CONDITION_SIGNATURE_MODE unless SIGNATURE_MODES.include? condition[:sig_mode].to_s.downcase
 
-      signature_result = validate_new_condition_signatures condition[:signatures], participants
+      signature_result = validate_new_condition_signatures condition[:sig_mode], condition[:signatures], participants
+
       trigger_result = validate_trigger condition[:trigger]
 
       result.concat signature_result
@@ -95,20 +97,30 @@ class ContractValidator
   end
 
   private
-  def validate_new_condition_signatures(signatures, participants)
+  def validate_new_condition_signatures(sig_mode, signatures, participants)
     result = []
 
-    result.concat validate_new_signatures signatures
+    # If sig_mode='fixed' then the request must contain a fixed number of pre-populated (without signature values and digests)
+    # signatures. If sig_mode='variable', then there should be NO signatures, just an empty array. This is because we expect
+    # new signatures to be posted to the condition with signature values and digests already populated.
+    case sig_mode
+      when SIGNATURE_MODE_FIXED
+        result.concat validate_new_signatures signatures
 
-    signatures.each do |signature|
-      result << INVALID_PARTICIPANT_CONDITION_SIGNATURE unless GeneralValidator.validate_string signature[:participant_external_id].to_s
-      result << INVALID_SIGNATURE_TYPE_CONDITION unless GeneralValidator.validate_string signature[:type].to_s
+        signatures.each do |signature|
+          result << INVALID_PARTICIPANT_CONDITION_SIGNATURE unless GeneralValidator.validate_string signature[:participant_external_id].to_s
+          result << INVALID_CONDITION_SIGNATURE_TYPE unless GeneralValidator.validate_string signature[:type].to_s
 
-      if signature[:type].to_s == SHARED_SECRET
-        result.concat(validate_delegated_participant(signature[:delegated_by_external_id], participants))
-      end
+          if signature[:type].to_s == SHARED_SECRET
+            result.concat(validate_delegated_participant(signature[:delegated_by_external_id], participants))
+          end
 
-    end if signatures != nil
+        end if signatures != nil
+      when SIGNATURE_MODE_VARIABLE
+        result << INVALID_CONDITION_SIGNATURE_COUNT unless (signatures == nil || signatures.length == 0)
+      else
+        # type code here
+    end
 
     result
   end
@@ -154,10 +166,7 @@ class ContractValidator
       (participant[:roles] == nil || participant[:roles].count == 0) ?
           result << INVALID_PARTICIPANT_ROLE :
           participant[:roles].each do |role|
-            result << INVALID_PARTICIPANT_ROLE unless GeneralValidator.validate_string role
-            result << INVALID_PARTICIPANT_ROLE unless ROLES.detect do |item|
-              role == item
-            end
+            result << INVALID_PARTICIPANT_ROLE unless (GeneralValidator.validate_string role && ROLES.include?(role))
           end
 
       #Note: wallet_address and wallet_tag are not required

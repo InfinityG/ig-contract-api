@@ -159,7 +159,7 @@ module Sinatra
         # update
         begin
           status 200 # OK
-          return ContractService.new.sign_condition(contract_id, condition_id, signature_id,
+          return ContractService.new.update_condition_signature(contract_id, condition_id, signature_id,
                                                     signature_value, digest).to_json
         rescue ContractError => e
           status 400

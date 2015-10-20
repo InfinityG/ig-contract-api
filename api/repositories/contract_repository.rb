@@ -25,7 +25,7 @@ class ContractRepository
   end
 
   def retrieve_contracts_lean
-    Contract.all :fields => ['id', 'name', 'conditions.id']
+    Contract.all :fields => ['id', 'name', 'conditions.id', 'conditions.name']
   end
 
   def retrieve_contract(contract_id)
@@ -99,6 +99,18 @@ class ContractRepository
   #   end
   # end
 
+  def create_signature_on_condition(condition, participant_id, type, value, digest)
+    signature = Signature.new(:participant_id => participant_id.to_s,
+                              :delegated_by_id => nil,
+                              :type => type,
+                              :value => value,
+                              :digest => digest)
+    condition.signatures << signature
+    condition.save
+
+    signature
+  end
+
   def update_signature(id, signature_value, digest)
     Signature.set({:id => id},
                   :value => signature_value,
@@ -137,6 +149,9 @@ class ContractRepository
                              sequence_number: condition[:sequence_number],
                              expires: condition[:expires],
                              status: 'pending',
+                             sig_mode: condition[:sig_mode],
+                             sig_threshold: condition[:sig_threshold],
+                             sig_weight: condition[:sig_weight],
                              signatures: signature_arr,
                              trigger: trigger)
 
