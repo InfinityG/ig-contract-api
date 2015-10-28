@@ -138,7 +138,46 @@ module Sinatra
         status 404 # not found
       end
 
-      # Sign a condition
+      # Create a condition signature
+      app.post '/contracts/:contract_id/conditions/:condition_id/signatures' do
+
+        contract_id = params[:contract_id]
+        condition_id = params[:condition_id]
+
+        # parse
+        data = begin
+          JSON.parse(request.body.read, :symbolize_names => true)
+        rescue
+          status 400
+          return 'Unable to parse JSON!'.to_json
+        end
+
+        # validate
+        begin
+          ContractValidator.new.validate_new_signature data
+        rescue ValidationError => e
+          status 400 # bad request
+          return e.message
+        end
+
+        signature_type = data[:type]
+        signature_value = data[:value]
+        digest = data[:digest]
+
+        # update
+        begin
+          status 200 # OK
+          return ContractService.new.create_condition_signature(contract_id, condition_id, signature_type,
+                                                    signature_value, digest).to_json
+        rescue ContractError => e
+          status 400
+          return e.message.to_json
+        end if (contract_id.to_s != '') && (condition_id.to_s != '')
+
+        status 404 # not found
+      end
+
+      # Update a condition signature
       app.post '/contracts/:contract_id/conditions/:condition_id/signatures/:signature_id' do
 
         contract_id = params[:contract_id]

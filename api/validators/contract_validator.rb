@@ -19,7 +19,11 @@ class ContractValidator
     else
       #fields
       errors.push INVALID_EXTERNAL_USER_ID unless GeneralValidator.validate_string data[:id]
-      errors.push INVALID_EMAIL unless GeneralValidator.validate_email data[:email]
+
+      unless GeneralValidator.validate_email data[:email]
+        errors.push INVALID_EMAIL
+      end if data[:email].to_s != ''
+
       errors.push INVALID_FIRST_NAME unless GeneralValidator.validate_string data[:first_name]
       errors.push INVALID_LAST_NAME unless GeneralValidator.validate_string data[:last_name]
       errors.push INVALID_USERNAME unless GeneralValidator.validate_string data[:username]
@@ -57,6 +61,18 @@ class ContractValidator
     # errors.push 'Invalid signature participant_id' unless validate_hex signature[:participant_id]
     errors.push INVALID_SIGNATURE_VALUE unless GeneralValidator.validate_string signature[:value]
     errors.push INVALID_DIGEST_VALUE unless GeneralValidator.validate_string signature[:digest]
+
+    raise ValidationError, {:valid => false, :errors => errors}.to_json if errors.count > 0
+    end
+
+  def validate_new_signature(signature)
+    errors = []
+
+    # errors.push 'Invalid signature participant_id' unless validate_hex signature[:participant_id]
+    errors << INVALID_PARTICIPANT_CONDITION_SIGNATURE unless GeneralValidator.validate_string signature[:participant_external_id].to_s
+    errors << INVALID_CONDITION_SIGNATURE_TYPE unless GeneralValidator.validate_string signature[:type].to_s
+    errors << INVALID_SIGNATURE_VALUE unless GeneralValidator.validate_string signature[:value]
+    errors << INVALID_DIGEST_VALUE unless GeneralValidator.validate_string signature[:digest]
 
     raise ValidationError, {:valid => false, :errors => errors}.to_json if errors.count > 0
   end
@@ -100,11 +116,11 @@ class ContractValidator
   def validate_new_condition_signatures(sig_mode, signatures, participants)
     result = []
 
-    # If sig_mode='fixed' then the request must contain a fixed number of pre-populated (without signature values and digests)
-    # signatures. If sig_mode='variable', then there should be NO signatures, just an empty array. This is because we expect
+    # If sig_mode='static' then the request must contain a fixed number of pre-populated (without signature values and digests)
+    # signatures. If sig_mode='dynamic', then there should be NO signatures, just an empty array. This is because we expect
     # new signatures to be posted to the condition with signature values and digests already populated.
     case sig_mode
-      when SIGNATURE_MODE_FIXED
+      when SIGNATURE_MODE_STATIC
         result.concat validate_new_signatures signatures
 
         signatures.each do |signature|
@@ -116,7 +132,7 @@ class ContractValidator
           end
 
         end if signatures != nil
-      when SIGNATURE_MODE_VARIABLE
+      when SIGNATURE_MODE_DYNAMIC
         result << INVALID_CONDITION_SIGNATURE_COUNT unless (signatures == nil || signatures.length == 0)
       else
         # type code here

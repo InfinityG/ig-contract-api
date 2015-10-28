@@ -2,7 +2,7 @@ Feature: Contract creation
   Should be able to create a new contract on the API
 
   Scenario: Create new contract with 4 participants (oracle, initiator, sender, receiver), 1 ecdsa signature and 1 condition.
-  Condition mode is FIXED. Condition trigger has a single webhook and no transactions.
+  Condition signature mode is STATIC. Condition trigger has a single webhook and no transactions.
     Given I have the following participants:
       | external_id | role_types |
       | 1           | initiator  |
@@ -18,7 +18,7 @@ Feature: Contract creation
       | 2               |
     And the contract expiry date is 2 days from now
     And I have 1 conditions
-    And condition 1 signature mode is fixed
+    And condition 1 signature mode is static
     And condition 1 has the following signatures:
       | type  | participant_id | delegated_by |
       | ecdsa | 2              |              |
@@ -32,7 +32,7 @@ Feature: Contract creation
     Then the API should respond with a 200 response code
 
   Scenario: Create new contract with 3 participants (initiator and sender are same participant), 1 ecdsa signature and 1 condition.
-  Condition mode is VARIABLE. No wallets.
+  Condition signature mode is DYNAMIC. No wallets.
     Given I have the following participants:
       | external_id | role_types        |
       | 1           | initiator, sender |
@@ -43,7 +43,8 @@ Feature: Contract creation
       | 2               |
     And the contract expiry date is 2 days from now
     And I have 1 conditions
-    And condition 1 signature mode is variable
+    And condition 1 signature mode is dynamic
+    And condition 1 signature threshold is 1
     And condition 1 has an expiry of 3 days from now
     And condition 1 has the following webhooks:
       | uri                |
@@ -54,7 +55,7 @@ Feature: Contract creation
     Then the API should respond with a 200 response code
 
   Scenario: Create new contract with 3 participants (initiator and sender are the same participant).
-  Condition mode is FIXED. Condition has a single transaction with an ecdsa signature.
+  Condition signature mode is STATIC. Condition has a single transaction with an ecdsa signature.
     Given I have the following participants:
       | external_id | role_types        |
       | 1           | initiator,sender  |
@@ -69,7 +70,7 @@ Feature: Contract creation
       | 2               |
     And the contract expiry date is 2 days from now
     And I have 1 conditions
-    And condition 1 signature mode is fixed
+    And condition 1 signature mode is static
     And condition 1 has the following signatures:
       | type  | participant_id | delegated_by |
       | ecdsa | 2              |              |
@@ -82,7 +83,7 @@ Feature: Contract creation
     Then the API should respond with a 200 response code
 
   Scenario: Create new contract with 3 participants (initiator and sender are the same participant).
-  Condition mode is FIXED. Condition has a single transaction with ss_key signature.
+  Condition signature mode is STATIC. Condition has a single transaction with ss_key signature.
     Given I have the following participants:
       | external_id | role_types        |
       | 1           | initiator,sender  |
@@ -97,7 +98,7 @@ Feature: Contract creation
       | 2               |
     And the contract expiry date is 2 days from now
     And I have 1 conditions
-    And condition 1 signature mode is fixed
+    And condition 1 signature mode is static
     And condition 1 has the following signatures:
       | type   | participant_id | delegated_by |
       | ss_key | 2              | 1            |

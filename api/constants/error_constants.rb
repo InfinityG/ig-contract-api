@@ -43,7 +43,7 @@ module ErrorConstants
 
     SIGNATURE_REQUIRED = 'At least 1 signature is required!'
     INVALID_CONDITION_SIGNATURE_TYPE = 'Invalid signature type for condition'
-    INVALID_CONDITION_SIGNATURE_MODE = "Invalid signature mode for condition. Must be 'fixed' or 'variable'"
+    INVALID_CONDITION_SIGNATURE_MODE = "Invalid signature mode for condition. Must be 'static' or 'dynamic'"
     INVALID_CONDITION_SIGNATURE_COUNT = "Invalid number of signatures in the condition. Check that 'sig_mode' is set to the correct value."
     INVALID_CONDIITON_SIGNATURE_THRESHOLD = 'Invalid condition signature threshold'
 

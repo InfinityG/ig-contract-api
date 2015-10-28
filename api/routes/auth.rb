@@ -14,7 +14,8 @@ module Sinatra
 
         if (method == 'OPTIONS') ||
             (method == 'POST' && path == '/users') ||
-            (method == 'POST' && path == '/tokens')
+            (method == 'POST' && path == '/tokens') ||
+            (method == 'GET' && (path.include? '/tokens/'))
           return
         else
           auth_header = env['HTTP_AUTHORIZATION']

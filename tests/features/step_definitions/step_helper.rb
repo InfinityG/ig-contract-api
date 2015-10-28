@@ -55,10 +55,21 @@ class StepHelper
     SignatureBuilder.new.with_value(signature).with_digest(encoded_digest).build
   end
 
-  def create_condition_signature(participant_external_id, type, delegated_by_id)
+  def create_condition_signature(participant_external_id, type, delegated_by_id, data=nil, private_key=nil)
+    encoded_digest = nil
+    value = nil
+
+    if data != nil && private_key != nil
+      ecdsa_util = CryptoUtils::EcdsaUtil.new
+      encoded_digest = HashGenerator.new.generate_hash data
+      value = ecdsa_util.sign encoded_digest, private_key
+    end
+
     SignatureBuilder.new.with_participant_external_id(participant_external_id)
         .with_type(type)
         .with_delegated_by_external_id(delegated_by_id)
+        .with_digest(encoded_digest)
+        .with_value(value)
         .build
   end
 
@@ -95,7 +106,7 @@ class StepHelper
         .build
   end
 
-  def create_condition(trigger, name, description, sequence_number, signatures, signature_mode, expires)
+  def create_condition(trigger, name, description, sequence_number, signatures, signature_mode, signature_threshold, expires)
     ConditionBuilder.new
         .with_trigger(trigger)
         .with_name(name)
@@ -103,7 +114,9 @@ class StepHelper
         .with_sequence_number(sequence_number)
         .with_signatures(signatures)
         .with_signature_mode(signature_mode)
-        .with_expires(expires).build
+        .with_signature_threshold(signature_threshold)
+        .with_expires(expires)
+        .build
   end
 
   def create_contract(name, description, expires, participants, conditions, signatures)

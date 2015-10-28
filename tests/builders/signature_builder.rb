@@ -26,10 +26,18 @@ class SignatureBuilder
   end
 
   def build
-    return {:value => @value, :digest => @digest} if @value != nil || @digest != nil
+    # return {:value => @value, :digest => @digest} if @value != nil || @digest != nil
+    #
+    #   {:participant_external_id => @participant_external_id, :type => @type,
+    #  :delegated_by_external_id => @delegated_by_external_id}
 
-      {:participant_external_id => @participant_external_id, :type => @type,
-     :delegated_by_external_id => @delegated_by_external_id}
+    {
+        :value => @value,
+        :digest => @digest,
+        :participant_external_id => @participant_external_id,
+        :type => @type,
+        :delegated_by_external_id => @delegated_by_external_id
+    }
   end
 
 end

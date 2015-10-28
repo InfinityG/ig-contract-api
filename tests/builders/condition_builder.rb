@@ -34,6 +34,16 @@ class ConditionBuilder
     self
   end
 
+  def with_signature_mode(signature_mode)
+    @signature_mode = signature_mode
+    self
+    end
+
+  def with_signature_threshold(sig_threshold)
+    @signature_threshold = sig_threshold
+    self
+  end
+
   def build
     {
         :name => @name,
@@ -41,13 +51,9 @@ class ConditionBuilder
         :sequence_number => @sequence_number,
         :signatures => @signature_arr,
         :sig_mode => @signature_mode,
+        :sig_threshold => @signature_threshold,
         :trigger => @trigger,
         :expires => @expires
     }
-  end
-
-  def with_signature_mode(signature_mode)
-    @signature_mode = signature_mode
-    self
   end
 end

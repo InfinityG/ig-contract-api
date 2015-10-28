@@ -3,9 +3,11 @@ require './api/services/signature_service'
 require './api/services/queue_processor_service'
 require './api/errors/contract_error'
 require './api/constants/error_constants'
+require './api/constants/contract_constants'
 
 class ContractService
   include ErrorConstants::ContractErrors
+  include GeneralConstants::ContractConstants
 
   def initialize(contract_repository = ContractRepository,
                  queue_service = QueueService,
@@ -89,7 +91,7 @@ class ContractService
     participant = find_oracle_for_contract contract
 
     # confirm that the digest is correct based on the path
-    validate_digest digest, "/contracts/#{contract_id}/conditions/#{condition_id}"
+    validate_digest digest, "/contracts/#{contract_id}/conditions/#{condition_id}/signatures"
 
     # check signature validity
     validate_signature(digest, participant[:public_key], signature_value)
@@ -190,6 +192,8 @@ class ContractService
     end
 
     raise ContractError, NO_ORACLE_ON_CONDITION if participant == nil
+
+    participant
   end
 
   def validate_signature(digest, public_key, signature_value)
