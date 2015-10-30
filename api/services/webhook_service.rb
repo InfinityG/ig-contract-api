@@ -8,9 +8,7 @@ class WebHookService
 
   def process_webhook(webhook)
     puts "Processing webhook:#{webhook.id}; uri:#{webhook.uri}"
-
-    # TODO: implement the requests using RestUtil!
-
+    
     uri = webhook[:uri]
     method = webhook[:method].to_s.downcase
     headers = webhook[:headers]
