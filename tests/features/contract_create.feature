@@ -24,9 +24,9 @@ Feature: Contract creation
       | ecdsa | 2              |              |
     And condition 1 has an expiry of 3 days from now
     And condition 1 has the following webhooks:
-      | uri                |
-      | www.mywebhook1.com |
-      | www.mywebhook2.com |
+      | uri                | headers  | method  | body             |
+      | https://mywebhook1.com |          | POST    | {"key1":"value"} |
+      | https://mywebhook2.com |          | POST    | {"key2":"value"} |
     And I have a valid auth token on the API
     And I POST the contract to the API
     Then the API should respond with a 200 response code
@@ -47,9 +47,9 @@ Feature: Contract creation
     And condition 1 signature threshold is 1
     And condition 1 has an expiry of 3 days from now
     And condition 1 has the following webhooks:
-      | uri                |
-      | www.mywebhook1.com |
-      | www.mywebhook2.com |
+      | uri                | headers  | method  | body             |
+      | https://mywebhook1.com |          | POST    | {"key1":"value"} |
+      | https://mywebhook2.com |          | POST    | {"key1":"value"} |
     And I have a valid auth token on the API
     And I POST the contract to the API
     Then the API should respond with a 200 response code

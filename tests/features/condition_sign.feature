@@ -7,6 +7,12 @@ Feature: Condition signing
     When I update a signature on the condition
     Then the API should respond with a 200 response code
 
+  Scenario: Sign all signatures on an existing condition with signature mode STATIC on an active contract
+    Given I have an existing contract with condition signature modes static
+    And The contract state is active
+    When I update all signatures on the condition
+    Then the condition status should be complete
+
   Scenario: Sign an existing condition with signature mode DYNAMIC on an active contract
     Given I have an existing contract with condition signature modes dynamic
     And The contract state is active

@@ -102,8 +102,13 @@ end
 
 And(/^condition (\d+) has the following webhooks:$/) do |arg, table|
   table.hashes.each do |item|
-    @condition_webhooks_hash[arg.to_i] << @step_helper.create_webhook(item[:uri])
+    @condition_webhooks_hash[arg.to_i] << @step_helper.create_webhook(item[:uri],
+                                                                      item[:method],
+                                                                      item[:headers],
+                                                                      item[:body])
   end
+
+  @condition_webhooks_hash
 end
 
 And(/^condition (\d+) has the following transactions:$/) do |arg, table|
@@ -203,9 +208,8 @@ Given(/^I have an existing contract with condition signature modes ([^"]*)/) do 
   steps "
     And condition 1 has an expiry of 3 days from now
     And condition 1 has the following webhooks:
-      | uri                |
-      | www.mywebhook1.com |
-      | www.mywebhook2.com |
+      | uri                         | headers  | method  | body             |
+      | http://requestb.in/1a8hd8s1 |          | POST    | {'key1':'value'} |
     And condition 2 signature mode is #{arg}"
 
   if arg == 'dynamic'
@@ -223,9 +227,8 @@ Given(/^I have an existing contract with condition signature modes ([^"]*)/) do 
   steps '
     And condition 2 has an expiry of 3 days from now
     And condition 2 has the following webhooks:
-      | uri                |
-      | www.mywebhook1.com |
-      | www.mywebhook2.com |
+      | uri                         | headers  | method  | body             |
+      | http://requestb.in/1a8hd8s1 |          | POST    | {"key1":"value"} |
     And I have a valid auth token on the API
     And I POST the contract to the API
   '
@@ -268,6 +271,38 @@ When(/^I update a signature on the condition$/) do
   rest_client = RestUtil.new
   @signature_uri = "#{CONTRACT_API_URI}#{signature_uri_fragment}"
   @result = rest_client.execute_post @signature_uri, @auth_token, @signature.to_json
+
+  end
+
+When(/^I update all signatures on the condition$/) do
+
+  contract = JSON.parse(@result.response_body, :symbolize_names => true)
+  @contract_id = contract[:id]
+  condition = contract[:conditions][0]
+  condition_id = condition[:id]
+
+  condition[:signatures].each do |sig|
+
+    signature_id = sig[:id]
+
+    signer = contract[:participants].detect do |participant|
+      participant[:id] == sig[:participant_id]
+    end
+
+    signer_id = signer[:external_id].to_s
+
+    # get the secret key for signing
+    secret_key = @all_keys_hash[signer_id][:sk]
+
+    # create the signature payload - the data to create a digest from and sign is the path to the signature
+    signature_uri_fragment = "/contracts/#{@contract_id}/conditions/#{condition_id}/signatures/#{signature_id}"
+    signature = @step_helper.create_updated_condition_signature signature_uri_fragment, secret_key
+
+    # execute the request: /contracts/{id}/conditions/{id}/signatures/{id}
+    rest_client = RestUtil.new
+    signature_uri = "#{CONTRACT_API_URI}#{signature_uri_fragment}"
+    rest_client.execute_post signature_uri, @auth_token, signature.to_json
+  end
 
 end
 
@@ -426,4 +461,9 @@ end
 
 def get_unix_date(value)
   (Date.today + value).to_time.to_i
+end
+
+
+Then(/^the condition status should be complete$/) do
+  pending
 end

@@ -11,6 +11,7 @@ module ErrorConstants
     SIGNATURE_ALREADY_RECORDED = 'Signature %s already recorded!'
     NO_ORACLE_ON_CONDITION = 'No oracle found on condition!'
     INVALID_DIGEST = 'Digest does not have the expected value'
+    INVALID_WEBHOOK_METHOD = 'Invalid HTTP method on webhook'
   end
 
   module ValidationErrors

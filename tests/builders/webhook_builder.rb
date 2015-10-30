@@ -3,7 +3,7 @@ class WebhookBuilder
   def with_uri(uri)
     @uri = uri
     self
-    end
+  end
 
   def with_method(method)
     @method = method
@@ -21,12 +21,12 @@ class WebhookBuilder
     self
   end
 
-  def with_payload(payload)
-    @payload = payload
+  def with_body(body)
+    @body = body
     self
   end
 
   def build
-    {:uri => @uri, :method => @method, :headers => @headers, :payload => @payload}
+    {:uri => @uri, :method => @method, :headers => @headers, :body => @body}
   end
 end

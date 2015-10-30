@@ -20,6 +20,9 @@ class QueueProcessorService
           pending_items = queue_service.get_pending_triggers
 
           pending_items.each do |queue_item|
+
+            errors = []
+
             # get the contract
             contract = contract_service.get_contract queue_item.contract_id
 
@@ -35,32 +38,54 @@ class QueueProcessorService
             if (current_trigger.transactions != nil) && (current_trigger.transactions.count > 0)
               current_trigger.transactions.each do |transaction|
 
-                # from participant
-                from_participant = contract.participants.detect do |participant|
-                  participant.id.to_s == transaction.from_participant_id.to_s
+                begin
+                  # from participant
+                  from_participant = contract.participants.detect do |participant|
+                    participant.id.to_s == transaction.from_participant_id.to_s
                   end
 
-                # to participant
-                to_participant = contract.participants.detect do |participant|
-                  participant.id.to_s == transaction.to_participant_id.to_s
-                end
+                  # to participant
+                  to_participant = contract.participants.detect do |participant|
+                    participant.id.to_s == transaction.to_participant_id.to_s
+                  end
 
-                transaction_service.process_transaction transaction, from_participant, to_participant
+                  transaction_service.process_transaction transaction, from_participant, to_participant
+
+                rescue Exception => e
+                  errors << "TRANSACTION ERROR! Condition #{current_condition.id.to_s},
+                                Trigger: #{current_trigger.id},
+                                Transaction: #{transaction.id} ||
+                                Message: #{e}"
+                end
               end
             end
+
 
             # process webhooks
             if (current_trigger.webhooks != nil) && (current_trigger.webhooks.count > 0)
               current_trigger.webhooks.each do |webhook|
-                webhook_service.process_webhook webhook
+                begin
+                  webhook_service.process_webhook webhook
+                rescue Exception => e
+                  errors << "WEBHOOK ERROR! Condition: #{current_condition.id.to_s},
+                                Trigger: #{current_trigger.id},
+                                Transaction: #{webhook.id} ||
+                                Message: #{e}"
+                end
               end
             end
 
-            queue_service.update_queue_item queue_item.id, 'complete'
+            if errors.length > 0
+              queue_service.update_queue_item queue_item.id, 'error'
+              puts errors
+            else
+              queue_service.update_queue_item queue_item.id, 'complete'
+            end
+
           end
 
         rescue Exception => e
-          LOGGER.error "Error processing queue item! || Error: #{e}"
+          puts "Error processing queue item! || Error: #{e}"
         end
 
         sleep 5.0
