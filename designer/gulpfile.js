@@ -68,7 +68,7 @@ gulp.task('css', function () {
 });
 
 gulp.task('images', function () {
-    var stream = gulp.src(config.srcDir + '/img/**/*');
+    var stream = gulp.src(config.srcDir + '/images/**/*');
 
     stream = stream.pipe(imagemin({
         progressive: true,
@@ -76,7 +76,7 @@ gulp.task('images', function () {
         use: [pngcrush()]
     }));
 
-    return stream.pipe(gulp.dest('./www/img'));
+    return stream.pipe(gulp.dest('./www/images'));
 });
 
 //gulp.task('fonts', function () {
@@ -92,7 +92,7 @@ gulp.task('html', function () {
 gulp.task('clean', function (cb) {
     return gulp.src([
         './www/*.html',
-        './www/img',
+        './www/images',
         './www/css',
         './www/js',
         './www/fonts'

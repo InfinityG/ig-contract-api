@@ -17,6 +17,10 @@
             return sessionStorageService.getAuthToken();
         };
 
+        factory.saveToken = function(userName, userId, externalId, role, token, identityToken){
+            sessionStorageService.saveAuthToken(userName, userId, externalId, role, token, identityToken);
+        };
+
         factory.deleteToken = function () {
             var result = sessionStorageService.deleteAuthToken();
             $rootScope.$broadcast('logoutEvent', {result: result});
@@ -36,7 +40,7 @@
                     $http.post(serviceBase + '/tokens', authData, {'withCredentials': false})
                         .then(function (response) {
                             var tokenData = response.data;
-                            sessionStorageService.saveAuthToken(username, tokenData.external_id, tokenData.external_id,
+                            factory.saveToken(username, tokenData.external_id, tokenData.external_id,
                                 tokenData.role, tokenData.token, idioToken);
                             var cryptoKey = keyService.generateAESKey(userData.password, nacl);
 

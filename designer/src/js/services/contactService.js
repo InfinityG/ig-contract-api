@@ -16,6 +16,10 @@
             return localStorageService.getContacts(userId);
         };
 
+        factory.saveContacts = function (userId, data) {
+            localStorageService.saveContacts(userId, data);
+        };
+
         factory.refreshContacts = function (userId) {
             var context = userService.getContext();
 
@@ -33,6 +37,7 @@
                         message: 'Contacts updated'
                     });
                 });
+
         };
 
         return factory;
