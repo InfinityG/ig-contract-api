@@ -51,6 +51,7 @@
             };
 
             $scope.updateText = function(){
+                console.debug('Updating JSON text...');
                 $scope.stringifiedModel.json = contractModelService.stringifyModel($scope.contract);
             };
 

@@ -8,7 +8,7 @@
                 <accordion-group heading="My Contacts" is-open="true" is-disabled="false">
                     <div ng-repeat="contact in contacts" ng-if="contact.status == 'connected'">
                         <div id="Contact">
-                            <contr-contact contact-id="Cont:{{contact.id}}"></contr-contact>
+                            <contr-contact id="Cont:{{contact.id}}"></contr-contact>
                         </div>
                     </div>
                 </accordion-group>

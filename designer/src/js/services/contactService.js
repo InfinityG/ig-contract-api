@@ -16,6 +16,13 @@
             return localStorageService.getContacts(userId);
         };
 
+        factory.getContact = function (contactId) {
+            var context = userService.getContext();
+            var userId = context.userId;
+
+            return localStorageService.getContact(userId, contactId);
+        };
+
         factory.saveContacts = function (userId, data) {
             localStorageService.saveContacts(userId, data);
         };

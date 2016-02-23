@@ -16,7 +16,7 @@
                 $scope.transFields = viewModelService.viewModel.triggers.webhook.fields;
 
                 //get the model from the index
-                $scope.webhook = modelIndexService.modelElementIndex[$scope.contractId];
+                $scope.webhook = modelIndexService.modelElementIndex[$scope.id];
             }
 
             init();

@@ -1,8 +1,8 @@
 (function () {
 
-    var injectParams = ['contactService', 'modelIndexService'];
+    var injectParams = ['contractService', 'modelIndexService'];
 
-    var contrContact = function (contactService, modelIndexService) {
+    var contrContact = function (contractService, modelIndexService) {
 
         return {
             templateUrl: 'contrContact.html',
@@ -10,18 +10,17 @@
             scope: {
                 showRemoveButton: '=',
                 dropActive: '=',
-                contactId: '@'
+                id: '@'
             },
             link: function postLink(scope, element, attrs) {
                 //set the id of the top element in the template HTML
-                element[0].childNodes[0].id = scope.contactId;
+                element[0].childNodes[0].id = scope.id;
 
-                ////check if the model has any child triggers (used for rebuilding a saved condition)
                 //var condition = modelIndexService.modelElementIndex[scope.contractId];
+                //console.debug('Conditionid: ' + condition.id);
                 //
-                //if ((condition != null && condition.trigger != null) &&
-                //    ((condition.trigger.transactions.length > 0) || (condition.trigger.webhooks.length > 0))) {
-                //    contractService.rebuildNestedElementsFromModel(scope.contractId, element, condition);
+                //if (condition != null) {
+                //    contractService.createContactElement(scope.contractId, element, condition);
                 //}
             }
         };

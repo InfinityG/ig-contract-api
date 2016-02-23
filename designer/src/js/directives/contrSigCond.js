@@ -10,14 +10,14 @@
             scope: {
                 showRemoveButton: '=',
                 dropActive: '=',
-                contractId: '@'
+                id: '@'
             },
             link: function postLink(scope, element, attrs) {
                 //set the id of the top element in the template HTML
-                element[0].childNodes[0].id = scope.contractId;
+                element[0].childNodes[0].id = scope.id;
 
                 //check if the model has any child triggers (used for rebuilding a saved condition)
-                var condition = modelIndexService.modelElementIndex[scope.contractId];
+                var condition = modelIndexService.modelElementIndex[scope.id];
 
                 if ((condition != null && condition.trigger != null) &&
                     ((condition.trigger.transactions.length > 0) || (condition.trigger.webhooks.length > 0))) {

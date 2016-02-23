@@ -20,19 +20,19 @@
             'conditions': {
                 'signature': {
                     'fields': {
-                        'creator': 'Agreement creator',
+                        //'creator': 'Agreement creator',
                         'single': 'Single contact',
-                        'specific': 'Multiple contacts',
-                        'all_group': 'All contacts in a group',
+                        'multiple': 'Multiple contacts',
+                        //'all_group': 'All contacts in a group',
                         'all': 'All contacts',
-                        'external': 'External system'
+                        //'external': 'External system'
                     }
                 },
                 'sms': {
                     'fields': {
                         'single': 'Single contact',
-                        'specific': 'Specific contacts',
-                        'all_group': 'All contacts in a group',
+                        'multiple': 'Multiple contacts',
+                        //'all_group': 'All contacts in a group',
                         'all': 'All contacts'
                     }
                 }

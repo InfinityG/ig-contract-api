@@ -26,9 +26,7 @@
                 $scope.contFields = viewModelService.viewModel.conditions.signature.fields;
 
                 //get the model from the index
-                $scope.contact = modelIndexService.contactModelElementIndex[$scope.contactId];
-
-                console.debug('Contact data: ' + JSON.stringify($scope.contact));
+                $scope.contact = modelIndexService.contactModelElementIndex[$scope.id];
             }
 
             init();

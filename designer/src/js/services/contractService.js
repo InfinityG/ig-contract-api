@@ -3,10 +3,38 @@
  */
 (function () {
 
-    var injectParams = ['$rootScope', '$compile'];
+    var injectParams = ['$rootScope', '$compile', 'contractModelService', 'modelIndexService'];
 
-    var contractServiceFactory = function ($rootScope, $compile) {
+    var contractServiceFactory = function ($rootScope, $compile, contractModelService, modelIndexService) {
         var factory = {};
+
+        factory.handleDrop = function (itemParent, item, directiveId, target) {
+            var itemId = item.id;
+            var parentId = itemParent.id;
+            var targetId = target.id;
+
+            //dont create new element if parent and target are the same
+            if (parentId == targetId)
+                return;
+
+            //don't allow contacts inside contacts
+            if ((itemId.indexOf('Cont:') > -1) && (factory.searchParentTree(target, 'Cont:') != null))
+                return;
+
+            factory.insertItem(item, directiveId, target);
+        };
+
+        //http://stackoverflow.com/questions/16656735/insert-directive-programatically-angular
+        factory.insertItem = function (item, directiveId, target) {
+
+            var modelId = item.id.split(':')[1];
+            var conditionId = factory.searchParentTree(target, 'Cond:').id.split(':')[1];
+
+            factory.createContactModel(conditionId, modelId);
+
+            var element = factory.createContactElement(modelId);
+            factory.insertElement(target, element);
+        };
 
         factory.buildContractFromModel = function(contractModel){
             var rootElement = document.getElementById('ContractTarget');
@@ -56,6 +84,21 @@
             }
         };
 
+        // signatures are at the same level as triggers within the condition
+        factory.rebuildContactElementsFromModel = function(parentElementId, parentElement, model){
+            var contactRootElement = parentElement.find('#ContactPanel')[0];
+            var element;
+
+            if(model.signatures.length > 0) {
+
+                for (var i = 0; i < model.signatures.length; i++) {
+                    var signature = model.signatures[i];
+                    element = factory.createContactElement(parentElementId, signature.external_id);
+                    factory.insertElement(contactRootElement, element);
+                }
+            }
+        };
+
         factory.insertElement = function (target, element) {
             var compiledElement = $compile(element)($rootScope);
             angular.element(target).append(element);
@@ -76,6 +119,11 @@
             return factory.createDirectiveElement('contr-sms-cond', elementId);
         };
 
+        factory.createContactElement = function (modelId) {
+            var elementId = 'Cont:' + modelId;
+            return factory.createDirectiveElement('contr-contact', elementId);
+        };
+
         factory.createTransactionTriggerElement = function(conditionElementId, modelId){
             var elementId = conditionElementId + '_TransTrig:' + modelId;
             return factory.createDirectiveElement('contr-trans-trig', elementId);
@@ -88,7 +136,7 @@
 
         factory.createDirectiveElement = function(directiveName, elementId){
             return angular.element(document.createElement(directiveName))
-                .attr('contract_id', elementId);
+                .attr('id', elementId);
         };
 
         factory.searchParentTree = function (el, idString) {
@@ -99,6 +147,21 @@
             }
             return null;
         };
+
+
+        /*
+         CREATION OF MODEL INSTANCES
+         */
+
+        factory.createContactModel = function (conditionId, contactModelId) {
+            var contact = contractModelService.createContact(contactModelId);
+            contractModelService.addContactToParticipants(contact);
+            contractModelService.addSignatureToCondition(conditionId, contact);
+
+            return contact;
+
+        };
+
         return factory;
     };
 

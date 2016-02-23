@@ -1,9 +1,9 @@
 //http://blog.parkji.co.uk/2013/08/11/native-drag-and-drop-in-angularjs.html
 
 (function () {
-    var injectParams = ['templateService'];
+    var injectParams = ['templateService', 'contractService'];
 
-    var droppable = function(templateService) {
+    var droppable = function(templateService, contractService) {
         return {
             //scope: {
             //    drop: '&', // parent
@@ -52,7 +52,10 @@
                         var directiveId = e.dataTransfer.getData('DirectiveId');
                         var itemParent = document.getElementById(e.dataTransfer.getData('ParentId'));
 
-                        templateService.handleDrop(itemParent, item, directiveId, target);
+                        if(directiveId == 'CONTR-CONTACT')
+                            contractService.handleDrop(itemParent, item, directiveId, target);
+                        else
+                            templateService.handleDrop(itemParent, item, directiveId, target);
 
                         //prevent event bubbling if this is a nested drop target
                         e.stopPropagation();

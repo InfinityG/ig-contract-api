@@ -15,7 +15,7 @@
                 $scope.transFields = viewModelService.viewModel.triggers.transaction.fields;
 
                 //get the model from the index
-                $scope.transaction = modelIndexService.modelElementIndex[$scope.contractId];
+                $scope.transaction = modelIndexService.modelElementIndex[$scope.id];
 
             }
 

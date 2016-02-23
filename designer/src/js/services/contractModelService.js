@@ -7,9 +7,9 @@
 
 (function () {
 
-    var injectParams = ['$http', '$rootScope'];
+    var injectParams = ['$http', '$rootScope', 'contactService'];
 
-    var contractModelFactory = function ($http, $rootScope) {
+    var contractModelFactory = function ($http, $rootScope, contactService) {
 
         var factory = {};
 
@@ -90,6 +90,11 @@
 
         /* Contacts */
 
+        factory.createContact = function(contactId){
+            var contact = contactService.getContact(contactId);
+            return factory.createClone(contact);
+        };
+
         factory.addContactsToParticipants = function (contacts) {
             for (var x = 0; x < contacts.length; x++) {
                 factory.addContactToParticipants(contacts[x]);
@@ -116,7 +121,9 @@
 
         /* Signatures */
 
-        factory.addSignaturesToCondition = function (condition, contacts) {
+        factory.addSignaturesToCondition = function (conditionId, contacts) {
+            var condition = factory.getCondition(conditionId);
+
             for (var x = 0; x < contacts.length; x++) {
 
                 var signature = {
@@ -127,12 +134,16 @@
             }
         };
 
-        /*
-         Events
-         */
+        factory.addSignatureToCondition = function (conditionId, contact) {
+            var condition = factory.getCondition(conditionId);
 
-        factory.raiseModelChanged = function() {
-            $rootScope.$broadcast('contractModelEvent', null);
+            var signature = {
+                    'participant_external_id': contact.id
+            };
+
+            condition.signatures.push(signature);
+
+            raiseModelChanged();
         };
 
         /* JSON stringification */
@@ -140,6 +151,14 @@
         factory.stringifyModel = function (model) {
             return JSON.stringify(model, null, 2);
         };
+
+        /*
+         Events
+         */
+
+        function raiseModelChanged() {
+            $rootScope.$broadcast('contractModelEvent', null);
+        }
 
         return factory;
     };

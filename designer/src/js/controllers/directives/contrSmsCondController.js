@@ -14,7 +14,7 @@
                 $scope.sigFields = viewModelService.viewModel.conditions.signature.fields;
 
                 //get the model from the index
-                $scope.condition = modelIndexService.modelElementIndex[$scope.contractId];
+                $scope.condition = modelIndexService.modelElementIndex[$scope.id];
             }
 
             init();
