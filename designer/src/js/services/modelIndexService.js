@@ -67,10 +67,12 @@
         };
 
         factory.addElementToModelIndex = function (elementId, model) {
+            console.log('modelIndexService, addElementToModelIndex:::', elementId, model);
             factory.modelElementIndex[elementId] = model;
         };
 
         factory.addElementToContactModelIndex = function (elementId, model) {
+            console.log('modelIndexService, addElementToContactModelIndex:::', elementId, model);
             factory.contactModelElementIndex[elementId] = model;
         };
 

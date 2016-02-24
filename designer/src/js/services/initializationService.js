@@ -32,13 +32,13 @@
 
             //initialise mocks
             if (constants.mockMode) {
-                factory.initialiseMocks();
+                factory.initialiseMocks();//this gets run now - frst time
             }
 
         };
 
         factory.start = function (key) {
-            var context = userService.getContext();
+            var context = userService.getContext();//fetch the login credentials
 
             $http.defaults.withCredentials = false; //this is so that we can use '*' in allowed-origin
 
@@ -49,7 +49,7 @@
                 if (!constants.mockMode)
                     contactService.refreshContacts(context.userId, context.username);
             } else {
-                factory.getFingerprint();
+                factory.getFingerprint();//not relevant as of yet - for checking the session isnt hijacked - added as user side token
             }
         };
 
@@ -68,6 +68,7 @@
                 "token": token
             };
 
+            //saves token to blob
             userService.saveToken(userName, userId, externalId, '', token, token);
 
             // mock contacts for user
@@ -89,9 +90,10 @@
                 "status": "connected"
             }];
 
+            //saves contacts to blob
             contactService.saveContacts(userId, contacts);
 
-            $rootScope.$broadcast('loginEvent', context);
+            $rootScope.$broadcast('loginEvent', context);// this gets consumed further down
 
         };
 
@@ -128,7 +130,7 @@
             });
 
             $rootScope.$on('loginEvent', function (event, args) {
-                factory.start(args.key);
+                factory.start(args.key);//now we have a context - so rerun
                 $location.path('/');
             });
 

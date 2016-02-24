@@ -36,6 +36,8 @@
         //http://stackoverflow.com/questions/16656735/insert-directive-programatically-angular
         factory.insertItem = function (item, directiveId, target) {
 
+            console.log('templateServuce, insertItem:::', item, directiveId, target);
+
             var model;
             var elementId;
 
@@ -171,6 +173,9 @@
         };
 
         factory.createDirectiveElement = function(directiveName, elementId){
+
+            console.log('creating directive element:::', directiveName, elementId);
+
             return angular.element(document.createElement(directiveName))
                 .attr('drop-active', 'true')
                 .attr('template_id', elementId);
